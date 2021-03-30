@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>PHPerKaigi 2021 - REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="PHPerKaigi 2021 参加レポ 2021/03/26 から 2021/03/28 にかけて開催された、PHPerKaigi 2021 に一般参加者として参加した。 弊社デジタルサーカス株式会社 (今年1月から勤務) はダイヤモンドスポンサーとなっており、スポンサー枠のチケットを使わせていただいた。
+このようなカンファレンスには初めて参加するのでかねてより心待ちにしていたのだが、生憎2日目から体調を崩してしまい、この記事も途中までとなっている。まだ見ていないセッションも多いが、ひとまず現時点での参加レポを書いておく。
+発表はトラック A、B に分かれていたのだが、今回はすべて A トラックを視聴している (切り替えるのが面倒だっただけ)。
+凡例  発表・スライドのメモ (引用ではない)
+ 感想など
+Day 0 前夜祭 (2021/03/27) 17:30 [A] PHP で AWS Lambda
+ Rails のプロジェクトを PHPer のメンバのみでメンテ →他のメンバもわかる PHP にリプレースを検討
+サーバレス
+ サーバ・インフラの管理が不要 アプリケーションコードの知識だけで保守可能  ゼロベースで作れる案件が (Railsの件とは別に) あるため、そちらで試験的に導入?
+AWSの学習 AWS のドキュメント DevelopersIO
+AWS Lambda のカスタムランタイムで PHP を動かす
+サーバのセットアップや維持管理を気にしなくて良い サーバーレスで PHP を動かすツールがすでにある サーバーレス構築はすんなり
+今は Laravel がルーティングしている Laravel Livewire を Lambda に載せられないか？ デプロイ方法は？ バッチ処理は？ (Lambda は 15分の制限)">
+    <meta name="author" content="">
+    
+    <link href="https://nsfisis.github.io/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://nsfisis.github.io/style.css" rel="stylesheet">
+    <link href="https://nsfisis.github.io/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://nsfisis.github.io/apple-touch-icon.png">
+    <link rel="icon" href="https://nsfisis.github.io/favicon.ico">
+    <meta name="generator" content="Hugo 0.81.0" />
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://nsfisis.github.io">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">PHPerKaigi 2021</h1>
+    <div class="post-meta">March 30, 2021</div>
+  </header>
+  <div class="post-content"><h1 id="phperkaigi-2021-参加レポ">PHPerKaigi 2021 参加レポ</h1>
+<p>2021/03/26 から 2021/03/28 にかけて開催された、<a href="https://phperkaigi.jp/2021/">PHPerKaigi 2021</a> に一般参加者として参加した。
+弊社<a href="https://www.dgcircus.com/">デジタルサーカス株式会社</a> (今年1月から勤務) はダイヤモンドスポンサーとなっており、スポンサー枠のチケットを使わせていただいた。</p>
+<p>このようなカンファレンスには初めて参加するのでかねてより心待ちにしていたのだが、生憎2日目から体調を崩してしまい、この記事も途中までとなっている。まだ見ていないセッションも多いが、ひとまず現時点での参加レポを書いておく。</p>
+<p>発表はトラック A、B に分かれていたのだが、今回はすべて A トラックを視聴している (切り替えるのが面倒だっただけ)。</p>
+<h2 id="凡例">凡例</h2>
+<blockquote>
+<p>発表・スライドのメモ (引用ではない)</p>
+</blockquote>
+<p>感想など</p>
+<h2 id="day-0-前夜祭-20210327">Day 0 前夜祭 (2021/03/27)</h2>
+<h3 id="1730-a">17:30 [A]</h3>
+<p>PHP で AWS Lambda</p>
+<blockquote>
+<p>Rails のプロジェクトを PHPer のメンバのみでメンテ
+→他のメンバもわかる PHP にリプレースを検討</p>
+<p>サーバレス</p>
+<ul>
+<li>サーバ・インフラの管理が不要</li>
+<li>アプリケーションコードの知識だけで保守可能</li>
+</ul>
+<p>ゼロベースで作れる案件が (Railsの件とは別に) あるため、そちらで試験的に導入?</p>
+<p>AWSの学習
+AWS のドキュメント
+DevelopersIO</p>
+<p>AWS Lambda のカスタムランタイムで PHP を動かす</p>
+<p>サーバのセットアップや維持管理を気にしなくて良い
+サーバーレスで PHP を動かすツールがすでにある
+サーバーレス構築はすんなり</p>
+<p>今は Laravel がルーティングしている
+Laravel Livewire を Lambda に載せられないか？
+デプロイ方法は？
+バッチ処理は？ (Lambda は 15分の制限)</p>
+<p>Lambda でコンテナイメージがサポートされるように</p>
+<p>抽象化されたもの「だけ」しか知らないよりも具象の理解は助けになる</p>
+</blockquote>
+<p>AWS Lambda のような Function as a Service はマイクロサービス化における一つの到達点に思えるのだが、これを使って実際に web サービスを作る具体的なイメージがまだ見えない (注: すべて for me として書いている)。</p>
+<p>PHP on AWS Lambda があれだけ簡単に動かせるのには驚いた。</p>
+<p>勝手に AWS Lambda だとフットプリントの軽さが求められそう (= PHP + Laravel などでは動かなさそう) だという先入観を持っていたのだが、この発表のデモによればそうでもないらしい。</p>
+<h3 id="1810-a">18:10 [A]</h3>
+<p>大規模サイトの SEO</p>
+<blockquote>
+<p>大規模サイト (100万ページ以上)
+Google の基準</p>
+<p>クロールバジェットを意識したSEO</p>
+<p>大規模サイトでコンテンツが中頻度 (1回/週) で更新 OR 中規模サイト (10,000以上) でコンテンツが目まぐるしく変更される
+これを満たさないなら、クロールバジェットを考えなくてもいい</p>
+<p>サーチコンソール
+「カバレッジ」の「除外」
+多すぎるのは問題→クロールバジェットを浪費している</p>
+<ul>
+<li>クエリの順番を決める</li>
+<li>空の値のルールを決めておく</li>
+<li>リダイレクトすればインデックスはうまくいく</li>
+<li>リンクが存在する限りクロールはされる</li>
+</ul>
+<p>リニューアル前のURL</p>
+<p>インデックスは移行される
+リンクのURLが存在する限り、別のURLとしてクロールされる
+リダイレクトされるとはいえ、リニューアル前のURLは移行した方が良い
+リニューアルで無視されるようになったパラメータも注意</p>
+<p>robotes.txt で拒否しているのにクロールされる
+一時的に拒否を外して 404 や 301 を読ませる
+内部リンクを確認する
+JS でのリンクに書き換え</p>
+<p>クエリパラメータからURLのパスに
+<code>/tokyo?area=HOGE</code> → <code>/tokyo/HOGE</code></p>
+<p>URL 設計だいじ</p>
+</blockquote>
+<p>SEO (Search Engine Optimization) は大して知らないので新鮮な話が多かった。その分語れることも少ない……。</p>
+<h3 id="1850-a">18:50 [A]</h3>
+<blockquote>
+<p>知覚可能
+操作可能
+理解可能
+堅牢 ちゃんとしたHTMLを書く (閉じタグ・入れ子構造など)</p>
+<ul>
+<li>
+<p>標準の HTML を適切に使う</p>
+</li>
+<li>
+<p>WAI-ARIA</p>
+</li>
+<li>
+<p>キーボードフレンドリー</p>
+</li>
+<li>
+<p>マシンフレンドリー</p>
+</li>
+<li>
+<p>SEOフレンドリー</p>
+</li>
+</ul>
+<p>button タグ
+→キーボード
+h1 タグ
+→スクリーンリーダー・クローラ
+a タグ</p>
+<p>WAI-ARIA
+HTML では表現できないセマンティクスを追加する</p>
+<ul>
+<li>ロール
+<ul>
+<li>何をするのか？</li>
+<li>ユーザーアクションによって変化しない</li>
+</ul>
+</li>
+<li>プロパティ
+<ul>
+<li>関連づけられたデータ</li>
+</ul>
+</li>
+<li>ステート
+<ul>
+<li>現在の状態</li>
+</ul>
+</li>
+</ul>
+<p>まずは標準の HTML 要素で解決する
+何でもかんでも WAI-ARIA を使えばいいというものではない</p>
+<p>マウスホバーでツールチップが出てくるが、キーボード操作では出てこない</p>
+<p>VoiceOver</p>
+<p>全ての属性を使う必要はない
+あくまでアクセシビリティを上げるための方法の一つにすぎない</p>
+</blockquote>
+<p>つい最近 WAI-ARIA についての記事を読んだばかりだったので個人的にタイムリーな話題だった。(あまりこの言葉を使いたくないのだが) いわゆる「健常者」にとって、こうした問題を普段の生活の中で意識するのは難しい。だからこそ情報へのアンテナは張っておくようにしたい。</p>
+<h3 id="1930-a">19:30 [A]</h3>
+<p>PHP で FUSE</p>
+<p>個人的に楽しみだった発表。</p>
+<blockquote>
+<p>VFS (virtual filesystem) vs 具体的なファイルシステム</p>
+<p>最適な実装方法は状況により異なる</p>
+<p>アプリケーションに見せるAPIは変えずに実装を隠蔽する→VFS</p>
+<p>カーネルのプログラムを作るのは難しい</p>
+<ul>
+<li>権限がデカすぎる</li>
+<li>システム全体がクラッシュ</li>
+<li>セキュリティリスク</li>
+<li>開発サイクルを回しづらい</li>
+<li>ネイティブコードにコンパイルされる言語である必要がある</li>
+</ul>
+<p>Filesystem in USEr space (FUSE)</p>
+<ul>
+<li>特定の C の関数を呼ぶことで filesystem が作れる</li>
+<li>FFI を持つ言語なら FUSE が使える</li>
+</ul>
+<p>SSHFS / s3fs / Docker Desktop</p>
+<p>Linux 以外でも使える</p>
+<ul>
+<li>dokany (on Windows)</li>
+<li>osxfuse</li>
+</ul>
+<p>VFS: システムコールが呼ばれると、ファイルシステムによってコール
+FUSE: カーネル空間からユーザ空間へ通信</p>
+<p>高レベルなラッパで型をつける</p>
+<p>PHP 以外では Wordpress を FUSE にマウントする実装がある (C, Python など)</p>
+<ul>
+<li>grep できる</li>
+<li>sed できる</li>
+<li>編集できる</li>
+</ul>
+</blockquote>
+<p>期待通りの興味深い発表だった。FUSE 自体も今回の発表で知ったのだが、これ本体の実装を見るのも面白そうだ。
+この発表を聞きながらファイルシステムにマウントできそうなものを考えていたのだが、およそ木構造をしているものすべてと言えそうだ (ハンマーしか持っていないと云々)。何かできそうだがなかなか思いつかない。</p>
+<h2 id="day-1-20210327">Day 1 (2021/03/27)</h2>
+<h3 id="1050-a">10:50 [A]</h3>
+<p>ATDD</p>
+<blockquote>
+<ul>
+<li>ユーザーストーリー</li>
+<li>ユニットテスト</li>
+<li>CI/CD</li>
+</ul>
+<p>ユーザストーリーの受け入れ条件が曖昧になりがち
+デグレチェックがユニットレベルでは収まらない場合、手動で同じシナリオをテストしている</p>
+<p>Q2の強化
+アジャイルテストの4象限</p>
+<p>技術面/ビジネス面
+開発チーム支援(コーディング前・コーディング中)/製品批評(コーディング後)</p>
+<ul>
+<li>Q1: 技術面 &amp; チーム支援
+<ul>
+<li>TDD</li>
+<li>ユニットテストなど</li>
+</ul>
+</li>
+<li>Q2: ビジネス面 &amp; チーム支援
+<ul>
+<li>ATDD</li>
+<li>ビジネス面の受け入れテストで駆動する</li>
+</ul>
+</li>
+</ul>
+<p>Agile Alliance
+ユーザストーリーのスキルレベルを高める</p>
+<p>テストピラミッド</p>
+<ul>
+<li>
+<p>UI Tests</p>
+</li>
+<li>
+<p>Service Tests</p>
+</li>
+<li>
+<p>Unit Tests</p>
+</li>
+<li>
+<p>異なる粒度のテストを書く</p>
+</li>
+<li>
+<p>高レベルになるほど、持つべきテストは少なくなる</p>
+<ul>
+<li>ピラミッド型になる</li>
+</ul>
+</li>
+</ul>
+<p>高レベルテストが多すぎる→アイスクリームコーン　アンチパターン</p>
+<p>ATDD (Acceptance TDD)
+API経由・UI経由での高レベルテスト E2E test</p>
+<p>ストーリ受け入れテスト</p>
+<p>入れ子のフィードバックループ
+ATDD(外側) と TDD(内側)</p>
+<p>外部品質・内部品質</p>
+<p>バーティカルスライスのデリバリー</p>
+<ul>
+<li>cucumber</li>
+<li>gauge</li>
+<li>behat</li>
+</ul>
+<p>ユビキタス言語
+手動テストもspecに書く
+自動化は可能だがコスパが悪い
+失敗することがわかっているテスト(レッドテスト)はCIから外す
+失敗時の原因究明が難しい
+饒舌なエラーメッセージ
+状況のスナップショット</p>
+<p>Continuous Testing</p>
+</blockquote>
+<p>User Acceptance Test (UAT) くらいの規模になると個人開発・趣味開発では触れない領域なので、大いに勉強になった。スライドに添付されている資料が相当に充実していたので、これを読むのが本番といった様相すら感じる。
+高レベルテストの自動化は現在のプロジェクトでも感じており、自動化のチャンスは伺っている。とはいえセッションでも指摘されているように自動化することにコストがかかりすぎる領域があるのも事実で、そのバランスが難しい。</p>
+<h3 id="1150-a">11:50 [A]</h3>
+<p>型解析を用いたリファクタリング</p>
+<p>型のある世界で生きてきた身として大いに楽しみにしていた発表。</p>
+<blockquote>
+<ul>
+<li>PHPStan</li>
+<li>Phan</li>
+<li>Psalm</li>
+</ul>
+<p>autoload も認識できる
+bootstrapFiles</p>
+<p>編集箇所と利用箇所を CI でチェック
+ルールレベルを徐々に引き上げていく
+警告が多すぎると見落としてしまう・無視されやすくなる</p>
+<p>型がついていないことによるエラーが多い</p>
+<p>型よりも詳細な検査 <code>Util_Assert::min</code></p>
+<p>SQL を静的解析
+placeholder の型付け</p>
+<p>警告レベルを低いレベルから導入
+タイプヒントを積極的に書いていく
+PHPStan の拡張を追加する</p>
+</blockquote>
+<p>昨今、動的型付き言語での型宣言・型アノテーション・型ヒントの導入が相次いでいる。長らく静的型付き言語を書いてきた私からすると、ようやく気づいたかといったところだが、ともかく型を導入する言語が増えてきた。
+今のプロジェクトでも新しく追加するコードには型をつけるよう努めているが、どうしても古いコードには型がついていない。個人的には型のないコードに対してどう型を自動的に付けるかという点に興味があり、その点で Ruby の typeprof には注目している。</p>
+<h3 id="1230-a">12:30 [A]</h3>
+<p>昼食をとっていた。事前に何か食料を買っておくべきだった。</p>
+<h3 id="1310-a">13:10 [A]</h3>
+<p>Documentation as Code</p>
+<p>この発表も以前から非常に楽しみにしていた。</p>
+<blockquote>
+<p>開発開始までのオーバーヘッド
+新規にチームにジョイン
+担当範囲外の機能を理解
+オンボーディングのコスト</p>
+<p>PHPerKaigi 2020 で発表あり</p>
+<p>継続的にシステムの理解を助けるドキュメント</p>
+<p>継続的ドキュメンテーション
+システムとドキュメントの乖離</p>
+<p>書いてあることが間違っている・足りない</p>
+<ul>
+<li>徐々にずれていく</li>
+<li>システムの更新タイミングとドキュメントの更新タイミングに差がある</li>
+</ul>
+<p>システムとドキュメントは対応関係がある</p>
+<ul>
+<li>間違ったドキュメント</li>
+<li>存在しないドキュメント</li>
+</ul>
+<p>システムとドキュメントの乖離を定量化する
+継続的に
+システムの更新に近いタイミングで ドキュメントを更新し続ける</p>
+<p>Documentation as Code</p>
+<p>コードと同じツールでドキュメントを書く</p>
+<ul>
+<li>issue tracker</li>
+<li>vcs</li>
+<li>plain text markup</li>
+<li>automation</li>
+</ul>
+<p>開発者
+システム
+ドキュメント
+構造化データ
+ソフトウェア</p>
+<p>システムから構造化データを抽出する
+PHPDoc
+OpenAPI</p>
+<p>ビュー 関心ごとに合わせてアーキテクチャを一つ以上の側面(断面)で説明する</p>
+<p>ビューの単位でドキュメントに</p>
+<p>スタックトレースからのドキュメント生成</p>
+</blockquote>
+<p>ドキュメントの管理は現プロジェクトでも課題と感じている。作られた当初は正しくても、実態と乖離していくのを止めるのは困難を極める。全体的に興味深い発表だったが、特にスタックトレースからのドキュメント生成というアイデアに惹かれるものを感じた。スタックトレースという実態と不可分な (乖離しない) 情報を起点にするのは理にかなっている。問題はトレースをいつ、どう取るかだろうか。それを自動化しなければ、実態との乖離が避けられないだろう。</p>
+<h3 id="1410-a">14:10 [A]</h3>
+<p>cookie による session 管理</p>
+<p>全体的に基本的な話だったので特に触れない。Cookie やセッションの話としては非常に分かりやすくまとめられていたので、知らない人が学ぶにはいい教材だろう。</p>
+<h3 id="1450-a">14:50 [A]</h3>
+<p>PHP のエラーと例外</p>
+<blockquote>
+<p>エラー PHPエンジンがエラーを通知する
+例外 プログラムが投げる</p>
+<p>PHP7-8とエラー</p>
+<p>PHPエンジンのエラーの一部が \Error に変換されるようになった
+→ try-catch で捕捉できる</p>
+<p>\Error は例外とは異なる</p>
+<p>PHP8 でエラーレベルの引き上げ</p>
+<ul>
+<li>捕捉すべきもの
+<ul>
+<li>recoverable</li>
+</ul>
+</li>
+<li>捕捉すべきでないもの
+<ul>
+<li>unrecoverable</li>
+<li>開発時に対処できるもの</li>
+</ul>
+</li>
+</ul>
+<p>例外</p>
+<ul>
+<li>捕捉して事後処理</li>
+<li>捕捉せず(or 捕捉した上で)さらに上に是非を問う</li>
+</ul>
+<p>開発段階で例外を把握し、ハンドリングを考えておく</p>
+<p>\Throwable  \Exception と \Error</p>
+<p>\Error はキャッチすべきでない</p>
+<ul>
+<li>
+<p>\Error</p>
+<ul>
+<li>本番で起きてはいけない</li>
+</ul>
+</li>
+<li>
+<p>\LogicException</p>
+<ul>
+<li>本番で起きてはいけない
+→生じないのだから捕捉もしない</li>
+</ul>
+</li>
+<li>
+<p>\RuntimeException</p>
+<ul>
+<li>起こるかもしれないので本番環境でも考慮する</li>
+</ul>
+</li>
+</ul>
+<p>捕捉して対応するのではなく、未然に防ぐ</p>
+<p>独自例外を使う
+\Exception を投げてしまうと、
+catch (\Exception)せざるを得ない
+→catch 範囲が広すぎる</p>
+<p>SPL の例外を使う</p>
+<p>例外翻訳
+上位のレイヤが下位のレイヤの例外を捕捉し、上位レイヤのAPIに「翻訳」する
+下位レイヤの知識に依存させない</p>
+<p>@throws
+捕捉してほしい例外を書き連ねておく</p>
+<p>呼び出しもとに負わせたい責任</p>
+</blockquote>
+<p>PHP を学んでいる途中の私としては、今まさに聞きたい発表だった (現時点で PHP を書き始めてから 4ヶ月ほどになる)。</p>
+<p>個人的に例外やエラーを最もうまく扱っているのは Go、Swift、Rust、Haskell などのエラーを「値として」扱う言語だと思っている。try-catch は通常の処理フローを完全に壊してしまう上、構文としても重すぎる。値としてのエラー通知は C言語時代への回帰ともいえるが、その頃と異なるのはエラーを暗黙のうちに握り潰すことがないということだ。これらの言語は型を持っており、静的に検証ができる (C のそれはまともな型付けではない。念のため)。</p>
+<p>PHP のように、すでに例外が言語システムに根ざしている言語ではどうすればよいか。この場合も同じく静的検証の力を借りることになるだろう。</p>
+<h3 id="1530-a">15:30 [A]</h3>
+<p>Laravel のメール認証</p>
+<p>Laravel の知識がない私にはまったくついていけなかった。また、個人的にタイトルがややミスリーディングに感じた。</p>
+<h3 id="1610-a">16:10 [A]</h3>
+<p>gRPC</p>
+<blockquote>
+<p>Unary RPCs
+Server streaming RPCs
+Client streaming RPCs
+Bidirectional streaming RPCs</p>
+<p>Protobuf</p>
+<p>実装とAPIが乖離しにくい
+自動生成
+複数言語でも相互に使える</p>
+<p>マイクロサービスのサービス通信
+スマホアプリ
+ゲームサーバ</p>
+<p>PHP では？</p>
+<p>PHP ではストリーミングが難しい
+リクエストごとにプロセスが使い捨て</p>
+<p>PHP ではgRPCのクライアントしか対応していない</p>
+<p>gRPC-Web
+ブラウザで扱うためのJSライブラリ+プロトコル</p>
+<p>HTTP/1.1 でも使える
+Unary RPC と Server streaming RPC のみ</p>
+<p>Envoy
+Nginx などで相互に gRPC と gRPC-Web で変換</p>
+<p>Amp
+イベント駆動な並行処理のフレームワーク</p>
+<p>HTTP/2 対応</p>
+<p>C#のgRPC-Webが楽</p>
+</blockquote>
+<p>(発表の中でもまさに同じことをおっしゃっていたが) PHP 以外の方が向いているだろう、というのが第一の感想である。gRPC はそれ自体というよりも Protobuf というエコシステムに乗れることのメリットが大きいと感じる。そのエコシステムにうまく乗れない時点で、うーんという感じ。</p>
+<h3 id="1650-a">16:50 [A]</h3>
+<p>アーキテクチャテスト</p>
+<blockquote>
+<p>Independent Core Layer Pattern</p>
+<p>開発初期のアーキテクチャが崩れる
+アーキテクチャ観点のコードレビューができない</p>
+<p>どこにクラスを置けばよいか？
+ドキュメントがない</p>
+<p>アーキテクチャ設計に関する知識が属人化・暗黙知化</p>
+<p>ガイドライン</p>
+<ul>
+<li>最初にルールを決めるのは簡単</li>
+<li>ルール通り作り始めるのも簡単
+<ul>
+<li>→維持するのが難しい、人が決めたものゆえ壊れやすい</li>
+</ul>
+</li>
+</ul>
+<p>PHP の特性</p>
+<ul>
+<li>クラスは public</li>
+<li>可視性の制御が public / protected / private のみ</li>
+<li>依存関係の制御が困難</li>
+</ul>
+<p>アーキテクチャテスト
+クラスの依存関係や実装ルールをコードとして表現し、自動テスト化する</p>
+<ul>
+<li>deptrac</li>
+<li>phpat</li>
+</ul>
+<p>Independent Core Layer Pattern</p>
+<p>アーキテクチャテストの失敗</p>
+<ul>
+<li>実装誤り</li>
+<li>or アーキテクチャが適切でない
+<ul>
+<li>開発の過程でフィードバックしていく</li>
+</ul>
+</li>
+</ul>
+<p>モジュラーモノリス→マイクロサービスへ</p>
+</blockquote>
+<h2 id="day-2-20210328">Day 2 (2021/03/28)</h2>
+<p>冒頭に書いた通り、2日目から体調が悪くまともに聴けていない。途中までは頭痛を我慢しつつ見ていたのだが、まともに入ってこなかった。</p>
+<p>残念ではあるが、いずれにせよ見られていない発表は他にもあるので、今週末にでもまとめて見ようと思う。</p>
+<h2 id="全体の感想">全体の感想</h2>
+<p>Day 2 にほとんど参加できなかったのは残念だが、イベント自体は大変楽しく、また興味深いものであった。自分がまったく知らない領域の話を聞けるのはこうしたイベントならではだと感じる。オンライン開催ゆえ現地に行く必要がなく、気軽に参加できたのも (特に初参加者として) 嬉しいポイントだった。</p>
+<p>今回、雑談/登壇者への質問等向けに Discord サーバもあったのだが、こちらは参加こそしたものの ROM のままになってしまった。発表に1ウィンドウ、メモを書くのに1ウィンドウ、Discord 表示に 1ウィンドウで私にはもう脳のリソースとディスプレイのスペースが追いつかなかった (さらにいうと Zoom でアンカンファレンスもやっていたようだ。こちらはまったく参加していない)。</p>
+<p>1つ個人的な反省点としては、一つ一つのセッションを真剣に聞き過ぎたというものがある。もっと適当に聞いておけばよかった。これだけだと大変語弊があるのだが、言い方を変えると、Discord しかりアンカンファレンスしかり「このイベントのこの瞬間にしかないコンテンツ」に触れずに、後から見返せる発表やスライドに注力してしまった、ということだ。発表の詳細な見直しはあとからできるのだから、今しかできないことを考えるべきだった。
+まあ初カンファレンスだし、とお茶を濁しておこう。</p>
+<p>さて、カンファレンスで一つ気になったことがある。それは、Discord という書き込み場所が増えたことでニコ生のコメントの流量が吸い取られてしまったのではないか、という点だ。ニコニコだけ見ていると過疎っているかのように見えた発表も、Discord の方では盛り上がっている、というのを何度か見かけた。ニコニコのコメント方式は盛り上がりを如実に反映するが、逆もまたしかり。Discord があったこと自体はプラスだったと思うが、この点はマイナスだったのではないかと感じる。</p>
+<hr>
+<p>最後になりましたが、毎年の PHPerKaigi 開催にご尽力されている皆様、スピーカーの皆様、楽しい3日間でした。ありがとうございました！
+(ずっと常体で書いてしまったのでいきなり仏頂面から笑顔になったようで気持ち悪い)</p>
+<p>ではまた来年。</p>
+</div>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2021 <a href="https://nsfisis.github.io">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://nsfisis.github.io/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+
