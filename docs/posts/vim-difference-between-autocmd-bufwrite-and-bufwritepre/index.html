@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>[Vim] autocmd events の BufWrite/BufWritePre の違い - REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/79ab4db8564032de0b25
+ TL; DR 違いはない。ただのエイリアス。
+調査記録 Vim の autocmd events には似通った名前のものがいくつかある。大抵は :help に説明があるが、この記事のタイトルにある2つを含めた以下のイベントには、その違いについて説明がない。
+ BufRead/BufReadPost BufWrite/BufWritePre BufAdd/BufCreate  このうち、BufAdd/BufCreate に関しては、:help BufCreate に
+ The BufCreate event is for historic reasons.
+ とあり、おそらくは BufAdd のエイリアスであろうということがわかる。他の2組も同様ではないかと予想されるが、確認のため vim と neovim のソースコードを調査した。
+ ソースコードへのリンク vim (調査時点での master branch) neovim (上に同じ)
+ vim のソースコード 以下は、autocmd events の名前と内部で使われている整数値とのマッピングを定義している箇所である。見ての通り、上でエイリアスではないかと述べた3組には、それぞれ同じ内部値が使われている。
+https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86
+{&#34;BufAdd&#34;,	EVENT_BUFADD}, {&#34;BufCreate&#34;,	EVENT_BUFADD}, https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97
+{&#34;BufRead&#34;,	EVENT_BUFREADPOST}, {&#34;BufReadCmd&#34;,	EVENT_BUFREADCMD}, {&#34;BufReadPost&#34;,	EVENT_BUFREADPOST}, https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105">
+    <meta name="author" content="">
+    
+    <link href="https://nsfisis.github.io/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://nsfisis.github.io/style.css" rel="stylesheet">
+    <link href="https://nsfisis.github.io/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://nsfisis.github.io/apple-touch-icon.png">
+    <link rel="icon" href="https://nsfisis.github.io/favicon.ico">
+    <meta name="generator" content="Hugo 0.88.1" />
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://nsfisis.github.io">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">[Vim] autocmd events の BufWrite/BufWritePre の違い</h1>
+    <div class="post-meta">October 2, 2021</div>
+  </header>
+  <div class="post-content"><p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/79ab4db8564032de0b25">https://qiita.com/nsfisis/items/79ab4db8564032de0b25</a></p>
+<hr>
+<h1 id="tl-dr">TL; DR</h1>
+<p>違いはない。ただのエイリアス。</p>
+<h1 id="調査記録">調査記録</h1>
+<p>Vim の autocmd events には似通った名前のものがいくつかある。大抵は <code>:help</code> に説明があるが、この記事のタイトルにある2つを含めた以下のイベントには、その違いについて説明がない。</p>
+<ul>
+<li><code>BufRead</code>/<code>BufReadPost</code></li>
+<li><code>BufWrite</code>/<code>BufWritePre</code></li>
+<li><code>BufAdd</code>/<code>BufCreate</code></li>
+</ul>
+<p>このうち、<code>BufAdd</code>/<code>BufCreate</code> に関しては、<code>:help BufCreate</code> に</p>
+<blockquote>
+<p>The BufCreate event is for historic reasons.</p>
+</blockquote>
+<p>とあり、おそらくは <code>BufAdd</code> のエイリアスであろうということがわかる。他の2組も同様ではないかと予想されるが、確認のため vim と neovim のソースコードを調査した。</p>
+<blockquote>
+<p>ソースコードへのリンク
+<a href="https://github.com/vim/vim/tree/8e6be34338f13a6a625f19bcef82019c9adc65f2">vim (調査時点での master branch)</a>
+<a href="https://github.com/neovim/neovim/tree/71d4f5851f068eeb432af34850dddda8cc1c71e3">neovim (上に同じ)</a></p>
+</blockquote>
+<h2 id="vim-のソースコード">vim のソースコード</h2>
+<p>以下は、autocmd events の名前と内部で使われている整数値とのマッピングを定義している箇所である。見ての通り、上でエイリアスではないかと述べた3組には、それぞれ同じ内部値が使われている。</p>
+<p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufAdd&#34;</span>,		EVENT_BUFADD},
+    {<span style="color:#e6db74">&#34;BufCreate&#34;</span>,	EVENT_BUFADD},
+</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufRead&#34;</span>,		EVENT_BUFREADPOST},
+    {<span style="color:#e6db74">&#34;BufReadCmd&#34;</span>,	EVENT_BUFREADCMD},
+    {<span style="color:#e6db74">&#34;BufReadPost&#34;</span>,	EVENT_BUFREADPOST},
+</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufWrite&#34;</span>,	EVENT_BUFWRITEPRE},
+    {<span style="color:#e6db74">&#34;BufWritePost&#34;</span>,	EVENT_BUFWRITEPOST},
+    {<span style="color:#e6db74">&#34;BufWritePre&#34;</span>,	EVENT_BUFWRITEPRE},
+</code></pre></div><h2 id="neovim-のソースコード">neovim のソースコード</h2>
+<p>neovim の場合でも同様のマッピングが定義されているが、こちらの場合は Lua で書かれている。以下にある通り、はっきり <code>aliases</code> と書かれている。</p>
+<p><a href="https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124">https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">  aliases <span style="color:#f92672">=</span> {
+    BufCreate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufAdd&#39;</span>,
+    BufRead <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufReadPost&#39;</span>,
+    BufWrite <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufWritePre&#39;</span>,
+    FileEncoding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EncodingChanged&#39;</span>,
+  },
+</code></pre></div><p>ところで、上では取り上げなかった <code>FileEncoding</code> だが、これは <code>:help FileEncoding</code> にしっかりと書いてある。</p>
+<pre tabindex="0"><code>                                                           *FileEncoding*
+FileEncoding                    Obsolete.  It still works and is equivalent
+                                to |EncodingChanged|.
+</code></pre><h2 id="まとめ">まとめ</h2>
+<p>記事タイトルについて言えば、どちらも変わらないので好きな方を使えばよい。あえて言えば、次のようになるだろう。</p>
+<ul>
+<li><code>BufAdd</code>/<code>BufCreate</code>
+<ul>
+<li>→ <code>BufCreate</code> は歴史的な理由により (&ldquo;for historic reasons&rdquo;) 存在しているため、新しい方 (<code>BufAdd</code>) を使う</li>
+</ul>
+</li>
+<li><code>BufRead</code>/<code>BufReadPost</code>
+<ul>
+<li>→ <code>BufReadPre</code> との対称性のため、あるいは <code>BufWritePost</code> との対称性のため <code>BufReadPost</code> を使う</li>
+</ul>
+</li>
+<li><code>BufWrite</code>/<code>BufWritePre</code>
+<ul>
+<li>→ <code>BufWritePost</code> との対称性のため、あるいは <code>BufReadPre</code> との対称性のため <code>BufWritePre</code> を使う</li>
+</ul>
+</li>
+<li><code>FileEncoding</code>/<code>EncodingChanged</code>
+<ul>
+<li>→ <code>FileEncoding</code> は &ldquo;Obsolete&rdquo; と明言されているので、<code>EncodingChanged</code> を使う</li>
+</ul>
+</li>
+</ul>
+<p>ところでこの調査で知ったのだが、<code>BufRead</code> と <code>BufWrite</code> は上にある通り発火するタイミングが「後」と「前」で対称性がない。可能なら <code>Pre</code>/<code>Post</code> 付きのものを使った方が分かりやすいだろう。</p>
+</div>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2021 <a href="https://nsfisis.github.io">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://nsfisis.github.io/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+
