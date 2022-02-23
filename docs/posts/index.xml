@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on REPL: Rest-Eat-Program Loop</title>
-    <link>https://nsfisis.github.io/posts/</link>
+    <link>https://blog.nsfisis.dev/posts/</link>
     <description>Recent content in Posts on REPL: Rest-Eat-Program Loop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sat, 02 Oct 2021 09:39:27 +0900</lastBuildDate><atom:link href="https://nsfisis.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Oct 2021 09:39:27 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rust のプリミティブ型はどこからやって来るか</title>
-      <link>https://nsfisis.github.io/posts/rust-where-are-primitive-types-from/</link>
+      <link>https://blog.nsfisis.dev/posts/rust-where-are-primitive-types-from/</link>
       <pubDate>Sat, 02 Oct 2021 09:39:27 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/rust-where-are-primitive-types-from/</guid>
+      <guid>https://blog.nsfisis.dev/posts/rust-where-are-primitive-types-from/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/9a429432258bbcd6c565
  前置き Rust において、プリミティブ型の名前は予約語でない。したがって、次のコードは合法である。
 #![allow(non_camel_case_types)] #![allow(dead_code)] struct bool; struct char; struct i8; struct i16; struct i32; struct i64; struct i128; struct isize; struct u8; struct u16; struct u32; struct u64; struct u128; struct usize; struct f32; struct f64; struct str; では、普段単に bool と書いたとき、この bool は一体どこから来ているのか。rustc のソースを追ってみた。
@@ -25,10 +25,10 @@ https://github.com/rust-lang/rust/tree/511ed9f2356af365ad8affe046b3dd33f7ac3c98
     
     <item>
       <title>[Ruby] then キーワードと case in</title>
-      <link>https://nsfisis.github.io/posts/ruby-then-keyword-and-case-in/</link>
+      <link>https://blog.nsfisis.dev/posts/ruby-then-keyword-and-case-in/</link>
       <pubDate>Sat, 02 Oct 2021 09:38:50 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/ruby-then-keyword-and-case-in/</guid>
+      <guid>https://blog.nsfisis.dev/posts/ruby-then-keyword-and-case-in/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/787a8cf888a304497223
  TL; DR case - in によるパターンマッチング構文でも、case - when と同じように then が使える (場合によっては使う必要がある)。
 then とは 使われることは稀だが、Ruby では then がキーワードになっている。次のように使う:
@@ -38,10 +38,10 @@ if cond then puts &amp;#34;Y&amp;#34; else puts &amp;#34;N&amp;#34; end この�
     
     <item>
       <title>[C&#43;&#43;] 属性構文の属性名にはキーワードが使える [[void]] [[for]]</title>
-      <link>https://nsfisis.github.io/posts/cpp-you-can-use-keywords-in-attributes/</link>
+      <link>https://blog.nsfisis.dev/posts/cpp-you-can-use-keywords-in-attributes/</link>
       <pubDate>Sat, 02 Oct 2021 09:38:30 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/cpp-you-can-use-keywords-in-attributes/</guid>
+      <guid>https://blog.nsfisis.dev/posts/cpp-you-can-use-keywords-in-attributes/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/94090937bcf860cfa93b
  タイトル落ち。まずはこのコードを見て欲しい。
 #include &amp;lt;iostream&amp;gt; [[alignas]] [[alignof]] [[and]] [[and_eq]] [[asm]] [[auto]] [[bitand]] [[bitor]] [[bool]] [[break]] [[case]] [[catch]] [[char]] [[char16_t]] [[char32_t]] [[class]] [[compl]] [[const]] [[const_cast]] [[constexpr]] [[continue]] [[decltype]] [[default]] [[delete]] [[do]] [[double]] [[dynamic_cast]] [[else]] [[enum]] [[explicit]] [[export]] [[extern]] [[false]] [[final]] [[float]] [[for]] [[friend]] [[goto]] [[if]] [[inline]] [[int]] [[long]] [[mutable]] [[namespace]] [[new]] [[noexcept]] [[not]] [[not_eq]] [[nullptr]] [[operator]] [[or]] [[or_eq]] [[override]] [[private]] [[protected]] [[public]] [[register]] [[reinterpret_cast]] [[return]] [[short]] [[signed]] [[sizeof]] [[static]] [[static_assert]] [[static_cast]] [[struct]] [[switch]] [[template]] [[this]] [[thread_local]] [[throw]] [[true]] [[try]] [[typedef]] [[typeid]] [[typename]] [[union]] [[unsigned]] [[virtual]] [[void]] [[volatile]] [[wchar_t]] [[while]] [[xor]] [[xor_eq]] // [[using]] int main() { std::cout &amp;lt;&amp;lt; &amp;#34;Hello, World!</description>
@@ -49,10 +49,10 @@ if cond then puts &amp;#34;Y&amp;#34; else puts &amp;#34;N&amp;#34; end この�
     
     <item>
       <title>[Ruby] 自身を実行している処理系の種類を判定する</title>
-      <link>https://nsfisis.github.io/posts/ruby-detect-running-implementation/</link>
+      <link>https://blog.nsfisis.dev/posts/ruby-detect-running-implementation/</link>
       <pubDate>Sat, 02 Oct 2021 09:37:50 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/ruby-detect-running-implementation/</guid>
+      <guid>https://blog.nsfisis.dev/posts/ruby-detect-running-implementation/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/74d7ffeeebc51b20d791
  Ruby という言語には複数の実装があるが、それらをスクリプト上からどのようにして programmatically に見分ければよいだろうか。
 Object クラスに定義されている RUBY_ENGINE という定数がこの用途に使える。
@@ -65,10 +65,10 @@ What values for RUBY_ENGINE correspond to which Ruby implementations? より引�
     
     <item>
       <title>Vimで選択した行の順番を入れ替える</title>
-      <link>https://nsfisis.github.io/posts/vim-swap-order-of-selected-lines/</link>
+      <link>https://blog.nsfisis.dev/posts/vim-swap-order-of-selected-lines/</link>
       <pubDate>Sat, 02 Oct 2021 09:37:25 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/vim-swap-order-of-selected-lines/</guid>
+      <guid>https://blog.nsfisis.dev/posts/vim-swap-order-of-selected-lines/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/4fefb361d9a693803520
  バージョン情報 :version の一部
  VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30) macOS version Included patches: 1-148 Huge version without GUI.
@@ -81,10 +81,10 @@ What values for RUBY_ENGINE correspond to which Ruby implementations? より引�
     
     <item>
       <title>[Vim] autocmd events の BufWrite/BufWritePre の違い</title>
-      <link>https://nsfisis.github.io/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</link>
+      <link>https://blog.nsfisis.dev/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</link>
       <pubDate>Sat, 02 Oct 2021 09:37:12 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</guid>
+      <guid>https://blog.nsfisis.dev/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/79ab4db8564032de0b25
  TL; DR 違いはない。ただのエイリアス。
 調査記録 Vim の autocmd events には似通った名前のものがいくつかある。大抵は :help に説明があるが、この記事のタイトルにある2つを含めた以下のイベントには、その違いについて説明がない。
@@ -100,10 +100,10 @@ https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/aut
     
     <item>
       <title>[Python] クロージャとUnboundLocalError: local variable &#39;x&#39; referenced before assignment</title>
-      <link>https://nsfisis.github.io/posts/python-unbound-local-error/</link>
+      <link>https://blog.nsfisis.dev/posts/python-unbound-local-error/</link>
       <pubDate>Sat, 02 Oct 2021 09:32:37 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/python-unbound-local-error/</guid>
+      <guid>https://blog.nsfisis.dev/posts/python-unbound-local-error/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/5d733703afcb35bbf399
  本記事は Python 3.7.6 の動作結果を元にして書かれている。
 Python でクロージャを作ろうと、次のようなコードを書いた。
@@ -115,10 +115,10 @@ def f(): x = 0 def g(): x += 1 g() f() 関数 g から 関数 f のスコープ�
     
     <item>
       <title>PHPerKaigi 2021</title>
-      <link>https://nsfisis.github.io/posts/phperkaigi-2021/</link>
+      <link>https://blog.nsfisis.dev/posts/phperkaigi-2021/</link>
       <pubDate>Tue, 30 Mar 2021 23:22:40 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/phperkaigi-2021/</guid>
+      <guid>https://blog.nsfisis.dev/posts/phperkaigi-2021/</guid>
       <description>PHPerKaigi 2021 参加レポ 2021/03/26 から 2021/03/28 にかけて開催された、PHPerKaigi 2021 に一般参加者として参加した。 弊社デジタルサーカス株式会社 (今年1月から勤務) はダイヤモンドスポンサーとなっており、スポンサー枠のチケットを使わせていただいた。
 このようなカンファレンスには初めて参加するのでかねてより心待ちにしていたのだが、生憎2日目から体調を崩してしまい、この記事も途中までとなっている。まだ見ていないセッションも多いが、ひとまず現時点での参加レポを書いておく。
 発表はトラック A、B に分かれていたのだが、今回はすべて A トラックを視聴している (切り替えるのが面倒だっただけ)。
@@ -136,10 +136,10 @@ AWS Lambda のカスタムランタイムで PHP を動かす
     
     <item>
       <title>My First Post</title>
-      <link>https://nsfisis.github.io/posts/my-first-post/</link>
+      <link>https://blog.nsfisis.dev/posts/my-first-post/</link>
       <pubDate>Fri, 05 Mar 2021 23:38:21 +0900</pubDate>
       
-      <guid>https://nsfisis.github.io/posts/my-first-post/</guid>
+      <guid>https://blog.nsfisis.dev/posts/my-first-post/</guid>
       <description>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
     </item>
     
