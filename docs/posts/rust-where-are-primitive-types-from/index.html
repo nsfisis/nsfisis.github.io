@@ -7,14 +7,7 @@
     
     <title>Rust のプリミティブ型はどこからやって来るか - REPL: Rest-Eat-Program Loop</title>
     
-    <meta name="description" content="この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/9a429432258bbcd6c565
- 前置き Rust において、プリミティブ型の名前は予約語でない。したがって、次のコードは合法である。
-#![allow(non_camel_case_types)] #![allow(dead_code)] struct bool; struct char; struct i8; struct i16; struct i32; struct i64; struct i128; struct isize; struct u8; struct u16; struct u32; struct u64; struct u128; struct usize; struct f32; struct f64; struct str; では、普段単に bool と書いたとき、この bool は一体どこから来ているのか。rustc のソースを追ってみた。
- 前提知識: 一般的なコンパイラの構造、用語。rustc そのものの知識は不要 (というよりも筆者自身がよく知らない)
- 調査 調査に使用したソース (調査時点での最新 master)
-https://github.com/rust-lang/rust/tree/511ed9f2356af365ad8affe046b3dd33f7ac3c98
-どのようにして調べるか。rustc の構造には詳しくないため、すぐに当たりをつけるのは難しい。
-大雑把な構造としては、compiler フォルダ以下に rustc_* という名前のクレートが数十個入っている。これがどうやら rustc コマンドの実装部のようだ。">
+    <meta name="description" content="この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/9a429432258bbcd6c565 前置き Rust において、プリミティブ型の名前は予約語でない。したがって、次のコードは合法である。 #![allow(non_camel_case_types)] #![allow(dead_code)] struct">
     <meta name="author" content="">
     
     <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">

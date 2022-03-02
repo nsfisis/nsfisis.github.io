@@ -86,13 +86,7 @@
     <h2>[Python] クロージャとUnboundLocalError: local variable &#39;x&#39; referenced before assignment</h2>
   </header>
   <section class="entry-content">
-   <p>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/5d733703afcb35bbf399
- 本記事は Python 3.7.6 の動作結果を元にして書かれている。
-Python でクロージャを作ろうと、次のようなコードを書いた。
-def f(): x = 0 def g(): x &#43;= 1 g() f() 関数 g から 関数 f のスコープ内で定義された変数 x を参照し、それに 1 を足そうとしている。 これを実行すると x &#43;= 1 の箇所でエラーが発生する。
- UnboundLocalError: local variable ‘x’ referenced before assignment
- local変数 x が代入前に参照された、とある。これは、f の x を参照するのではなく、新しく別の変数を g 内に作ってしまっているため。 前述のコードを宣言と代入を便宜上分けて書き直すと次のようになる。var を変数宣言のための構文として擬似的に利用している。
-# 注: var は正しい Python の文法ではない。上記参照のこと def f(): var x # f の local変数 &#39;x&#39; を宣言 x = 0 # x に 0 を代入 def g(): # f の内部関数 g を定義 var x # g の local変数 &#39;x&#39; を宣言 # たまたま f にも同じ名前の変数があるが、それとは別の変数 x &#43;= 1 # x に 1 を加算 (x = x &#43; 1 の糖衣構文) # 加算する前の値を参照しようとするが、まだ代入されていないためエラー g() 当初の意図を表現するには、次のように書けばよい。...</p>
+   <p>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/5d733703afcb35bbf399 本記事は Python 3.7.6 の動作結果を元にして書かれている。 Python でクロージャを作ろうと、次のようなコードを書いた...</p>
   </section>
   <footer class="entry-footer">
     <time>October 2, 2021</time>

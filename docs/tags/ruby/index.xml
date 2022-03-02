@@ -13,11 +13,7 @@
       <pubDate>Sat, 02 Oct 2021 09:38:50 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/ruby-then-keyword-and-case-in/</guid>
-      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/787a8cf888a304497223
- TL; DR case - in によるパターンマッチング構文でも、case - when と同じように then が使える (場合によっては使う必要がある)。
-then とは 使われることは稀だが、Ruby では then がキーワードになっている。次のように使う:
-if cond then puts &amp;#34;Y&amp;#34; else puts &amp;#34;N&amp;#34; end このキーワードが現れうる場所はいくつかあり、if、unless、rescue、case 構文がそれに当たる。 上記のように、何か条件を書いた後 then を置き、式がそこで終了していることを示すマーカーとして機能する。
-# Example: if x then a end unless x then a end begin a rescue then b end case x when p then a end なぜ普段は書かなくてもよいのか 普通 Ruby のコードで then を書くことはない。なぜか。次のコードを実行してみるとわかる。</description>
+      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/787a8cf888a304497223 TL; DR case - in によるパターンマッチング構文でも、case - when と同じように then が使える (場合によっては使</description>
     </item>
     
     <item>
@@ -26,14 +22,7 @@ if cond then puts &amp;#34;Y&amp;#34; else puts &amp;#34;N&amp;#34; end この�
       <pubDate>Sat, 02 Oct 2021 09:37:50 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/ruby-detect-running-implementation/</guid>
-      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/74d7ffeeebc51b20d791
- Ruby という言語には複数の実装があるが、それらをスクリプト上からどのようにして programmatically に見分ければよいだろうか。
-Object クラスに定義されている RUBY_ENGINE という定数がこの用途に使える。
-参考: Object::RUBY_ENGINE
-上記ページの例から引用する:
-$ ruby-1.9.1 -ve &#39;p RUBY_ENGINE&#39; ruby 1.9.1p0 (2009-03-04 revision 22762) [x86_64-linux] &amp;quot;ruby&amp;quot; $ jruby -ve &#39;p RUBY_ENGINE&#39; jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java] &amp;quot;jruby&amp;quot; それぞれの処理系がどのような値を返すかだが、stack overflow に良い質問と回答があった。
-What values for RUBY_ENGINE correspond to which Ruby implementations? より引用:
-    RUBY_ENGINE Implementation     &amp;lt;undefined&amp;gt; MRI &amp;lt; 1.</description>
+      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/74d7ffeeebc51b20d791 Ruby という言語には複数の実装があるが、それらをスクリプト上からどのようにして programmatically に見分ければよいだろ</description>
     </item>
     
   </channel>

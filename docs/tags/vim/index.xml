@@ -13,14 +13,7 @@
       <pubDate>Sat, 02 Oct 2021 09:37:25 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/vim-swap-order-of-selected-lines/</guid>
-      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/4fefb361d9a693803520
- バージョン情報 :version の一部
- VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30) macOS version Included patches: 1-148 Huge version without GUI.
- よく紹介されている手法 tac / tail tac や tail -r などの外部コマンドを ! を使って呼び出し、置き換える。
- :h v_!
- tac コマンドや tail の -r オプションは環境によって利用できないことがあり、複数の環境を行き来する場合に採用しづらい
-:g/^/m0 こちらは外部コマンドに頼らず、Vim の機能のみを使う。g は :global コマンドの、m は :move コマンドの略
-:global コマンドは :[range]global/{pattern}/[command] のように使い、[range] で指定された範囲の行のうち、{pattern} で指定された検索パターンにマッチする行に対して、順番に [command] で指定された Ex コマンドを呼び出す。</description>
+      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/4fefb361d9a693803520 バージョン情報 :version の一部 VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30) macOS version Included patches: 1-148 Huge version without GUI. よく紹介されている手法 tac / tail tac</description>
     </item>
     
     <item>
@@ -29,17 +22,7 @@
       <pubDate>Sat, 02 Oct 2021 09:37:12 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</guid>
-      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/79ab4db8564032de0b25
- TL; DR 違いはない。ただのエイリアス。
-調査記録 Vim の autocmd events には似通った名前のものがいくつかある。大抵は :help に説明があるが、この記事のタイトルにある2つを含めた以下のイベントには、その違いについて説明がない。
- BufRead/BufReadPost BufWrite/BufWritePre BufAdd/BufCreate  このうち、BufAdd/BufCreate に関しては、:help BufCreate に
- The BufCreate event is for historic reasons.
- とあり、おそらくは BufAdd のエイリアスであろうということがわかる。他の2組も同様ではないかと予想されるが、確認のため vim と neovim のソースコードを調査した。
- ソースコードへのリンク vim (調査時点での master branch) neovim (上に同じ)
- vim のソースコード 以下は、autocmd events の名前と内部で使われている整数値とのマッピングを定義している箇所である。見ての通り、上でエイリアスではないかと述べた3組には、それぞれ同じ内部値が使われている。
-https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86
-{&amp;#34;BufAdd&amp;#34;,	EVENT_BUFADD}, {&amp;#34;BufCreate&amp;#34;,	EVENT_BUFADD}, https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97
-{&amp;#34;BufRead&amp;#34;,	EVENT_BUFREADPOST}, {&amp;#34;BufReadCmd&amp;#34;,	EVENT_BUFREADCMD}, {&amp;#34;BufReadPost&amp;#34;,	EVENT_BUFREADPOST}, https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105</description>
+      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/79ab4db8564032de0b25 TL; DR 違いはない。ただのエイリアス。 調査記録 Vim の autocmd events には似通った名前のものがいくつかある。大抵は :help</description>
     </item>
     
   </channel>

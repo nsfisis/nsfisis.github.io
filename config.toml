@@ -1,5 +1,6 @@
 baseURL = "https://blog.nsfisis.dev"
 languageCode = "ja-JP"
+hasCJKLanguage = true
 title = "REPL: Rest-Eat-Program Loop"
 theme = "paper"
 

@@ -7,14 +7,7 @@
     
     <title>Vimで選択した行の順番を入れ替える - REPL: Rest-Eat-Program Loop</title>
     
-    <meta name="description" content="この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/4fefb361d9a693803520
- バージョン情報 :version の一部
- VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30) macOS version Included patches: 1-148 Huge version without GUI.
- よく紹介されている手法 tac / tail tac や tail -r などの外部コマンドを ! を使って呼び出し、置き換える。
- :h v_!
- tac コマンドや tail の -r オプションは環境によって利用できないことがあり、複数の環境を行き来する場合に採用しづらい
-:g/^/m0 こちらは外部コマンドに頼らず、Vim の機能のみを使う。g は :global コマンドの、m は :move コマンドの略
-:global コマンドは :[range]global/{pattern}/[command] のように使い、[range] で指定された範囲の行のうち、{pattern} で指定された検索パターンにマッチする行に対して、順番に [command] で指定された Ex コマンドを呼び出す。">
+    <meta name="description" content="この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/4fefb361d9a693803520 バージョン情報 :version の一部 VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30) macOS version Included patches: 1-148 Huge version without GUI. よく紹介されている手法 tac / tail tac">
     <meta name="author" content="">
     
     <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
