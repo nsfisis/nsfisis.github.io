@@ -2,3 +2,6 @@ baseURL = "https://blog.nsfisis.dev"
 languageCode = "ja-JP"
 title = "REPL: Rest-Eat-Program Loop"
 theme = "paper"
+
+[taxonomies]
+tag = 'tags'
