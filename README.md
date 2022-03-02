@@ -1,1 +1,1 @@
-GitHub Pages: https://nsfisis.github.io
+GitHub Pages: https://blog.nsfisis.dev
