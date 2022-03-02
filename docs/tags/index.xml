@@ -5,6 +5,106 @@
     <link>https://blog.nsfisis.dev/tags/</link>
     <description>Recent content in Tags on REPL: Rest-Eat-Program Loop</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>ja-JP</language><atom:link href="https://blog.nsfisis.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>ja-JP</language>
+    <lastBuildDate>Sat, 02 Oct 2021 09:39:27 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rust</title>
+      <link>https://blog.nsfisis.dev/tags/rust/</link>
+      <pubDate>Sat, 02 Oct 2021 09:39:27 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/rust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby</title>
+      <link>https://blog.nsfisis.dev/tags/ruby/</link>
+      <pubDate>Sat, 02 Oct 2021 09:38:50 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby3</title>
+      <link>https://blog.nsfisis.dev/tags/ruby3/</link>
+      <pubDate>Sat, 02 Oct 2021 09:38:50 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/ruby3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cpp</title>
+      <link>https://blog.nsfisis.dev/tags/cpp/</link>
+      <pubDate>Sat, 02 Oct 2021 09:38:30 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/cpp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cpp17</title>
+      <link>https://blog.nsfisis.dev/tags/cpp17/</link>
+      <pubDate>Sat, 02 Oct 2021 09:38:30 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/cpp17/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://blog.nsfisis.dev/tags/vim/</link>
+      <pubDate>Sat, 02 Oct 2021 09:37:25 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://blog.nsfisis.dev/tags/python/</link>
+      <pubDate>Sat, 02 Oct 2021 09:32:37 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python3</title>
+      <link>https://blog.nsfisis.dev/tags/python3/</link>
+      <pubDate>Sat, 02 Oct 2021 09:32:37 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/python3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>conference</title>
+      <link>https://blog.nsfisis.dev/tags/conference/</link>
+      <pubDate>Tue, 30 Mar 2021 23:22:40 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/conference/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>php</title>
+      <link>https://blog.nsfisis.dev/tags/php/</link>
+      <pubDate>Tue, 30 Mar 2021 23:22:40 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>phperkaigi</title>
+      <link>https://blog.nsfisis.dev/tags/phperkaigi/</link>
+      <pubDate>Tue, 30 Mar 2021 23:22:40 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/tags/phperkaigi/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

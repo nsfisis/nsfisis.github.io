@@ -5,17 +5,38 @@
     <loc>https://blog.nsfisis.dev/posts/</loc>
     <lastmod>2021-10-02T09:39:27+09:00</lastmod>
   </url><url>
+    <loc>https://blog.nsfisis.dev/tags/rust/</loc>
+    <lastmod>2021-10-02T09:39:27+09:00</lastmod>
+  </url><url>
     <loc>https://blog.nsfisis.dev/posts/rust-where-are-primitive-types-from/</loc>
+    <lastmod>2021-10-02T09:39:27+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/</loc>
     <lastmod>2021-10-02T09:39:27+09:00</lastmod>
   </url><url>
     <loc>https://blog.nsfisis.dev/posts/ruby-then-keyword-and-case-in/</loc>
     <lastmod>2021-10-02T09:38:50+09:00</lastmod>
   </url><url>
+    <loc>https://blog.nsfisis.dev/tags/ruby/</loc>
+    <lastmod>2021-10-02T09:38:50+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/ruby3/</loc>
+    <lastmod>2021-10-02T09:38:50+09:00</lastmod>
+  </url><url>
     <loc>https://blog.nsfisis.dev/posts/cpp-you-can-use-keywords-in-attributes/</loc>
+    <lastmod>2021-10-02T09:38:30+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/cpp/</loc>
+    <lastmod>2021-10-02T09:38:30+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/cpp17/</loc>
     <lastmod>2021-10-02T09:38:30+09:00</lastmod>
   </url><url>
     <loc>https://blog.nsfisis.dev/posts/ruby-detect-running-implementation/</loc>
     <lastmod>2021-10-02T09:37:50+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/vim/</loc>
+    <lastmod>2021-10-02T09:37:25+09:00</lastmod>
   </url><url>
     <loc>https://blog.nsfisis.dev/posts/vim-swap-order-of-selected-lines/</loc>
     <lastmod>2021-10-02T09:37:25+09:00</lastmod>
@@ -26,8 +47,23 @@
     <loc>https://blog.nsfisis.dev/posts/python-unbound-local-error/</loc>
     <lastmod>2021-10-02T09:32:37+09:00</lastmod>
   </url><url>
+    <loc>https://blog.nsfisis.dev/tags/python/</loc>
+    <lastmod>2021-10-02T09:32:37+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/python3/</loc>
+    <lastmod>2021-10-02T09:32:37+09:00</lastmod>
+  </url><url>
     <loc>https://blog.nsfisis.dev/</loc>
     <lastmod>2021-03-31T01:36:49+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/conference/</loc>
+    <lastmod>2021-03-30T23:22:40+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/php/</loc>
+    <lastmod>2021-03-30T23:22:40+09:00</lastmod>
+  </url><url>
+    <loc>https://blog.nsfisis.dev/tags/phperkaigi/</loc>
+    <lastmod>2021-03-30T23:22:40+09:00</lastmod>
   </url><url>
     <loc>https://blog.nsfisis.dev/posts/phperkaigi-2021/</loc>
     <lastmod>2021-03-30T23:22:40+09:00</lastmod>
@@ -36,7 +72,5 @@
     <lastmod>2021-03-05T23:38:21+09:00</lastmod>
   </url><url>
     <loc>https://blog.nsfisis.dev/categories/</loc>
-  </url><url>
-    <loc>https://blog.nsfisis.dev/tags/</loc>
   </url>
 </urlset>

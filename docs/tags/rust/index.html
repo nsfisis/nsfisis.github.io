@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>rust - REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/style.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://blog.nsfisis.dev/apple-touch-icon.png">
+    <link rel="icon" href="https://blog.nsfisis.dev/favicon.ico">
+    <meta name="generator" content="Hugo 0.88.1" />
+    
+    <link rel="alternate" type="application/rss+xml" href="https://blog.nsfisis.dev/tags/rust/index.xml" title="REPL: Rest-Eat-Program Loop" />
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="list">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+<header class="page-header"><h1>rust</h1></header>
+
+<article class="post-entry">
+  <header class="entry-header">
+    <h2>Rust のプリミティブ型はどこからやって来るか</h2>
+  </header>
+  <section class="entry-content">
+   <p>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/9a429432258bbcd6c565
+ 前置き Rust において、プリミティブ型の名前は予約語でない。したがって、次のコードは合法である。
+#![allow(non_camel_case_types)] #![allow(dead_code)] struct bool; struct char; struct i8; struct i16; struct i32; struct i64; struct i128; struct isize; struct u8; struct u16; struct u32; struct u64; struct u128; struct usize; struct f32; struct f64; struct str; では、普段単に bool と書いたとき、この bool は一体どこから来ているのか。rustc のソースを追ってみた。
+ 前提知識: 一般的なコンパイラの構造、用語。rustc そのものの知識は不要 (というよりも筆者自身がよく知らない)
+ 調査 調査に使用したソース (調査時点での最新 master)
+https://github.com/rust-lang/rust/tree/511ed9f2356af365ad8affe046b3dd33f7ac3c98
+どのようにして調べるか。rustc の構造には詳しくないため、すぐに当たりをつけるのは難しい。
+大雑把な構造としては、compiler フォルダ以下に rustc_* という名前のクレートが数十個入っている。これがどうやら rustc コマンドの実装部のようだ。...</p>
+  </section>
+  <footer class="entry-footer">
+    <time>October 2, 2021</time>
+  </footer>
+  <a class="entry-link" href="https://blog.nsfisis.dev/posts/rust-where-are-primitive-types-from/"></a>
+</article></main>
+<footer class="footer">
+  <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://blog.nsfisis.dev/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+

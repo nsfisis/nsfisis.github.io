@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>cpp17 - REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/style.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://blog.nsfisis.dev/apple-touch-icon.png">
+    <link rel="icon" href="https://blog.nsfisis.dev/favicon.ico">
+    <meta name="generator" content="Hugo 0.88.1" />
+    
+    <link rel="alternate" type="application/rss+xml" href="https://blog.nsfisis.dev/tags/cpp17/index.xml" title="REPL: Rest-Eat-Program Loop" />
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="list">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+<header class="page-header"><h1>cpp17</h1></header>
+
+<article class="post-entry">
+  <header class="entry-header">
+    <h2>[C&#43;&#43;] 属性構文の属性名にはキーワードが使える [[void]] [[for]]</h2>
+  </header>
+  <section class="entry-content">
+   <p>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/94090937bcf860cfa93b
+ タイトル落ち。まずはこのコードを見て欲しい。
+#include &lt;iostream&gt; [[alignas]] [[alignof]] [[and]] [[and_eq]] [[asm]] [[auto]] [[bitand]] [[bitor]] [[bool]] [[break]] [[case]] [[catch]] [[char]] [[char16_t]] [[char32_t]] [[class]] [[compl]] [[const]] [[const_cast]] [[constexpr]] [[continue]] [[decltype]] [[default]] [[delete]] [[do]] [[double]] [[dynamic_cast]] [[else]] [[enum]] [[explicit]] [[export]] [[extern]] [[false]] [[final]] [[float]] [[for]] [[friend]] [[goto]] [[if]] [[inline]] [[int]] [[long]] [[mutable]] [[namespace]] [[new]] [[noexcept]] [[not]] [[not_eq]] [[nullptr]] [[operator]] [[or]] [[or_eq]] [[override]] [[private]] [[protected]] [[public]] [[register]] [[reinterpret_cast]] [[return]] [[short]] [[signed]] [[sizeof]] [[static]] [[static_assert]] [[static_cast]] [[struct]] [[switch]] [[template]] [[this]] [[thread_local]] [[throw]] [[true]] [[try]] [[typedef]] [[typeid]] [[typename]] [[union]] [[unsigned]] [[virtual]] [[void]] [[volatile]] [[wchar_t]] [[while]] [[xor]] [[xor_eq]] // [[using]] int main() { std::cout &lt;&lt; &#34;Hello, World!...</p>
+  </section>
+  <footer class="entry-footer">
+    <time>October 2, 2021</time>
+  </footer>
+  <a class="entry-link" href="https://blog.nsfisis.dev/posts/cpp-you-can-use-keywords-in-attributes/"></a>
+</article></main>
+<footer class="footer">
+  <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://blog.nsfisis.dev/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+

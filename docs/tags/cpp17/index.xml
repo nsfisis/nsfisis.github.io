@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cpp17 on REPL: Rest-Eat-Program Loop</title>
+    <link>https://blog.nsfisis.dev/tags/cpp17/</link>
+    <description>Recent content in cpp17 on REPL: Rest-Eat-Program Loop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Sat, 02 Oct 2021 09:38:30 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/cpp17/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[C&#43;&#43;] 属性構文の属性名にはキーワードが使える [[void]] [[for]]</title>
+      <link>https://blog.nsfisis.dev/posts/cpp-you-can-use-keywords-in-attributes/</link>
+      <pubDate>Sat, 02 Oct 2021 09:38:30 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/cpp-you-can-use-keywords-in-attributes/</guid>
+      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/94090937bcf860cfa93b
+ タイトル落ち。まずはこのコードを見て欲しい。
+#include &amp;lt;iostream&amp;gt; [[alignas]] [[alignof]] [[and]] [[and_eq]] [[asm]] [[auto]] [[bitand]] [[bitor]] [[bool]] [[break]] [[case]] [[catch]] [[char]] [[char16_t]] [[char32_t]] [[class]] [[compl]] [[const]] [[const_cast]] [[constexpr]] [[continue]] [[decltype]] [[default]] [[delete]] [[do]] [[double]] [[dynamic_cast]] [[else]] [[enum]] [[explicit]] [[export]] [[extern]] [[false]] [[final]] [[float]] [[for]] [[friend]] [[goto]] [[if]] [[inline]] [[int]] [[long]] [[mutable]] [[namespace]] [[new]] [[noexcept]] [[not]] [[not_eq]] [[nullptr]] [[operator]] [[or]] [[or_eq]] [[override]] [[private]] [[protected]] [[public]] [[register]] [[reinterpret_cast]] [[return]] [[short]] [[signed]] [[sizeof]] [[static]] [[static_assert]] [[static_cast]] [[struct]] [[switch]] [[template]] [[this]] [[thread_local]] [[throw]] [[true]] [[try]] [[typedef]] [[typeid]] [[typename]] [[union]] [[unsigned]] [[virtual]] [[void]] [[volatile]] [[wchar_t]] [[while]] [[xor]] [[xor_eq]] // [[using]] int main() { std::cout &amp;lt;&amp;lt; &amp;#34;Hello, World!</description>
+    </item>
+    
+  </channel>
+</rss>

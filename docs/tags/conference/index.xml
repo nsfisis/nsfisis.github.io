@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>conference on REPL: Rest-Eat-Program Loop</title>
+    <link>https://blog.nsfisis.dev/tags/conference/</link>
+    <description>Recent content in conference on REPL: Rest-Eat-Program Loop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Tue, 30 Mar 2021 23:22:40 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/conference/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PHPerKaigi 2021</title>
+      <link>https://blog.nsfisis.dev/posts/phperkaigi-2021/</link>
+      <pubDate>Tue, 30 Mar 2021 23:22:40 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/phperkaigi-2021/</guid>
+      <description>PHPerKaigi 2021 参加レポ 2021/03/26 から 2021/03/28 にかけて開催された、PHPerKaigi 2021 に一般参加者として参加した。 弊社デジタルサーカス株式会社 (今年1月から勤務) はダイヤモンドスポンサーとなっており、スポンサー枠のチケットを使わせていただいた。
+このようなカンファレンスには初めて参加するのでかねてより心待ちにしていたのだが、生憎2日目から体調を崩してしまい、この記事も途中までとなっている。まだ見ていないセッションも多いが、ひとまず現時点での参加レポを書いておく。
+発表はトラック A、B に分かれていたのだが、今回はすべて A トラックを視聴している (切り替えるのが面倒だっただけ)。
+凡例  発表・スライドのメモ (引用ではない)
+ 感想など
+Day 0 前夜祭 (2021/03/27) 17:30 [A] PHP で AWS Lambda
+ Rails のプロジェクトを PHPer のメンバのみでメンテ →他のメンバもわかる PHP にリプレースを検討
+サーバレス
+ サーバ・インフラの管理が不要 アプリケーションコードの知識だけで保守可能  ゼロベースで作れる案件が (Railsの件とは別に) あるため、そちらで試験的に導入?
+AWSの学習 AWS のドキュメント DevelopersIO
+AWS Lambda のカスタムランタイムで PHP を動かす
+サーバのセットアップや維持管理を気にしなくて良い サーバーレスで PHP を動かすツールがすでにある サーバーレス構築はすんなり
+今は Laravel がルーティングしている Laravel Livewire を Lambda に載せられないか？ デプロイ方法は？ バッチ処理は？ (Lambda は 15分の制限)</description>
+    </item>
+    
+  </channel>
+</rss>

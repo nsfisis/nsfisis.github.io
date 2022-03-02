@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ruby3 on REPL: Rest-Eat-Program Loop</title>
+    <link>https://blog.nsfisis.dev/tags/ruby3/</link>
+    <description>Recent content in ruby3 on REPL: Rest-Eat-Program Loop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Sat, 02 Oct 2021 09:38:50 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/ruby3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Ruby] then キーワードと case in</title>
+      <link>https://blog.nsfisis.dev/posts/ruby-then-keyword-and-case-in/</link>
+      <pubDate>Sat, 02 Oct 2021 09:38:50 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/ruby-then-keyword-and-case-in/</guid>
+      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/787a8cf888a304497223
+ TL; DR case - in によるパターンマッチング構文でも、case - when と同じように then が使える (場合によっては使う必要がある)。
+then とは 使われることは稀だが、Ruby では then がキーワードになっている。次のように使う:
+if cond then puts &amp;#34;Y&amp;#34; else puts &amp;#34;N&amp;#34; end このキーワードが現れうる場所はいくつかあり、if、unless、rescue、case 構文がそれに当たる。 上記のように、何か条件を書いた後 then を置き、式がそこで終了していることを示すマーカーとして機能する。
+# Example: if x then a end unless x then a end begin a rescue then b end case x when p then a end なぜ普段は書かなくてもよいのか 普通 Ruby のコードで then を書くことはない。なぜか。次のコードを実行してみるとわかる。</description>
+    </item>
+    
+  </channel>
+</rss>
