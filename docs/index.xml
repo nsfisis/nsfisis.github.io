@@ -8,6 +8,15 @@
     <language>ja-JP</language>
     <lastBuildDate>Wed, 31 Mar 2021 01:36:49 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>PHPerKaigi 2022 トークン問題の解説</title>
+      <link>https://blog.nsfisis.dev/posts/phperkaigi-2022-tokens/</link>
+      <pubDate>Sat, 09 Apr 2022 21:50:19 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/phperkaigi-2022-tokens/</guid>
+      <description>はじめに 本日開始された PHPerKaigi 2022 の PHPer チャレンジにおいて、弊社デジタルサーカスの問題を 3問作成した。この記事では、これらの問題の解説をおこなう。 リポ</description>
+    </item>
+    
+    <item>
       <title>Rust のプリミティブ型はどこからやって来るか</title>
       <link>https://blog.nsfisis.dev/posts/rust-where-are-primitive-types-from/</link>
       <pubDate>Sat, 02 Oct 2021 09:39:27 +0900</pubDate>
