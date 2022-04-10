@@ -9,19 +9,19 @@
     <lastBuildDate>Sat, 02 Oct 2021 09:37:25 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vimで選択した行の順番を入れ替える</title>
-      <link>https://blog.nsfisis.dev/posts/vim-swap-order-of-selected-lines/</link>
+      <link>https://blog.nsfisis.dev/posts/2021-10-02/vim-swap-order-of-selected-lines/</link>
       <pubDate>Sat, 02 Oct 2021 09:37:25 +0900</pubDate>
       
-      <guid>https://blog.nsfisis.dev/posts/vim-swap-order-of-selected-lines/</guid>
+      <guid>https://blog.nsfisis.dev/posts/2021-10-02/vim-swap-order-of-selected-lines/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/4fefb361d9a693803520 バージョン情報 :version の一部 VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30) macOS version Included patches: 1-148 Huge version without GUI. よく紹介されている手法 tac / tail tac</description>
     </item>
     
     <item>
       <title>[Vim] autocmd events の BufWrite/BufWritePre の違い</title>
-      <link>https://blog.nsfisis.dev/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</link>
+      <link>https://blog.nsfisis.dev/posts/2021-10-02/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</link>
       <pubDate>Sat, 02 Oct 2021 09:37:12 +0900</pubDate>
       
-      <guid>https://blog.nsfisis.dev/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</guid>
+      <guid>https://blog.nsfisis.dev/posts/2021-10-02/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/79ab4db8564032de0b25 TL; DR 違いはない。ただのエイリアス。 調査記録 Vim の autocmd events には似通った名前のものがいくつかある。大抵は :help</description>
     </item>
     

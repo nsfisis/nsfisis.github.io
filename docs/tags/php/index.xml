@@ -6,13 +6,22 @@
     <description>Recent content in php on REPL: Rest-Eat-Program Loop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Tue, 30 Mar 2021 23:22:40 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Apr 2022 21:50:19 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PHPerKaigi 2022 トークン問題の解説</title>
+      <link>https://blog.nsfisis.dev/posts/2022-04-09/phperkaigi-2022-tokens/</link>
+      <pubDate>Sat, 09 Apr 2022 21:50:19 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/2022-04-09/phperkaigi-2022-tokens/</guid>
+      <description>はじめに 本日開始された PHPerKaigi 2022 の PHPer チャレンジにおいて、弊社デジタルサーカスの問題を 3問作成した。この記事では、これらの問題の解説をおこなう。 リポ</description>
+    </item>
+    
     <item>
       <title>PHPerKaigi 2021</title>
-      <link>https://blog.nsfisis.dev/posts/phperkaigi-2021/</link>
+      <link>https://blog.nsfisis.dev/posts/2021-03-30/phperkaigi-2021/</link>
       <pubDate>Tue, 30 Mar 2021 23:22:40 +0900</pubDate>
       
-      <guid>https://blog.nsfisis.dev/posts/phperkaigi-2021/</guid>
+      <guid>https://blog.nsfisis.dev/posts/2021-03-30/phperkaigi-2021/</guid>
       <description>PHPerKaigi 2021 参加レポ 2021/03/26 から 2021/03/28 にかけて開催された、PHPerKaigi 2021 に一般参加者として参加した。 弊社デジタルサーカス株式会社 (今年1月から勤務) は</description>
     </item>
     

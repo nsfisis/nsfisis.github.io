@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>PHPerKaigi 2022 トークン問題の解説 - REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="はじめに 本日開始された PHPerKaigi 2022 の PHPer チャレンジにおいて、弊社デジタルサーカスの問題を 3問作成した。この記事では、これらの問題の解説をおこなう。 リポ">
+    <meta name="author" content="">
+    
+    <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/style.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://blog.nsfisis.dev/apple-touch-icon.png">
+    <link rel="icon" href="https://blog.nsfisis.dev/favicon.ico">
+    <meta name="generator" content="Hugo 0.88.1" />
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">PHPerKaigi 2022 トークン問題の解説</h1>
+    <div class="post-meta">April 9, 2022</div>
+  </header>
+  <div class="post-content"><h1 id="はじめに">はじめに</h1>
+<p>本日開始された <a href="https://phperkaigi.jp/2022/">PHPerKaigi 2022</a> の PHPer チャレンジにおいて、弊社デジタルサーカスの問題を 3問作成した。この記事では、これらの問題の解説をおこなう。</p>
+<p>リポジトリはこちら: <a href="https://github.com/nsfisis/PHPerKaigi2022-tokens">https://github.com/nsfisis/PHPerKaigi2022-tokens</a></p>
+<p>注意: ネタバレ防止のため、2問目と 3問目はまだ解説を書いていない。</p>
+<h1 id="第1問-brainf_ckphp">第1問 brainf_ck.php</h1>
+<p>ソースコードはこちら。実行には PHP 8.1 以上が必要なので注意。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#66d9ef">declare</span>(<span style="color:#a6e22e">strict_types</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span><span style="color:#a6e22e">O1</span>);
+
+<span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">Dgcircus\PHPerKaigi\Y2022</span>;
+
+<span style="color:#e6db74">/**
+</span><span style="color:#e6db74"> * @todo
+</span><span style="color:#e6db74"> * Run this program to acquire a PHPer token.
+</span><span style="color:#e6db74"> */</span>
+
+<span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">creativecommons</span><span style="color:#f92672">.</span><span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">publicdomain</span><span style="color:#f92672">/</span><span style="color:#a6e22e">zero</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>
+
+<span style="color:#a6e22e">\error_reporting</span>(<span style="color:#f92672">~+!</span><span style="color:#e6db74">&#39;We are hiring!&#39;</span>);
+
+$z <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($f) <span style="color:#f92672">=&gt;</span> (<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> $f(<span style="color:#a6e22e">fn</span>(<span style="color:#f92672">...</span>$xs) <span style="color:#f92672">=&gt;</span> $x($x)(<span style="color:#f92672">...</span>$xs)))(<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> $f(<span style="color:#a6e22e">fn</span>(<span style="color:#f92672">...</span>$xs) <span style="color:#f92672">=&gt;</span> $x($x)(<span style="color:#f92672">...</span>$xs)));
+$id <span style="color:#f92672">=</span> <span style="color:#a6e22e">\spl_object_id</span>(<span style="color:#f92672">...</span>);
+$put <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($c) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">\printf</span>(<span style="color:#e6db74">&#39;%c&#39;</span>, $c);
+$mm <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($p, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\ArrayObject</span>(<span style="color:#a6e22e">\array_fill</span>(<span style="color:#f92672">+!!</span>[], $n, $p));
+
+$👉 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [<span style="color:#f92672">++</span>$mp, <span style="color:#f92672">++</span>$pc];
+$👈 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [<span style="color:#f92672">--</span>$mp, <span style="color:#f92672">++</span>$pc];
+$👍 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, <span style="color:#f92672">++</span>$m[$mp]];
+$👎 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, <span style="color:#f92672">--</span>$m[$mp]];
+$📝 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, $put($m[$mp])];
+$🤡 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($m[$mp]) {
+    <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">=&gt;</span> [$mp, $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($pc, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($id($p[$pc])) {
+      $b <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">++</span>$pc, <span style="color:#f92672">++</span>$n),
+      $e <span style="color:#f92672">=&gt;</span> $n <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">?</span> <span style="color:#f92672">++</span>$pc <span style="color:#f92672">:</span> $loop(<span style="color:#f92672">++</span>$pc, <span style="color:#f92672">--</span>$n),
+      <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">++</span>$pc, $n),
+    })($pc, <span style="color:#f92672">-!</span>[])],
+    <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc],
+};
+$🎪 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($m[$mp]) {
+    <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc],
+    <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> [$mp, $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($pc, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($id($p[$pc])) {
+      $e <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">--</span>$pc, <span style="color:#f92672">++</span>$n),
+      $b <span style="color:#f92672">=&gt;</span> $n <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">?</span> $pc<span style="color:#f92672">+!</span>[] <span style="color:#f92672">:</span> $loop(<span style="color:#f92672">--</span>$pc, <span style="color:#f92672">--</span>$n),
+      <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">--</span>$pc, $n),
+    })($pc, <span style="color:#f92672">-!</span>[])],
+};
+$🐘 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($p) <span style="color:#f92672">=&gt;</span> $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span>
+  <span style="color:#a6e22e">isset</span>($p[$pc]) <span style="color:#f92672">&amp;&amp;</span> $loop($m, $p, $b, $e, <span style="color:#f92672">...</span>($p[$pc]($m, $p, $b, $e, $mp, $pc)))
+)($mm(<span style="color:#f92672">+!!</span>[], <span style="color:#f92672">+</span>(<span style="color:#f92672">!</span>[]<span style="color:#f92672">.!</span>[])), $p, $id($🤡), $id($🎪), <span style="color:#f92672">+!!</span>[], <span style="color:#f92672">+!!</span>[]);
+
+$🐘([
+  $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
+  $🤡,
+    $👉, $👍, $👍, $👍,
+    $👉, $👍, $👍, $👍, $👍, $👍,
+    $👉, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
+    $👉, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
+    $👈, $👈, $👈, $👈, $👎,
+  $🎪,
+  $👉, $👍, $👍, $👍, $👍, $👍, $📝,
+  $👎, $👎, $📝,
+  $👉, $👎, $👎, $👎, $📝,
+  $👉, $👎, $👎, $👎, $📝,
+  $👎, $👎, $📝,
+  $👎, $📝,
+  $👈, $📝,
+  $👉, $👉, $👎, $👎, $📝,
+  $👍, $👍, $👍, $👍, $👍, $👍, $👍, $📝,
+  $👈, $👎, $👎, $👎, $👎, $📝,
+  $👈, $📝,
+  $👉, $👍, $👍, $📝,
+  $👉, $👎, $📝,
+  $👈, $📝,
+]);
+</code></pre></div><p>この問題は、単に適切なバージョンの PHP で動かせばトークンが得られる。</p>
+<h2 id="解説">解説</h2>
+<h3 id="絵文字">絵文字</h3>
+<p>まず目につくのは大量の絵文字だろう。
+PHP は識別子に使用できる文字の範囲が広く、絵文字も使うことができる。</p>
+<h3 id="url">URL</h3>
+<p>ソースコードのライセンスを示したこの部分だが、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">creativecommons</span><span style="color:#f92672">.</span><span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">publicdomain</span><span style="color:#f92672">/</span><span style="color:#a6e22e">zero</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>
+</code></pre></div><p>完全に合法な PHP のコードである。
+<code>https:</code> 部分はラベル、<code>//</code> 以降は行コメントになっている。</p>
+<h3 id="リテラルなしで数値を生成する">リテラルなしで数値を生成する</h3>
+<p>ソースコード中に、ほとんど数値リテラルが書かれていないことにお気づきだろうか。
+PHP では、型変換を利用することで任意の整数を作り出すことができる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[]);
+<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+!</span>[]);
+<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]);
+<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]<span style="color:#f92672">+!</span>[]);
+<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+</span>(<span style="color:#f92672">!</span>[]<span style="color:#f92672">.+!!</span>[]));
+</code></pre></div><p><code>[]</code> に <code>!</code> を適用すると <code>TRUE</code> が返ってくる。それに <code>+</code>
+を適用すると、<code>bool</code> から <code>int</code> ヘの型変換が走り、<code>1</code> が生成される。<code>10</code>
+はさらにトリッキーだ。まず <code>1</code> と <code>0</code> を作り、<code>.</code> で文字列として結合する
+(<code>'10'</code>)。これに <code>+</code> を適用すると、<code>string</code> から <code>int</code>
+への型変換が走り、<code>10</code> が生まれる (コード量に頓着しないなら、<code>1</code> を 10
+個足し合わせてももちろん 10 が作れる)。</p>
+<h3 id="if-文なしで条件分岐"><code>if</code> 文なしで条件分岐</h3>
+<p>三項演算子ないし <code>match</code> 式を使うことで、<code>if</code> を一切書かずに条件分岐ができる。
+また、<code>&amp;&amp;</code> / <code>||</code> も使えることがある。
+遅延評価が不要なケースでは、<code>[$t, $f][$cond]</code> のような形で分岐することもできる。</p>
+<h3 id="whilefor-文なしでループ"><code>while</code>、<code>for</code> 文なしでループ</h3>
+<p>不動点コンビネータを使う (説明は省略)。ここでは、一般に Z
+コンビネータとして知られるものを使った (<code>$z</code>)。</p>
+<h3 id="プログラム全体">プログラム全体</h3>
+<p>Brainf*ck。以上。</p>
+<h1 id="第2問-riddlephp">第2問 riddle.php</h1>
+<p>前述のとおり、ネタバレ防止のため、2問目はまだ解説を書いていない。</p>
+<h1 id="第3問-toquinephp">第3問 toquine.php</h1>
+<p>前述のとおり、ネタバレ防止のため、3問目はまだ解説を書いていない。</p>
+</div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.nsfisis.dev/tags/conference">conference</a></li>
+      <li><a href="https://blog.nsfisis.dev/tags/php">php</a></li>
+      <li><a href="https://blog.nsfisis.dev/tags/phperkaigi">phperkaigi</a></li>
+    </ul>
+  </footer>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://blog.nsfisis.dev/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+

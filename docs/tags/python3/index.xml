@@ -9,10 +9,10 @@
     <lastBuildDate>Sat, 02 Oct 2021 09:32:37 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/python3/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Python] クロージャとUnboundLocalError: local variable &#39;x&#39; referenced before assignment</title>
-      <link>https://blog.nsfisis.dev/posts/python-unbound-local-error/</link>
+      <link>https://blog.nsfisis.dev/posts/2021-10-02/python-unbound-local-error/</link>
       <pubDate>Sat, 02 Oct 2021 09:32:37 +0900</pubDate>
       
-      <guid>https://blog.nsfisis.dev/posts/python-unbound-local-error/</guid>
+      <guid>https://blog.nsfisis.dev/posts/2021-10-02/python-unbound-local-error/</guid>
       <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/5d733703afcb35bbf399 本記事は Python 3.7.6 の動作結果を元にして書かれている。 Python でクロージャを作ろうと、次のようなコードを書いた</description>
     </item>
     

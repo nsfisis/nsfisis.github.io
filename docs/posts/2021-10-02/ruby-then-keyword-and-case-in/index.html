@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>[Ruby] then キーワードと case in - REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/787a8cf888a304497223 TL; DR case - in によるパターンマッチング構文でも、case - when と同じように then が使える (場合によっては使">
+    <meta name="author" content="">
+    
+    <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/style.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://blog.nsfisis.dev/apple-touch-icon.png">
+    <link rel="icon" href="https://blog.nsfisis.dev/favicon.ico">
+    <meta name="generator" content="Hugo 0.88.1" />
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">[Ruby] then キーワードと case in</h1>
+    <div class="post-meta">October 2, 2021</div>
+  </header>
+  <div class="post-content"><p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/787a8cf888a304497223">https://qiita.com/nsfisis/items/787a8cf888a304497223</a></p>
+<hr>
+<h1 id="tl-dr">TL; DR</h1>
+<p><code>case</code> - <code>in</code> によるパターンマッチング構文でも、<code>case</code> - <code>when</code> と同じように <code>then</code> が使える (場合によっては使う必要がある)。</p>
+<h1 id="then-とは"><code>then</code> とは</h1>
+<p>使われることは稀だが、Ruby では <code>then</code> がキーワードになっている。次のように使う:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> cond <span style="color:#66d9ef">then</span>
+  puts <span style="color:#e6db74">&#34;Y&#34;</span>
+<span style="color:#66d9ef">else</span>
+  puts <span style="color:#e6db74">&#34;N&#34;</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>このキーワードが現れうる場所はいくつかあり、<code>if</code>、<code>unless</code>、<code>rescue</code>、<code>case</code> 構文がそれに当たる。
+上記のように、何か条件を書いた後 <code>then</code> を置き、式がそこで終了していることを示すマーカーとして機能する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Example:</span>
+
+<span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">then</span>
+  a
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">unless</span> x <span style="color:#66d9ef">then</span>
+  a
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">begin</span>
+  a
+<span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">then</span>
+  b
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">when</span> p <span style="color:#66d9ef">then</span>
+  a
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h1 id="なぜ普段は書かなくてもよいのか">なぜ普段は書かなくてもよいのか</h1>
+<p>普通 Ruby のコードで <code>then</code> を書くことはない。なぜか。次のコードを実行してみるとわかる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span> puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
+</code></pre></div><p>次のような構文エラーが出力される。</p>
+<pre tabindex="0"><code>20:1: syntax error, unexpected local variable or method, expecting `then' or ';' or '\n'
+if true puts 'Hello, World!' end
+        ^~~~
+20:1: syntax error, unexpected `end', expecting end-of-input
+...f true puts 'Hello, World!' end
+</code></pre><p>二つ目のメッセージは無視して一つ目を読むと、<code>then</code> か <code>;</code> か改行が来るはずのところ変数だかメソッドだかが現れたことによりエラーとなっているようだ。</p>
+<p>ポイントは改行が <code>then</code> (や <code>;</code>) の代わりとなることである。<code>true</code> の後に改行を入れてみる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span>
+puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
+</code></pre></div><p>無事 Hello, World! と出力されるようになった。</p>
+<h1 id="なぜ-then-や--や改行が必要か">なぜ <code>then</code> や <code>;</code> や改行が必要か</h1>
+<p>なぜ <code>then</code> や <code>;</code> や改行 (以下 「<code>then</code> 等」) が必要なのだろうか。次の例を見てほしい:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> a b <span style="color:#66d9ef">end</span>
+</code></pre></div><p><code>then</code> も <code>;</code> も改行もないのでエラーになるが、これは条件式がどこまで続いているのかわからないためだ。
+この例は二通りに解釈できる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># a という変数かメソッドの評価結果が truthy なら b という変数かメソッドを評価</span>
+<span style="color:#66d9ef">if</span> a <span style="color:#66d9ef">then</span>
+  b
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># a というメソッドに b という変数かメソッドの評価結果を渡して呼び出し、</span>
+<span style="color:#75715e"># その結果が truthy なら何もしない</span>
+<span style="color:#66d9ef">if</span> a(b) <span style="color:#66d9ef">then</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p><code>then</code> 等はこの曖昧性を排除するためにあり、条件式は <code>if</code> から <code>then</code> 等までの間にある、ということを明確にする。
+C系の <code>if</code> 後に来る <code>(</code>/<code>)</code> や、Python の <code>:</code>、Rust/Go/Swift などの <code>{</code> も同じ役割を持つ。</p>
+<p>Ruby の場合、プログラマーが書きやすいよう改行でもって <code>then</code> が代用できるので、ほとんどの場合 <code>then</code> は必要ない。</p>
+<h1 id="case---in-における-then"><code>case</code> - <code>in</code> における <code>then</code></h1>
+<p>ようやく本題にたどり着いた。来る Ruby 3.0 では <code>case</code> と <code>in</code> キーワードを使ったパターンマッチングの構文が入る予定である。この構文でもパターン部との区切りとして <code>then</code> 等が必要になる。
+(現在の) Ruby には formal な形式での文法仕様は存在しないので、yacc の定義ファイルを参照した (yacc の説明は省略)。</p>
+<p><a href="https://github.com/ruby/ruby/blob/221ca0f8281d39f0dfdfe13b2448875384bbf735/parse.y#L3961-L3986">https://github.com/ruby/ruby/blob/221ca0f8281d39f0dfdfe13b2448875384bbf735/parse.y#L3961-L3986</a></p>
+<pre tabindex="0"><code class="language-yacc" data-lang="yacc">p_case_body	: keyword_in
+		    {
+			SET_LEX_STATE(EXPR_BEG|EXPR_LABEL);
+			p-&gt;command_start = FALSE;
+			$&lt;ctxt&gt;1 = p-&gt;ctxt;
+			p-&gt;ctxt.in_kwarg = 1;
+			$&lt;tbl&gt;$ = push_pvtbl(p);
+		    }
+		    {
+			$&lt;tbl&gt;$ = push_pktbl(p);
+		    }
+		  p_top_expr then
+		    {
+			pop_pktbl(p, $&lt;tbl&gt;3);
+			pop_pvtbl(p, $&lt;tbl&gt;2);
+			p-&gt;ctxt.in_kwarg = $&lt;ctxt&gt;1.in_kwarg;
+		    }
+		  compstmt
+		  p_cases
+		    {
+		    /*%%%*/
+			$$ = NEW_IN($4, $7, $8, &amp;@$);
+		    /*% %*/
+		    /*% ripper: in!($4, $7, escape_Qundef($8)) %*/
+		    }
+		;
+</code></pre><p>簡略版:</p>
+<pre tabindex="0"><code class="language-yacc" data-lang="yacc">p_case_body	: keyword_in p_top_expr then compstmt p_cases
+		;
+</code></pre><p>ここで、<code>keyword_in</code> は文字通り <code>in</code>、<code>p_top_expr</code> はいわゆるパターン、<code>then</code> は <code>then</code> キーワードのことではなく、この記事で <code>then</code> 等と呼んでいるもの、つまり <code>then</code> キーワード、<code>;</code>、改行のいずれかである。</p>
+<p>これにより、<code>case</code> - <code>when</code> による従来の構文と同じように、<code>then</code> 等をパターンの後ろに挿入すればよいことがわかった。つまり次の3通りのいずれかになる:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span> a
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">then</span> b
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">then</span> c
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>
+  a
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>
+  b
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>
+  c
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>; a
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>; b
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>; c
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>ところで、<code>p_top_expr</code> には <code>if</code> による guard clause が書けるので、その場合は <code>if</code> - <code>then</code> と似たような見た目になる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> a
+<span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> b
+<span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">then</span> c
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h1 id="まとめ">まとめ</h1>
+<ul>
+<li><code>if</code> や <code>case</code> の条件の後ろには <code>then</code>、<code>;</code>、改行のいずれかが必要
+<ul>
+<li>通常は改行しておけばよい</li>
+</ul>
+</li>
+<li>3.0 で入る予定の <code>case</code> - <code>in</code> でも <code>then</code> 等が必要になる</li>
+<li>Ruby の構文を正確に知るには (現状) <code>parse.y</code> を直接読めばよい</li>
+</ul>
+</div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.nsfisis.dev/tags/ruby">ruby</a></li>
+      <li><a href="https://blog.nsfisis.dev/tags/ruby3">ruby3</a></li>
+    </ul>
+  </footer>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://blog.nsfisis.dev/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+

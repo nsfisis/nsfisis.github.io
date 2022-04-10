@@ -3,6 +3,7 @@ title: "[Python] クロージャとUnboundLocalError: local variable 'x' referen
 date: 2021-10-02T09:32:37+09:00
 draft: false
 tags: ["python", "python3"]
+aliases: ['/posts/python-unbound-local-error/']
 ---
 
 この記事は Qiita から移植してきたものです。

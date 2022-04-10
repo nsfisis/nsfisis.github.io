@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>Vimで選択した行の順番を入れ替える - REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/4fefb361d9a693803520 バージョン情報 :version の一部 VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30) macOS version Included patches: 1-148 Huge version without GUI. よく紹介されている手法 tac / tail tac">
+    <meta name="author" content="">
+    
+    <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/style.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://blog.nsfisis.dev/apple-touch-icon.png">
+    <link rel="icon" href="https://blog.nsfisis.dev/favicon.ico">
+    <meta name="generator" content="Hugo 0.88.1" />
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">Vimで選択した行の順番を入れ替える</h1>
+    <div class="post-meta">October 2, 2021</div>
+  </header>
+  <div class="post-content"><p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/4fefb361d9a693803520">https://qiita.com/nsfisis/items/4fefb361d9a693803520</a></p>
+<hr>
+<h1 id="バージョン情報">バージョン情報</h1>
+<p><code>:version</code> の一部</p>
+<blockquote>
+<p>VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30)
+macOS version
+Included patches: 1-148
+Huge version without GUI.</p>
+</blockquote>
+<h1 id="よく紹介されている手法">よく紹介されている手法</h1>
+<h2 id="tac--tail"><code>tac</code> / <code>tail</code></h2>
+<p><code>tac</code> や <code>tail -r</code> などの外部コマンドを <code>!</code> を使って呼び出し、置き換える。</p>
+<blockquote>
+<p>:h v_!</p>
+</blockquote>
+<p><code>tac</code> コマンドや <code>tail</code> の <code>-r</code> オプションは環境によって利用できないことがあり、複数の環境を行き来する場合に採用しづらい</p>
+<h2 id="gm0"><code>:g/^/m0</code></h2>
+<p>こちらは外部コマンドに頼らず、Vim の機能のみを使う。<code>g</code> は <code>:global</code> コマンドの、<code>m</code> は <code>:move</code> コマンドの略</p>
+<p><code>:global</code> コマンドは <code>:[range]global/{pattern}/[command]</code> のように使い、<code>[range]</code> で指定された範囲の行のうち、<code>{pattern}</code> で指定された検索パターンにマッチする行に対して、順番に <code>[command]</code> で指定された Ex コマンドを呼び出す。</p>
+<blockquote>
+<p>:h :global</p>
+</blockquote>
+<p><code>:move</code> コマンドは <code>[range]:move {address}</code> のように使い、<code>[range]</code> で指定された範囲の行を <code>{address}</code> で指定された位置に移動させる。</p>
+<blockquote>
+<p>:h :move</p>
+</blockquote>
+<p><code>:g/^/m0</code> のように組み合わせると、「すべての行を1行ずつ 0行目(1行目の上)に動かす」という動きをする。これは確かに行の入れ替えになっている。</p>
+<p>なお、<code>:g/^/m0</code> は全ての行を入れ替えるが、<code>:N,Mg/^/mN-1</code> とすることで N行目から M行目を処理範囲とするよう拡張できる。手でこれを入力するわけにはいかないので、次のようなコマンドを用意する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>これは望みの動作をするが、実際に実行してみると全行がハイライトされてしまう。次節で詳細を述べる。</p>
+<h1 id="gm0-の問題点"><code>:g/^/m0</code> の問題点</h1>
+<p><code>:global</code> コマンドは各行に対してマッチングを行う際、現在の検索パターンを上書きしてしまう。<code>^</code> は行の先頭にマッチするため、結果として全ての行がハイライトされてしまう。<code>'hlsearch'</code> オプションを無効にしている場合その限りではないが、その場合でも直前の検索パターンが失われてしまうと <code>n</code> コマンドなどの際に不便である。</p>
+<blockquote>
+<p>:h @/</p>
+</blockquote>
+<h1 id="解決策">解決策</h1>
+<blockquote>
+<p>[2020/9/28追記]
+より簡潔な方法を見つけたので次節に追記した</p>
+</blockquote>
+<p>前述した <code>:Reverse</code> コマンドの定義を少し変えて、次のようにする:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">s</span>:<span style="color:#a6e22e">reverse_lines</span>(<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">to</span>) <span style="color:#a6e22e">abort</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#a6e22e">execute</span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d,%dg/^/m%d&#34;</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">to</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span> - <span style="color:#ae81ff">1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">endfunction</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">call</span> &lt;<span style="color:#a6e22e">SID</span>&gt;<span style="color:#a6e22e">reverse_lines</span>(&lt;<span style="color:#a6e22e">line1</span>&gt;, &lt;<span style="color:#a6e22e">line2</span>&gt;)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>実行しているコマンドが変わったわけではないが、関数呼び出しを経由するようにした。これだけで前述の問題が解決する。</p>
+<p>この理由は、ユーザー定義関数を実行する際は検索パターンが一度保存され、実行が終了したあと復元されるため。結果として検索パターンが <code>^</code> で上書きされることがなくなる。</p>
+<p>Vim のヘルプから該当箇所を引用する (強調は筆者による)。</p>
+<blockquote>
+<p>:h autocmd-searchpat</p>
+<p><strong>Autocommands do not change the current search patterns.</strong>  Vim saves the current
+search patterns before executing autocommands then restores them after the
+autocommands finish.  This means that autocommands do not affect the strings
+highlighted with the &lsquo;hlsearch&rsquo; option.</p>
+</blockquote>
+<p>これは autocommand の実行に関しての記述だが、これと同じことがユーザー定義関数の実行時にも適用される。このことは <code>:nohlsearch</code> のヘルプにある。同じく該当箇所を引用する (強調は筆者による)。</p>
+<blockquote>
+<p>:h :nohlsearch</p>
+<p>(略) This command doesn&rsquo;t work in an autocommand, because
+the highlighting state is saved and restored when
+executing autocommands |autocmd-searchpat|.
+<strong>Same thing for when invoking a user function.</strong></p>
+</blockquote>
+<p>この仕様により、<code>:g/^/m0</code> の呼び出しをユーザー定義関数に切り出すことで上述の問題を解決できる。</p>
+<h1 id="解決策-改訂版">解決策 (改訂版)</h1>
+<blockquote>
+<p>[2020/9/28追記]
+より簡潔な方法を見つけたため追記する</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>まさにこのための Exコマンド、<code>:keeppatterns</code> が存在する。<code>:keeppatterns {command}</code> のように使い、読んで字の如く、後ろに続く Exコマンドを「現在の検索パターンを保ったまま」実行する。はるかに分かりやすく意図を表現できる。</p>
+<blockquote>
+<p>:h :keeppatterns</p>
+</blockquote>
+<h1 id="コピペ用再掲">コピペ用再掲</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#75715e">&#34; License: Public Domain</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div></div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://blog.nsfisis.dev/tags/vim">vim</a></li>
+    </ul>
+  </footer>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://blog.nsfisis.dev/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+
