@@ -7,7 +7,7 @@
     
     <title>PHPerKaigi 2022 トークン問題の解説 - REPL: Rest-Eat-Program Loop</title>
     
-    <meta name="description" content="はじめに 本日開始された PHPerKaigi 2022 の PHPer チャレンジにおいて、弊社デジタルサーカスの問題を 3問作成した。この記事では、これらの問題の解説をおこなう。 リポ">
+    <meta name="description" content="更新履歴 2022-04-09: 公開 2022-04-16: 2問目、3問目の解説を追加、1問目に加筆 はじめに 本日開始された PHPerKaigi 2022 の PHPer チャレンジにおいて、弊社 デジタルサーカス株式会社 の問題">
     <meta name="author" content="">
     
     <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
@@ -84,10 +84,14 @@
     <h1 class="post-title">PHPerKaigi 2022 トークン問題の解説</h1>
     <div class="post-meta">April 9, 2022</div>
   </header>
-  <div class="post-content"><h1 id="はじめに">はじめに</h1>
-<p>本日開始された <a href="https://phperkaigi.jp/2022/">PHPerKaigi 2022</a> の PHPer チャレンジにおいて、弊社デジタルサーカスの問題を 3問作成した。この記事では、これらの問題の解説をおこなう。</p>
+  <div class="post-content"><h1 id="更新履歴">更新履歴</h1>
+<ul>
+<li>2022-04-09: 公開</li>
+<li>2022-04-16: 2問目、3問目の解説を追加、1問目に加筆</li>
+</ul>
+<h1 id="はじめに">はじめに</h1>
+<p>本日開始された <a href="https://phperkaigi.jp/2022/">PHPerKaigi 2022</a> の PHPer チャレンジにおいて、弊社 <a href="https://www.dgcircus.com/">デジタルサーカス株式会社</a> の問題を 3問作成した。この記事では、これらの問題の解説をおこなう。</p>
 <p>リポジトリはこちら: <a href="https://github.com/nsfisis/PHPerKaigi2022-tokens">https://github.com/nsfisis/PHPerKaigi2022-tokens</a></p>
-<p>注意: ネタバレ防止のため、2問目と 3問目はまだ解説を書いていない。</p>
 <h1 id="第1問-brainf_ckphp">第1問 brainf_ck.php</h1>
 <p>ソースコードはこちら。実行には PHP 8.1 以上が必要なので注意。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
@@ -164,6 +168,53 @@ $🐘([
 <h3 id="絵文字">絵文字</h3>
 <p>まず目につくのは大量の絵文字だろう。
 PHP は識別子に使用できる文字の範囲が広く、絵文字も使うことができる。</p>
+<h3 id="プログラム全体">プログラム全体</h3>
+<p>Brainf*ck のインタプリタとプログラムになっている。
+Brainf*ck とは、難解プログラミング言語のひとつであり、ここで説明するよりも Wikipedia の該当ページを読んだ方がよい。</p>
+<p><a href="https://ja.wikipedia.org/wiki/Brainfuck">https://ja.wikipedia.org/wiki/Brainfuck</a></p>
+<p>なお、brainf*ck プログラムを普通の書き方で書くと、次のようになる。</p>
+<pre tabindex="0"><code>+ + + + + + + + + +
+[
+  &gt; + + +
+  &gt; + + + + +
+  &gt; + + + + + + + + + + + +
+  &gt; + + + + + + + + + +
+  &lt; &lt; &lt; &lt; -
+]
+&gt; + + + + + .
+- - .
+&gt; - - - .
+&gt; - - - .
+- - .
+- .
+&lt; .
+&gt; &gt; - - .
++ + + + + + + .
+&lt; - - - - .
+&lt; .
+&gt; + + .
+&gt; - .
+&lt; .
+</code></pre><p>実行結果はこちら: <a href="https://ideone.com/22VWmb">https://ideone.com/22VWmb</a></p>
+<p>それぞれの絵文字で表された関数が、各命令に対応している。</p>
+<ul>
+<li><code>$👉</code>: <code>&gt;</code></li>
+<li><code>$👈</code>: <code>&lt;</code></li>
+<li><code>$👍</code>: <code>+</code></li>
+<li><code>$👎</code>: <code>-</code></li>
+<li><code>$📝</code>: <code>.</code></li>
+<li><code>$🤡</code>: <code>[</code></li>
+<li><code>$🎪</code>: <code>]</code></li>
+</ul>
+<p><code>,</code> (入力) に対応する関数はない (このプログラムでは使わないので用意していない)。</p>
+<p>なお、<code>$🐘</code> はいわゆる main 関数であり、プログラムの実行部分である。</p>
+<h3 id="絵文字の選択">絵文字の選択</h3>
+<p>おおよそ意味に合致するよう選んでいるが、<code>$🤡</code> と <code>$🎪</code> は弊社デジタルサーカスにちなんでいる。
+また、<code>$🐘</code> は PHP のマスコットの象に由来する。</p>
+<h3 id="strict_types">strict_types</h3>
+<p><code>declare</code> 文の <code>strict_types</code> に指定できるのは、<code>0</code> か <code>1</code> の数値リテラルだが、
+<code>0x0</code> や <code>0b1</code> のような値も受け付ける。
+今回は、PHP 8.1 から追加された、<code>0O</code> または <code>0o</code> から始まる八進数リテラルを使った。</p>
 <h3 id="url">URL</h3>
 <p>ソースコードのライセンスを示したこの部分だが、</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">creativecommons</span><span style="color:#f92672">.</span><span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">publicdomain</span><span style="color:#f92672">/</span><span style="color:#a6e22e">zero</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>
@@ -177,25 +228,180 @@ PHP では、型変換を利用することで任意の整数を作り出すこ�
 <span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]);
 <span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]<span style="color:#f92672">+!</span>[]);
 <span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+</span>(<span style="color:#f92672">!</span>[]<span style="color:#f92672">.+!!</span>[]));
-</code></pre></div><p><code>[]</code> に <code>!</code> を適用すると <code>TRUE</code> が返ってくる。それに <code>+</code>
+</code></pre></div><p><code>[]</code> に <code>!</code> を適用すると <code>true</code> が返ってくる。それに <code>+</code>
 を適用すると、<code>bool</code> から <code>int</code> ヘの型変換が走り、<code>1</code> が生成される。<code>10</code>
 はさらにトリッキーだ。まず <code>1</code> と <code>0</code> を作り、<code>.</code> で文字列として結合する
 (<code>'10'</code>)。これに <code>+</code> を適用すると、<code>string</code> から <code>int</code>
 への型変換が走り、<code>10</code> が生まれる (コード量に頓着しないなら、<code>1</code> を 10
 個足し合わせてももちろん 10 が作れる)。</p>
+<p>また、<code>error_reporting</code> に指定しているのは <code>-1</code> である。
+これは、<code>!</code> によって文字列を <code>false</code> にし、<code>+</code> によって <code>false</code> を <code>0</code> にし、さらにビット反転して <code>-1</code> にしている。</p>
 <h3 id="if-文なしで条件分岐"><code>if</code> 文なしで条件分岐</h3>
 <p>三項演算子ないし <code>match</code> 式を使うことで、<code>if</code> を一切書かずに条件分岐ができる。
 また、<code>&amp;&amp;</code> / <code>||</code> も使えることがある。
 遅延評価が不要なケースでは、<code>[$t, $f][$cond]</code> のような形で分岐することもできる。</p>
 <h3 id="whilefor-文なしでループ"><code>while</code>、<code>for</code> 文なしでループ</h3>
-<p>不動点コンビネータを使う (説明は省略)。ここでは、一般に Z
-コンビネータとして知られるものを使った (<code>$z</code>)。</p>
-<h3 id="プログラム全体">プログラム全体</h3>
-<p>Brainf*ck。以上。</p>
+<p>不動点コンビネータを使って無名再帰する (詳しい説明は省略する。これらの単語で検索してほしい)。
+ここでは、一般に Z コンビネータとして知られるものを使った (<code>$z</code>)。</p>
+<p>実際のところ、<code>$🤡</code> や <code>$🎪</code>、<code>$🐘</code> は、一度 Scheme (Lisp の一種) で書いてから PHP に翻訳する形で記述した。</p>
+<p>なお、PHP は末尾再帰の最適化をおこなわない (少なくとも今のところは) ので、
+あまりに長い brainf*ck プログラムを書くとスタックオーバーフローする。</p>
 <h1 id="第2問-riddlephp">第2問 riddle.php</h1>
-<p>前述のとおり、ネタバレ防止のため、2問目はまだ解説を書いていない。</p>
+<p>ソースコードはこちら。実行には PHP 8.0 以上が必要なので注意。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#e6db74">/*********************************************************
+</span><span style="color:#e6db74"> * This program displays a PHPer token.                  *
+</span><span style="color:#e6db74"> * Guess &#39;N&#39;.                                            *
+</span><span style="color:#e6db74"> *                                                       *
+</span><span style="color:#e6db74"> * Hints:                                                *
+</span><span style="color:#e6db74"> * - N itself has no special meaning, e.g., 42, 8128,    *
+</span><span style="color:#e6db74"> *   it is selected at random.                           *
+</span><span style="color:#e6db74"> * - Each element of $token represents a single letter.  *
+</span><span style="color:#e6db74"> * - One letter consists of 5x5 cells.                   *
+</span><span style="color:#e6db74"> * - Remember, the output is a complete PHPer token.     *
+</span><span style="color:#e6db74"> *                                                       *
+</span><span style="color:#e6db74"> * License:                                              *
+</span><span style="color:#e6db74"> *   https://creativecommons.org/publicdomain/zero/1.0/  *
+</span><span style="color:#e6db74"> *********************************************************/</span>
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">N</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">/* Change it to your answer. */</span>;
+<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span><span style="color:#a6e22e">b11111_11111_11111_11111_11111</span>);
+
+$token <span style="color:#f92672">=</span> [
+  <span style="color:#ae81ff">0x14B499C</span>,
+  <span style="color:#ae81ff">0x0BE34CC</span>, <span style="color:#ae81ff">0x01C9C69</span>,
+  <span style="color:#ae81ff">0x0ECA069</span>, <span style="color:#ae81ff">0x01C2449</span>, <span style="color:#ae81ff">0x0FDB166</span>, <span style="color:#ae81ff">0x01C9C69</span>,
+  <span style="color:#ae81ff">0x01C1C66</span>, <span style="color:#ae81ff">0x0FC1C47</span>, <span style="color:#ae81ff">0x01C1C66</span>,
+  <span style="color:#ae81ff">0x10C5858</span>, <span style="color:#ae81ff">0x1E4E3B8</span>, <span style="color:#ae81ff">0x1A2F2F8</span>,
+];
+<span style="color:#66d9ef">foreach</span> ($token <span style="color:#66d9ef">as</span> $x) {
+  $x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
+
+  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
+  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
+  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>$x<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+}
+</code></pre></div><p>さて、この問題はさきほどのように単純に実行しただけでは、謎のブロックが表示されるだけでトークンは得られない。
+トークンを得るためには、ソースコードを読み、定数 <code>N</code> を特定する必要がある。</p>
+<p>ここでは、私の想定解を解説する。</p>
+<h2 id="読解">読解</h2>
+<p>まずはソースコードを読んでいく。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$token <span style="color:#f92672">=</span> [
+  <span style="color:#75715e">// 略
+</span><span style="color:#75715e"></span>];
+</code></pre></div><p>数値からなる <code>$token</code> があり、各要素をループしている。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
+</code></pre></div><p>まずは排他的論理和 (xor) を取り、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
+</code></pre></div><p>二進数に変換して、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+</code></pre></div><p>0 を空白に、1 を <code>#</code> にし、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
+</code></pre></div><p>5文字ごとに区切ったあと、改行で結合している。</p>
+<h2 id="ヒント">ヒント</h2>
+<p>次に、ソースコードに書いてあるヒントを読んでいく。</p>
+<ul>
+<li><code>N</code> それ自体は、42 や 8128 といったような特別な意味を持たず、ランダムに決められている</li>
+<li><code>$token</code> の各要素は、1文字を表す</li>
+<li>1文字は 5x5 のセルからなる</li>
+<li>出力されるのは、完全な PHPer トークンである</li>
+</ul>
+<p>ここで、PHPer トークンは必ず <code>#</code> 記号から始まることを思いだすと、
+<code>$token</code> の最初の数字 <code>0x14B499C</code> は、変換の結果 <code>#</code> になるのではないかと予想される (なお、このことは、リポジトリの README ファイルに追加ヒントとして書かれている)。</p>
+<h2 id="解く">解く</h2>
+<p>ここまでわかれば、あと一歩で解ける。すなわち、<code>0x14B499C</code> が <code>#</code> に変換されるような <code>N</code> を見つければよい。</p>
+<p><code>N</code> は高々</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span><span style="color:#a6e22e">b11111_11111_11111_11111_11111</span>);
+</code></pre></div><p>なのでブルートフォースしてもよいが、ここではブルートフォースしない方法を紹介する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+$x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x14B499C</span>;
+
+$x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
+
+$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
+$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
+
+<span style="color:#a6e22e">assert</span>($x <span style="color:#f92672">===</span>
+  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34; # # &#34;</span>);
+</code></pre></div><p>この一連の変換に対する逆変換を考えると、次のようになる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+$x <span style="color:#f92672">=</span>
+  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+  <span style="color:#e6db74">&#34; # # &#34;</span>;
+
+$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#a6e22e">explode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $x));
+$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">bindec</span>($x);
+
+$n <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x14B499C</span>;
+
+<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;N = </span><span style="color:#e6db74">$n\n</span><span style="color:#e6db74">&#34;</span>;
+</code></pre></div><p>これを実行すると、<code>N</code> が得られる。</p>
 <h1 id="第3問-toquinephp">第3問 toquine.php</h1>
-<p>前述のとおり、ネタバレ防止のため、3問目はまだ解説を書いていない。</p>
+<p>ソースコードはこちら。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#75715e">// License: https://creativecommons.org/publicdomain/zero/1.0/
+</span><span style="color:#75715e">// This is a quine-like program to generate a PHPer token.
+</span><span style="color:#75715e">// Execute it like this: php toquine.php | php | php | php | ...
+</span><span style="color:#75715e"></span>
+$s <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;&lt;&#39;</span><span style="color:#e6db74">Q</span><span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">&lt;?cuc
+</span><span style="color:#e6db74">// Yvprafr: uggcf://perngvirpbzzbaf.bet/choyvpqbznva/mreb/1.0/
+</span><span style="color:#e6db74">// Guvf vf n dhvar-yvxr cebtenz gb trarengr n CUCre gbxra.
+</span><span style="color:#e6db74">// Rkrphgr vg yvxr guvf: cuc gbdhvar.cuc | cuc | cuc | cuc | ...
+</span><span style="color:#e6db74">%f$f = %f;
+</span><span style="color:#e6db74">$f = fge_ebg13($f); $kf = [
+</span><span style="color:#e6db74">%f,
+</span><span style="color:#e6db74">];
+</span><span style="color:#e6db74">$g = ahyy.snyfr; sbe ($v = 0; $v &lt;= vagqvi(__YVAR__-035,6); ++$v) vs (!vffrg($kf[$v])) oernx; ryfr
+</span><span style="color:#e6db74">$g .= vzcybqr(&#34;\a&#34;, fge_fcyvg(fge_ercynpr([&#39;0&#39;,&#39;1&#39;], [&#39;  &#39;,&#39;##&#39;], fcevags(pue(37) . &#39;025o&#39;, $kf[$v])), 012)) . &#34;\a\a&#34;;
+</span><span style="color:#e6db74">$jf = neenl_znc(sa($j) =&gt; vzcybqr(&#39;, &#39;, $j), neenl_puhax(neenl_znc(sa($k) =&gt; fcevags(&#39;0k&#39; . pue(37) . &#39;07K&#39;, $k), $kf), 10));
+</span><span style="color:#e6db74">cevags($f, $g, fge_ebg13(&#34;&lt;&lt;&lt;&#39;Q&#39;\a{$f}\aQ&#34;), vzcybqr(&#34;,\a&#34;, $jf));
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">Q</span>;
+$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_rot13</span>($s); $xs <span style="color:#f92672">=</span> [
+<span style="color:#ae81ff">0x0AFABEA</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F2109F</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x0002800</span>, <span style="color:#ae81ff">0x1F2109F</span>, <span style="color:#ae81ff">0x0117041</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1F295B7</span>,
+<span style="color:#ae81ff">0x010FC21</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1151151</span>, <span style="color:#ae81ff">0x010FC21</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F295B7</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F295B7</span>, <span style="color:#ae81ff">0x1F8C63F</span>,
+<span style="color:#ae81ff">0x1F8C631</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x17AD6BD</span>, <span style="color:#ae81ff">0x17AD6BD</span>, <span style="color:#ae81ff">0x1F8C63F</span>, <span style="color:#ae81ff">0x1F295B7</span>,
+];
+$t <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">.</span><span style="color:#66d9ef">false</span>; <span style="color:#66d9ef">for</span> ($i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; $i <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">intdiv</span>(<span style="color:#66d9ef">__LINE__</span><span style="color:#f92672">-</span><span style="color:#ae81ff">035</span>,<span style="color:#ae81ff">6</span>); <span style="color:#f92672">++</span>$i) <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>($xs[$i])) <span style="color:#66d9ef">break</span>; <span style="color:#66d9ef">else</span>
+$t <span style="color:#f92672">.=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>(<span style="color:#a6e22e">str_replace</span>([<span style="color:#e6db74">&#39;0&#39;</span>,<span style="color:#e6db74">&#39;1&#39;</span>], [<span style="color:#e6db74">&#39;  &#39;</span>,<span style="color:#e6db74">&#39;##&#39;</span>], <span style="color:#a6e22e">sprintf</span>(<span style="color:#a6e22e">chr</span>(<span style="color:#ae81ff">37</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;025b&#39;</span>, $xs[$i])), <span style="color:#ae81ff">012</span>)) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+$ws <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">fn</span>($w) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>, $w), <span style="color:#a6e22e">array_chunk</span>(<span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;0x&#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">chr</span>(<span style="color:#ae81ff">37</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;07X&#39;</span>, $x), $xs), <span style="color:#ae81ff">10</span>));
+<span style="color:#a6e22e">printf</span>($s, $t, <span style="color:#a6e22e">str_rot13</span>(<span style="color:#e6db74">&#34;&lt;&lt;&lt;&#39;D&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>$s<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">D&#34;</span>), <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;,</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $ws));
+</code></pre></div><p>コメントにもあるとおり、次のようにして実行すれば答えがでてくる。</p>
+<pre tabindex="0"><code class="language-shell-session" data-lang="shell-session">$ php toquine.php | php | php | php | ...
+</code></pre><p>実際にはもう少しパイプで繋げなければならない。</p>
+<h2 id="解説-1">解説</h2>
+<h3 id="プログラム全体-1">プログラム全体</h3>
+<p>コメントにもあるとおり、これは quine (風) のプログラムになっている。
+Quine とは、自分のソースコードをそっくりそのまま出力するようなプログラムのことである。</p>
+<p>このプログラムは、実行すると自身とほとんど同じプログラムを出力する。
+異なるのはトークンになっている部分のみである。</p>
+<h3 id="トークン">トークン</h3>
+<p><code>$xs</code> がトークンに対応している。変換のロジックは <code>riddle.php</code> とほぼ同じなので省略する。</p>
+<h3 id="状態保持">状態保持</h3>
+<p>トークンの何文字目まで出力したかを、ソースコードを変えずに (quine なので) 覚えておく必要がある。
+このプログラムでは、トークンが出力されるとソースコードがだんだんと長くなっていくのを利用して、<code>__LINE__</code> から情報を取得している。</p>
+<h3 id="rot-13">ROT 13</h3>
+<p>Quine は、素朴に書くとプログラムの一部が 2回記述されてしまう。
+これがあまり美しくないので、<code>toquine.php</code> では、ROT 13 変換を使って難読化した。</p>
+<p>それにしてもなぜこんなものが標準ライブラリに……。</p>
+<h1 id="おわりに">おわりに</h1>
+<p>解いていただいたみなさん、また、難易度調整につきあっていただいた社内のみなさん、ありがとうございました。</p>
+<p>今回は直前に作りはじめたのもあり、3問だけかつ使い古されたネタばかりになってしまいましたが、
+来年は 5問、より面白い問題を持っていきます。</p>
+<p>実はもう作りはじめているので、どうか来年もありますように……。</p>
 </div>
   <footer class="post-footer">
     <ul class="post-tags">
