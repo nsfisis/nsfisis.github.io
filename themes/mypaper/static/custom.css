@@ -1,1 +1,26 @@
 /* Place a custom css file in your own project to use this. */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  border-bottom: var(--primary) solid 1px;
+}
+
+.post-content h1::before,
+.post-content h2::before,
+.post-content h3::before,
+.post-content h4::before,
+.post-content h5::before,
+.post-content h6::before {
+  color: var(--secondary);
+  padding-right: 0.3rem;
+}
+
+.post-content h1::before { content: '#'; }
+.post-content h2::before { content: '##'; }
+.post-content h3::before { content: '###'; }
+.post-content h4::before { content: '####'; }
+.post-content h5::before { content: '#####'; }
+.post-content h6::before { content: '######'; }
