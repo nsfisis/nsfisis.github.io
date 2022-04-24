@@ -10,21 +10,53 @@
       <path d="M 50 10 L 46 5 L 54 5" fill="white"/>
       <path d="M 50 30 L 47 50 L 53 50" fill="white"/>
     </g>
+    <g id="favicon.s">
+      <rect x="0" y="0" width="10" height="10" fill-opacity="0.75"/>
+    </g>
   </defs>
   <circle cx="50" cy="50" r="50" fill="orange"/>
-  <circle cx="50" cy="50" r="45" fill="orange" stroke="white" stroke-width="4"/>
+
+  <circle cx="50" cy="50" r="45" fill="transparent" stroke="white" stroke-width="4"/>
   <circle cx="50" cy="50" r="8" fill="white"/>
-  <use transform="rotate(  0, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate( 36, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate( 72, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate(108, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate(144, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate(180, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate(216, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate(252, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate(288, 50, 50)" xlink:href="#favicon.l"/>
-  <use transform="rotate(324, 50, 50)" xlink:href="#favicon.l"/>
-  <rect x="30" y="35" width="5" height="20" rx="3" ry="3" fill="black"/>
-  <rect x="65" y="35" width="5" height="20" rx="3" ry="3" fill="black"/>
-  <rect x="43" y="65" width="14" height="5" rx="3" ry="3" fill="black"/>
+  <use xlink:href="#favicon.l" transform="rotate(  0, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate( 36, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate( 72, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate(108, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate(144, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate(180, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate(216, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate(252, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate(288, 50, 50)"/>
+  <use xlink:href="#favicon.l" transform="rotate(324, 50, 50)"/>
+
+  <use xlink:href="#favicon.s" x="50" y="0"  fill="darkorange"/>
+  <use xlink:href="#favicon.s" x="50" y="20" fill="gold"/>
+  <use xlink:href="#favicon.s" x="50" y="30" fill="orange"/>
+  <use xlink:href="#favicon.s" x="50" y="70" fill="orange"/>
+  <use xlink:href="#favicon.s" x="50" y="90" fill="gold"/>
+  <use xlink:href="#favicon.s" x="60" y="10" fill="orange"/>
+  <use xlink:href="#favicon.s" x="60" y="20" fill="orange"/>
+  <use xlink:href="#favicon.s" x="60" y="30" fill="gold"/>
+  <use xlink:href="#favicon.s" x="60" y="50" fill="gold"/>
+  <use xlink:href="#favicon.s" x="60" y="70" fill="gold"/>
+  <use xlink:href="#favicon.s" x="60" y="80" fill="gold"/>
+  <use xlink:href="#favicon.s" x="70" y="0"  fill="#ffcd72"/>
+  <use xlink:href="#favicon.s" x="70" y="10" fill="orange"/>
+  <use xlink:href="#favicon.s" x="70" y="20" fill="gold"/>
+  <use xlink:href="#favicon.s" x="70" y="30" fill="gold"/>
+  <use xlink:href="#favicon.s" x="70" y="70" fill="darkorange"/>
+  <use xlink:href="#favicon.s" x="70" y="90" fill="#ffcd72"/>
+  <use xlink:href="#favicon.s" x="80" y="10" fill="#ffd27f"/>
+  <use xlink:href="#favicon.s" x="80" y="20" fill="orange"/>
+  <use xlink:href="#favicon.s" x="80" y="40" fill="gold"/>
+  <use xlink:href="#favicon.s" x="80" y="60" fill="orange"/>
+  <use xlink:href="#favicon.s" x="80" y="70" fill="orange"/>
+  <use xlink:href="#favicon.s" x="80" y="80" fill="#ffd27f"/>
+  <use xlink:href="#favicon.s" x="90" y="30" fill="#ffc04c"/>
+  <use xlink:href="#favicon.s" x="90" y="40" fill="#ffa90c"/>
+  <use xlink:href="#favicon.s" x="90" y="60" fill="#ffc04c"/>
+  <use xlink:href="#favicon.s" x="90" y="70" fill="#ffe4b2"/>
+
+  <rect x="30" y="35" width="6" height="25" rx="2" ry="2" fill="black"/>
+  <rect x="64" y="35" width="6" height="25" rx="2" ry="2" fill="black"/>
 </svg>
