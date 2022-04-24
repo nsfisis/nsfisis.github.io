@@ -8,6 +8,15 @@
     <language>ja-JP</language>
     <lastBuildDate>Wed, 31 Mar 2021 01:36:49 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>term-banner: ターミナルにバナーを表示するツールを書いた</title>
+      <link>https://blog.nsfisis.dev/posts/2022-04-24/term-banner-write-tool-showing-banner-in-terminal/</link>
+      <pubDate>Sun, 24 Apr 2022 13:22:52 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/2022-04-24/term-banner-write-tool-showing-banner-in-terminal/</guid>
+      <description>はじめに こんなものを作った。 $ term-banner &#39;Hello, World!&#39; &#39;こんにちは、&#39; &#39;世界！&#39; コマンドライン引数として渡した文字列をターミナルに大きく表示する。 リポジトリは</description>
+    </item>
+    
+    <item>
       <title>PHPerKaigi 2022 トークン問題の解説</title>
       <link>https://blog.nsfisis.dev/posts/2022-04-09/phperkaigi-2022-tokens/</link>
       <pubDate>Sat, 09 Apr 2022 21:50:19 +0900</pubDate>

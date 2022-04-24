@@ -11,5 +11,5 @@ $ hugo -d docs
 Create a new post.
 
 ```
-$ hugo new posts/[TITLE].md
+$ hugo new posts/$(date +'%Y-%m-%d')/[TITLE].md
 ```
