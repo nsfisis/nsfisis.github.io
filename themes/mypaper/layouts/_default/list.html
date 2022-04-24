@@ -10,9 +10,7 @@
 {{- range $index, $page := $paginator.Pages }}
 
 {{- $class := "post-entry" }}
-{{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0)) }}
-{{- $class = "first-entry" }}
-{{- else if .Data.Term }}
+{{- if .Data.Term }}
 {{- $class = "post-entry tag-entry" }}
 {{- end }}
 <article class="{{ $class }}">

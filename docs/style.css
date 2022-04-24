@@ -198,32 +198,6 @@ img {
 }
 /* Post entry
 -------------------------------------------------- */
-.first-entry {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 320px;
-  margin-bottom: var(--header-height);
-}
-.first-entry .entry-header {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-.first-entry .entry-header h2 {
-  font-size: 40px;
-}
-.first-entry .entry-content {
-  margin-top: 14px;
-  margin-bottom: 14px;
-  font-size: 16px;
-  -webkit-line-clamp: 3;
-}
-.first-entry .entry-footer {
-  font-size: 14px;
-}
 .post-entry {
   position: relative;
   margin-bottom: var(--gap);
