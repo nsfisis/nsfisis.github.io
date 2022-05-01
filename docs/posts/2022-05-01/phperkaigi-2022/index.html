@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>PHPerKaigi 2022 | REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="はじめに 2022-04-09 から 2022-04-11 にかけて開催された、PHPerKaigi 2022 に、一般参加者として参加した。 弊社デジタルサーカス株式会社 はダイヤモンドスポンサー">
+    <meta name="author" content="">
+    
+    <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/style.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
+    
+    <link rel="icon" href="https://blog.nsfisis.dev/favicon.svg">
+    <meta name="generator" content="Hugo 0.88.1" />
+    
+    
+  </head>
+  <body class="single">
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">PHPerKaigi 2022</h1>
+    <div class="post-meta">2022-05-01</div>
+    <ul class="post-tags">
+      <li><a href="https://blog.nsfisis.dev/tags/conference">conference</a></li>
+      <li><a href="https://blog.nsfisis.dev/tags/php">php</a></li>
+      <li><a href="https://blog.nsfisis.dev/tags/phperkaigi">phperkaigi</a></li>
+    </ul>
+  </header>
+  <div class="post-content"><h1 id="はじめに">はじめに</h1>
+<p>2022-04-09 から 2022-04-11 にかけて開催された、<a href="https://phperkaigi.jp/2022/">PHPerKaigi 2022</a> に、一般参加者として参加した。
+弊社<a href="https://www.dgcircus.com/">デジタルサーカス株式会社</a> はダイヤモンドスポンサーとなっており、スポンサー枠のチケットを使わせていただいた。</p>
+<p>昨年のレポートは<a href="/posts/2021-03-30/phperkaigi-2021">こちら</a>。</p>
+<h1 id="感想">感想</h1>
+<h2 id="厳選おすすめトーク">厳選おすすめトーク</h2>
+<p>多くの素晴らしいトークの中から、特におすすめのものを 5つ選んだ。是非聞いてほしい。引用部分は、リンク先プロポーザルから引用している。</p>
+<p><a href="https://fortee.jp/phperkaigi-2022/proposal/ef8cf4ed-63fe-42f8-8145-b3e70054458b">予防に勝る防御なし - 堅牢なコードを導く様々な設計のヒント</a></p>
+<blockquote>
+<p>PHP はバージョンを追う毎に型宣言、例外、表明、列挙型などの機能が大幅に強化され、堅牢なコードを書くための機能が充実してきました。それらの機能はどう使うと効果的なのでしょうか。</p>
+<p>本講演では PHP 8.1 をベースにして、誤りを想定してチェックするのではなく、そもそも誤りにくい設計とはどのようなものか、つまり「予防」の観点を軸足に、堅牢なコードを導くための様々な設計のヒントをご紹介します。</p>
+</blockquote>
+<p><a href="https://fortee.jp/phperkaigi-2022/proposal/db00d49e-0dd6-453f-b54b-f731d112f10e">PHPのエラーを理解して適切なエラーハンドリングを学ぼう</a></p>
+<blockquote>
+<p>PHPを使ってるとよく遭遇する Fatal error / Parse error / Warning / Notice 理解していますか？<br>
+これらのエラー文を理解することで、すぐにエラーの原因に気付き適切に対象できる様になります！<br>
+またそれらを理解した上でのエラーハンドリングを学びましょう。</p>
+</blockquote>
+<p><a href="https://fortee.jp/phperkaigi-2022/proposal/4a7e3ded-9134-4919-955c-ec7bf4491c0d">エラー監視とテスト体制への改善作戦</a></p>
+<blockquote>
+<p>毎日流れてくるエラーに皆さんはどう向き合ってますか？<br>
+エラーを出さない事が一番ですが、完全に塞ぐ事は難しいと考えます。<br>
+サービス運用の中で本番環境から発生するエラー（サーバー・クライアントサイド・サードパーティ起因のエラー）への監視体制と、<br>
+エラー・バグ防御のためチームで行っているテストコード文化づくりの話をします。</p>
+</blockquote>
+<p><a href="https://fortee.jp/phperkaigi-2022/proposal/6f47daf8-c78f-4fb1-9b99-e9656e6fe7f7">ISUCON11のPHP実装は、何を考え、どのようにして作られていたのか</a></p>
+<blockquote>
+<p>昨年開催されたISUCON11にて問題（参考実装）のPHPへの移植を担当させていただきました。</p>
+<p>最終的なソースコードこそシンプルなWebアプリケーションではありますが、その裏には<br>
+・「（私の思う）良い設計」を実現するための意思決定<br>
+・「ISUCONの問題」という位置付けに由来する取捨選択<br>
+・移植中に遭遇したトラブルとその解決策<br>
+といった文脈や葛藤が存在しています。</p>
+<p>本発表はそれらを共有することで<br>
+・PHPアプリケーションの設計、実装事例として役立ててもらう<br>
+・ISUCONの言語移植に興味を持ってもらう<br>
+・ISUCON問題移植の「実装や設計の練習をする教材」としての可能性を知ってもらう<br>
+ことを目的とします。</p>
+</blockquote>
+<p><a href="https://fortee.jp/phperkaigi-2022/proposal/5a260e4e-542d-4d82-849d-ef3d6cb7c854">チームの仕事はまわっていたけど、メンバーはそれぞれモヤモヤを抱えていた話──40名の大規模開発チームで1on1ログを公開してみた</a></p>
+<blockquote>
+<p>サイボウズの大企業向けグループウェアのGaroon（ガルーン）は、PHPで開発されている20年目の製品です。ガルーン開発チームは日本で40名、ベトナムで50名の計90名ほどのチームになっています。また、コロナ禍でフルリモートでの活動がこの2年ほど継続してきました。</p>
+<p>フルリモートになっても仕事はまわっており、継続的にリリースはしていましたが、一方でお互いの考えていることや感じている問題意識が見えづらくなり、モヤモヤを抱えているメンバーが増えていました。</p>
+<p>このセッションでは、そういう状況で私がチーム外からジョインし、聴き役に徹しながら見える化することで状況を改善していった取り組みを紹介します。同じように大きなチームやリモートワークで難しさを感じている人に、難しさの原因への気づきや取り組みへのヒントがあれば幸いです。</p>
+</blockquote>
+<h2 id="トークン問題の作成">トークン問題の作成</h2>
+<p>今回は、PHPer チャレンジ用に弊社のトークン問題を 3題作成した。こちらについては<a href="/posts/2022-04-09/phperkaigi-2022-tokens">別途記事にしている</a>ので、そちらを参照されたい。</p>
+<h2 id="phper-チャレンジ">PHPer チャレンジ</h2>
+<p><a href="https://fortee.jp/phperkaigi-2022/challenge">1位</a>になった。<br>
+また、賞品として <a href="https://www.amazon.co.jp/dp/B08MQNJC9Z">Echo Show 15</a> をいただいた。</p>
+<h2 id="カンファレンス全体への感想">カンファレンス全体への感想</h2>
+<p><a href="/posts/2021-03-30/phperkaigi-2021">去年の参加レポ</a> では、こんなことを書いた。</p>
+<blockquote>
+<p>1つ個人的な反省点としては、(中略) Discord しかりアンカンファレンスしかり「このイベントのこの瞬間にしかないコンテンツ」に触れずに、後から見返せる発表やスライドに注力してしまった、ということだ。発表の詳細な見直しはあとからできるのだから、今しかできないことを考えるべきだった。<br>
+まあ初カンファレンスだし、とお茶を濁しておこう。</p>
+</blockquote>
+<p>この反省を踏まえ、今年は積極的にほかの場 (公式の Discord サーバや、アンカンファレンス) にも参加した。<br>
+これにより、参加体験の質がはるかに向上した。特に Discord に関しては、登壇者ご本人による補足や、質問への回答などがおこなわれる (ことが多い) ため、特別な理由のない限り、発言はしないまでも参加はしておいたほうが良いと思われる。</p>
+<p>なお、アンカンファレンスについては、1日目の終わりに<a href="https://fortee.jp/phperkaigi-2022/unconference/view/d332797a-8921-4706-a7e2-ee72640c9b5e">トークン問題の解説放送</a>もおこなった。</p>
+<p>また、今年はオフラインとオンラインのハイブリッド開催であったが、去年の全オンラインと比べて、オンライン参加の体験が落ちていなかったのは、特筆すべきであろう。
+今年は 3回目のワクチン接種が間に合わなかったこともあり現地参加は見送ったのだが、来年は是非オフラインで参加したい。</p>
+<h1 id="そして来年へ">そして来年へ……?</h1>
+<p>PHPerKaigi 2023 があるかどうか存じ上げないが、あるとすれば、次の 4つを目標としたい。</p>
+<ul>
+<li>プロポーザルを出す</li>
+<li>PHPer チャレンジのトークン問題を 5題作成する</li>
+<li>現地に行く</li>
+<li>PHPer チャレンジで圧勝する</li>
+</ul>
+<hr>
+<p>最後になりましたが、PHPerKaigi のスタッフ、スポンサー、スピーカーのみなさん、素敵な時間をありがとうございました。</p>
+<p>ではまた来年。</p>
+</div>
+</article></main>
+<footer class="footer">
+  <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+</footer>
+<script src="https://blog.nsfisis.dev/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+
