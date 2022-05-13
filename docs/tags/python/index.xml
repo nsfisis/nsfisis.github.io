@@ -13,7 +13,7 @@
       <pubDate>Sat, 02 Oct 2021 09:32:37 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/python-unbound-local-error/</guid>
-      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/5d733703afcb35bbf399 本記事は Python 3.7.6 の動作結果を元にして書かれている。 Python でクロージャを作ろうと、次のようなコードを書いた</description>
+      <description>Python における UnboundLocalError の理由と対処法。</description>
     </item>
     
   </channel>

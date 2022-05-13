@@ -4,6 +4,8 @@ date: 2022-04-09T21:50:19+09:00
 draft: false
 tags: ["conference", "php", "phperkaigi"]
 aliases: ['/posts/phperkaigi-2022-tokens/']
+summary: |
+    PHPerKaigi 2022 で私が作成した PHPer チャレンジ問題を解説する。
 ---
 
 # 更新履歴

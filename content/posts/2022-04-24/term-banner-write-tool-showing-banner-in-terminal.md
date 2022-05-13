@@ -3,6 +3,8 @@ title: "term-banner: ターミナルにバナーを表示するツールを書�
 date: 2022-04-24T13:22:52+09:00
 draft: false
 tags: ["my-programs"]
+summary: |
+    ターミナルに任意の文字のバナーを表示するためのツールを Go で書いた。
 ---
 
 

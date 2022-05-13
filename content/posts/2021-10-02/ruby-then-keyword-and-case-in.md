@@ -4,6 +4,8 @@ date: 2021-10-02T09:38:50+09:00
 draft: false
 tags: ["ruby", "ruby3"]
 aliases: ['/posts/ruby-then-keyword-and-case-in/']
+summary: |
+  Ruby 3.0 で追加される case in 構文と、then キーワードについて。
 ---
 
 この記事は Qiita から移植してきたものです。

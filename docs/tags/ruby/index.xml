@@ -13,7 +13,7 @@
       <pubDate>Sat, 02 Oct 2021 09:38:50 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/ruby-then-keyword-and-case-in/</guid>
-      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/787a8cf888a304497223 TL; DR case - in によるパターンマッチング構文でも、case - when と同じように then が使える (場合によっては使</description>
+      <description>Ruby 3.0 で追加される case in 構文と、then キーワードについて。</description>
     </item>
     
     <item>
@@ -22,7 +22,7 @@
       <pubDate>Sat, 02 Oct 2021 09:37:50 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/ruby-detect-running-implementation/</guid>
-      <description>この記事は Qiita から移植してきたものです。 元 URL: https://qiita.com/nsfisis/items/74d7ffeeebc51b20d791 Ruby という言語には複数の実装があるが、それらをスクリプト上からどのようにして programmatically に見分ければよいだろ</description>
+      <description>Ruby には複数の実装があるが、自身を実行している処理系の種類をスクリプト上からどのように判定すればよいだろうか。</description>
     </item>
     
   </channel>

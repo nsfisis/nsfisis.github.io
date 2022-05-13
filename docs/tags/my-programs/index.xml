@@ -13,7 +13,7 @@
       <pubDate>Sun, 24 Apr 2022 13:22:52 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2022-04-24/term-banner-write-tool-showing-banner-in-terminal/</guid>
-      <description>はじめに こんなものを作った。 $ term-banner &#39;Hello, World!&#39; &#39;こんにちは、&#39; &#39;世界！&#39; コマンドライン引数として渡した文字列をターミナルに大きく表示する。 リポジトリは</description>
+      <description>ターミナルに任意の文字のバナーを表示するためのツールを Go で書いた。</description>
     </item>
     
   </channel>
