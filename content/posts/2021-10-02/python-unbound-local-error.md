@@ -6,6 +6,8 @@ tags: ["python", "python3"]
 aliases: ['/posts/python-unbound-local-error/']
 summary: |
   Python における UnboundLocalError の理由と対処法。
+changelog:
+  2021-10-02: Qiita から移植
 ---
 
 この記事は Qiita から移植してきたものです。

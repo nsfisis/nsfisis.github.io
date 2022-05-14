@@ -6,6 +6,8 @@ tags: ["rust"]
 aliases: ['/posts/rust-where-are-primitive-types-from/']
 summary: |
   Rust のプリミティブ型は予約語ではなく普通の識別子である。どのようにこれが名前解決されるのかを調べた。
+changelog:
+  2021-10-02: Qiita から移植
 ---
 
 この記事は Qiita から移植してきたものです。

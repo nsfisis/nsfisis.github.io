@@ -31,13 +31,22 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title">[Python] クロージャとUnboundLocalError: local variable &#39;x&#39; referenced before assignment</h1>
-    <div class="post-meta">2021-10-02</div>
+    <div class="post-meta">
+      Posted on <time>2021-10-02</time>
+    </div>
     <ul class="post-tags">
       <li><a href="https://blog.nsfisis.dev/tags/python">python</a></li>
       <li><a href="https://blog.nsfisis.dev/tags/python3">python3</a></li>
     </ul>
   </header>
-  <div class="post-content"><p>この記事は Qiita から移植してきたものです。
+  <div class="post-content">
+    <section>
+      <h1>更新履歴</h1>
+      <ul>
+        <li>2021-10-02: Qiita から移植</li>
+      </ul>
+    </section>
+    <p>この記事は Qiita から移植してきたものです。
 元 URL: <a href="https://qiita.com/nsfisis/items/5d733703afcb35bbf399">https://qiita.com/nsfisis/items/5d733703afcb35bbf399</a></p>
 <hr>
 <p>本記事は Python 3.7.6 の動作結果を元にして書かれている。</p>
@@ -74,7 +83,8 @@ f()
         x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
     g()
 </code></pre></div><p><code>(*)</code> のように、<code>nonlocal</code> を追加する。これにより一つ外側のスコープ (<code>g</code> の一つ外側 = <code>f</code>) で定義されている <code>x</code> を探しに行くようになる。</p>
-</div>
+
+  </div>
 </article></main>
 <footer class="footer">
   <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>

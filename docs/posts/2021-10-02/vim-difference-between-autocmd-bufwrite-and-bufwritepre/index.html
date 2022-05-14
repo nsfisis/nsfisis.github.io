@@ -31,12 +31,21 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title">[Vim] autocmd events の BufWrite/BufWritePre の違い</h1>
-    <div class="post-meta">2021-10-02</div>
+    <div class="post-meta">
+      Posted on <time>2021-10-02</time>
+    </div>
     <ul class="post-tags">
       <li><a href="https://blog.nsfisis.dev/tags/vim">vim</a></li>
     </ul>
   </header>
-  <div class="post-content"><p>この記事は Qiita から移植してきたものです。
+  <div class="post-content">
+    <section>
+      <h1>更新履歴</h1>
+      <ul>
+        <li>2021-10-02: Qiita から移植</li>
+      </ul>
+    </section>
+    <p>この記事は Qiita から移植してきたものです。
 元 URL: <a href="https://qiita.com/nsfisis/items/79ab4db8564032de0b25">https://qiita.com/nsfisis/items/79ab4db8564032de0b25</a></p>
 <hr>
 <h1 id="tl-dr">TL; DR</h1>
@@ -109,7 +118,8 @@ FileEncoding                    Obsolete.  It still works and is equivalent
 </li>
 </ul>
 <p>ところでこの調査で知ったのだが、<code>BufRead</code> と <code>BufWrite</code> は上にある通り発火するタイミングが「後」と「前」で対称性がない。可能なら <code>Pre</code>/<code>Post</code> 付きのものを使った方が分かりやすいだろう。</p>
-</div>
+
+  </div>
 </article></main>
 <footer class="footer">
   <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>

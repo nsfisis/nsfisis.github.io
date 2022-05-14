@@ -6,6 +6,8 @@ tags: ["cpp", "cpp17"]
 aliases: ['/posts/cpp-you-can-use-keywords-in-attributes/']
 summary: |
   C++ の属性構文の属性名には、キーワードが使える。ネタ記事。
+changelog:
+  2021-10-02: Qiita から移植
 ---
 
 

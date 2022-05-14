@@ -6,6 +6,8 @@ tags: ["vim"]
 aliases: ['/posts/vim-difference-between-autocmd-bufwrite-and-bufwritepre/']
 summary: |
   Vim の autocmd events における BufWrite/BufWritePre がどう違うのかを調べた結果、違いはないことがわかった。
+changelog:
+  2021-10-02: Qiita から移植
 ---
 
 この記事は Qiita から移植してきたものです。

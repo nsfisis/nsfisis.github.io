@@ -5,6 +5,8 @@ draft: false
 aliases: ['/posts/my-first-post/']
 summary: |
   これはテスト投稿です。これはテスト投稿です。これはテスト投稿です。
+changelog:
+  2021-03-05: 公開
 ---
 
 # Test

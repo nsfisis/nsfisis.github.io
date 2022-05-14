@@ -5,6 +5,8 @@ draft: false
 tags: ["conference", "php", "phperkaigi"]
 summary: |
     2022-04-09 から 2022-04-11 にかけて開催された、PHPerKaigi 2022 に参加した。
+changelog:
+  2022-05-01: 公開
 ---
 
 # はじめに

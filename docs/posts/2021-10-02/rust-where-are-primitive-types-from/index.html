@@ -31,12 +31,21 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title">Rust のプリミティブ型はどこからやって来るか</h1>
-    <div class="post-meta">2021-10-02</div>
+    <div class="post-meta">
+      Posted on <time>2021-10-02</time>
+    </div>
     <ul class="post-tags">
       <li><a href="https://blog.nsfisis.dev/tags/rust">rust</a></li>
     </ul>
   </header>
-  <div class="post-content"><p>この記事は Qiita から移植してきたものです。
+  <div class="post-content">
+    <section>
+      <h1>更新履歴</h1>
+      <ul>
+        <li>2021-10-02: Qiita から移植</li>
+      </ul>
+    </section>
+    <p>この記事は Qiita から移植してきたものです。
 元 URL: <a href="https://qiita.com/nsfisis/items/9a429432258bbcd6c565">https://qiita.com/nsfisis/items/9a429432258bbcd6c565</a></p>
 <hr>
 <h1 id="前置き">前置き</h1>
@@ -159,7 +168,8 @@ rustc_resolve/src/lib.rs:        table.insert(sym::i128, Int(IntTy::I128));
 </code></pre></div><p>ここで <code>main()</code> の <code>bool</code> は <code>struct bool</code> として解決される。なぜなら、プリミティブ型の判定をする前に <code>bool</code> という名前の別の型が見つかるからだ。</p>
 <h1 id="まとめ">まとめ</h1>
 <p>Rust のプリミティブ型は予約語ではない。名前解決の最終段階で特別扱いされ、他に同名の型が見つかっていなければ対応するプリミティブ型に解決される。</p>
-</div>
+
+  </div>
 </article></main>
 <footer class="footer">
   <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>

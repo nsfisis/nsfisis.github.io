@@ -6,6 +6,8 @@ tags: ["vim"]
 aliases: ['/posts/vim-swap-order-of-selected-lines/']
 summary: |
   Vim で選択した行の順番を入れ替える方法。
+changelog:
+  2021-10-02: Qiita から移植
 ---
 
 この記事は Qiita から移植してきたものです。
