@@ -6,4 +6,7 @@ title = "REPL: Rest-Eat-Program Loop"
 theme = "mypaper"
 
 [taxonomies]
-tag = 'tags'
+tag = "tags"
+
+[outputFormats.rss]
+baseName = "feed"

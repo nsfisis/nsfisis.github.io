@@ -6,7 +6,7 @@
     <description>Recent content in vim on REPL: Rest-Eat-Program Loop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sat, 02 Oct 2021 09:37:25 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Oct 2021 09:37:25 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/tags/vim/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vimで選択した行の順番を入れ替える</title>
       <link>https://blog.nsfisis.dev/posts/2021-10-02/vim-swap-order-of-selected-lines/</link>
