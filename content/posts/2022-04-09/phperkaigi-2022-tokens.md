@@ -2,7 +2,6 @@
 title: "PHPerKaigi 2022 トークン問題の解説"
 date: 2022-04-09T21:50:19+09:00
 lastmod: 2022-04-16
-draft: false
 tags: ["conference", "php", "phperkaigi"]
 aliases: ['/posts/phperkaigi-2022-tokens/']
 summary: |

@@ -1,7 +1,6 @@
 ---
 title: "Rust のプリミティブ型はどこからやって来るか"
 date: 2021-10-02T09:39:27+09:00
-draft: false
 tags: ["rust"]
 aliases: ['/posts/rust-where-are-primitive-types-from/']
 summary: |

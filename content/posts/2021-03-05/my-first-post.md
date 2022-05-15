@@ -1,7 +1,6 @@
 ---
 title: "My First Post"
 date: 2021-03-05T23:38:21+09:00
-draft: false
 aliases: ['/posts/my-first-post/']
 summary: |
   これはテスト投稿です。これはテスト投稿です。これはテスト投稿です。

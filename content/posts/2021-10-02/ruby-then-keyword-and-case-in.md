@@ -1,7 +1,6 @@
 ---
 title: "[Ruby] then キーワードと case in"
 date: 2021-10-02T09:38:50+09:00
-draft: false
 tags: ["ruby", "ruby3"]
 aliases: ['/posts/ruby-then-keyword-and-case-in/']
 summary: |

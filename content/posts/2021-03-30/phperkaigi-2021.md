@@ -1,7 +1,6 @@
 ---
 title: "PHPerKaigi 2021"
 date: 2021-03-30T23:22:40+09:00
-draft: false
 tags: ["conference", "php", "phperkaigi"]
 aliases: ['/posts/phperkaigi-2021/']
 summary: |

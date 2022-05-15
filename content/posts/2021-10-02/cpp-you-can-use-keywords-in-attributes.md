@@ -1,7 +1,6 @@
 ---
 title: "[C++] 属性構文の属性名にはキーワードが使える [[void]] [[for]]"
 date: 2021-10-02T09:38:30+09:00
-draft: false
 tags: ["cpp", "cpp17"]
 aliases: ['/posts/cpp-you-can-use-keywords-in-attributes/']
 summary: |
