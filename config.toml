@@ -5,6 +5,9 @@ timeZone = "Asia/Tokyo"
 title = "REPL: Rest-Eat-Program Loop"
 theme = "mypaper"
 
+[author]
+name = "nsfisis"
+
 [taxonomies]
 tag = "tags"
 
