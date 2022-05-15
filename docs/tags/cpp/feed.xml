@@ -13,7 +13,76 @@
       <pubDate>Sat, 02 Oct 2021 09:38:30 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/cpp-you-can-use-keywords-in-attributes/</guid>
-      <description>C++ の属性構文の属性名には、キーワードが使える。ネタ記事。</description>
+      <description><![CDATA[ <p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/94090937bcf860cfa93b">https://qiita.com/nsfisis/items/94090937bcf860cfa93b</a></p>
+<hr>
+<p>タイトル落ち。まずはこのコードを見て欲しい。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">[[alignas]] [[alignof]] [[and]] [[and_eq]] [[asm]] [[auto]] [[bitand]]</span>
+<span style="color:#a6e22e">[[bitor]] [[bool]] [[break]] [[case]] [[catch]] [[char]] [[char16_t]]</span>
+<span style="color:#a6e22e">[[char32_t]] [[class]] [[compl]] [[const]] [[const_cast]] [[constexpr]]</span>
+<span style="color:#a6e22e">[[continue]] [[decltype]] [[default]] [[delete]] [[do]] [[double]]</span>
+<span style="color:#a6e22e">[[dynamic_cast]] [[else]] [[enum]] [[explicit]] [[export]] [[extern]] [[false]]</span>
+<span style="color:#a6e22e">[[final]] [[float]] [[for]] [[friend]] [[goto]] [[if]] [[inline]] [[int]]</span>
+<span style="color:#a6e22e">[[long]] [[mutable]] [[namespace]] [[new]] [[noexcept]] [[not]] [[not_eq]]</span>
+<span style="color:#a6e22e">[[nullptr]] [[operator]] [[or]] [[or_eq]] [[override]] [[private]]</span>
+<span style="color:#a6e22e">[[protected]] [[public]] [[register]] [[reinterpret_cast]] [[return]] [[short]]</span>
+<span style="color:#a6e22e">[[signed]] [[sizeof]] [[static]] [[static_assert]] [[static_cast]] [[struct]]</span>
+<span style="color:#a6e22e">[[switch]] [[template]] [[this]] [[thread_local]] [[throw]] [[true]] [[try]]</span>
+<span style="color:#a6e22e">[[typedef]] [[typeid]] [[typename]] [[union]] [[unsigned]]</span>
+<span style="color:#a6e22e">[[virtual]] [[void]] [[volatile]] [[wchar_t]] [[while]] [[xor]] [[xor_eq]]</span>
+<span style="color:#75715e">// [[using]]
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> main() {
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+}
+</code></pre></div><blockquote>
+<p>コンパイラのバージョン
+$ clang++ &ndash;version
+Apple clang version 11.0.0 (clang-1100.0.33.8)
+Target: x86_64-apple-darwin19.6.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin</p>
+<p>コンパイルコマンド (C++17指定)
+$ clang++ &ndash;std=c++17 hoge.cpp</p>
+</blockquote>
+<p>この記事から得られるものはこれ以上ないので以下は蛇足になる。</p>
+<p>別件で cppreference.com の <a href="https://en.cppreference.com/w/cpp/language/identifiers">identifier のページ</a> を読んでいた時、次の文が目に止まった。</p>
+<blockquote>
+<ul>
+<li>the identifiers that are keywords cannot be used for other purposes;
+<ul>
+<li>The only place they can be used as non-keywords is in an attribute-token. (e.g. [[private]] is a valid attribute) (since C++11)</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>キーワードでも属性として指定する場合は非キーワードとして使えるらしい。
+実際にやってみる。</p>
+<p>同サイトの [keywords のページ] (<a href="https://en.cppreference.com/w/cpp/keyword">https://en.cppreference.com/w/cpp/keyword</a>) から一覧を拝借し、上のコードが出来上がった (C++17 においてキーワードでないものなど、一部省いている)。
+大量の警告 (unknown attribute &lsquo;〇〇&rsquo; ignored) がコンパイラから出力されるが、コンパイルできる。</p>
+<p>上のコードでは <code>[[using]]</code> をコメントアウトしているが、これは <code>using</code> キーワードのみ属性構文の中で意味を持つからであり、このコメントアウトを外すとコンパイルに失敗する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// using の例
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">[[using foo: attr1, attr2]] int x; // [[foo::attr1, foo::attr2]]</span> <span style="color:#960050;background-color:#1e0010">の糖衣構文</span>
+</code></pre></div><p>C++17 の仕様も見てみる (正確には標準化前のドラフト)。</p>
+<p>引用元: <a href="https://timsong-cpp.github.io/cppwp/n4659/dcl.attr#grammar-4">https://timsong-cpp.github.io/cppwp/n4659/dcl.attr#grammar-4</a></p>
+<blockquote>
+<p>If a keyword or an alternative token that satisfies the syntactic requirements of an identifier is contained in an attribute-token, it is considered an identifier.</p>
+</blockquote>
+<p>「<code>identifier</code> の構文上の要件を満たすキーワードまたは代替トークンが <code>attribute-token</code> に含まれている場合、<code>identifier</code> とみなされる」とある。どうやら間違いないようだ。</p>
+<p>ところで、代替トークン (alternative token) とは <code>and</code> (<code>&amp;</code>) や <code>bitor</code> (<code>|</code>) などのことだが、<code>identifier</code> の構文上の要件を満たさないような代替トークンなどあるのか？
+疑問に思って調べたところ、代替トークンという語にはダイグラフも含まれるらしい (参考: <a href="https://timsong-cpp.github.io/cppwp/n4659/lex.digraph">同ドラフト</a>)</p>
+<ul>
+<li><code>&lt;%</code> → <code>{</code></li>
+<li><code>%&gt;</code> → <code>}</code></li>
+<li><code>&lt;:</code> → <code>[</code></li>
+<li><code>:&gt;</code> → <code>]</code></li>
+<li><code>%:</code> → <code>#</code></li>
+<li><code>%:%:</code> → <code>##</code></li>
+</ul>
+<p>「<code>identifier</code> の構文上の要件を満たさないような代替トークン」はこれらが当てはまると思われる。</p>
+<p>調べた感想: 字句解析器か構文解析器が辛そう</p>
+]]></description>
     </item>
     
   </channel>

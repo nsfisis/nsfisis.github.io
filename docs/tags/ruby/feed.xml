@@ -13,7 +13,142 @@
       <pubDate>Sat, 02 Oct 2021 09:38:50 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/ruby-then-keyword-and-case-in/</guid>
-      <description>Ruby 3.0 で追加される case in 構文と、then キーワードについて。</description>
+      <description><![CDATA[ <p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/787a8cf888a304497223">https://qiita.com/nsfisis/items/787a8cf888a304497223</a></p>
+<hr>
+<h1 id="tl-dr">TL; DR</h1>
+<p><code>case</code> - <code>in</code> によるパターンマッチング構文でも、<code>case</code> - <code>when</code> と同じように <code>then</code> が使える (場合によっては使う必要がある)。</p>
+<h1 id="then-とは"><code>then</code> とは</h1>
+<p>使われることは稀だが、Ruby では <code>then</code> がキーワードになっている。次のように使う:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> cond <span style="color:#66d9ef">then</span>
+  puts <span style="color:#e6db74">&#34;Y&#34;</span>
+<span style="color:#66d9ef">else</span>
+  puts <span style="color:#e6db74">&#34;N&#34;</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>このキーワードが現れうる場所はいくつかあり、<code>if</code>、<code>unless</code>、<code>rescue</code>、<code>case</code> 構文がそれに当たる。
+上記のように、何か条件を書いた後 <code>then</code> を置き、式がそこで終了していることを示すマーカーとして機能する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Example:</span>
+
+<span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">then</span>
+  a
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">unless</span> x <span style="color:#66d9ef">then</span>
+  a
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">begin</span>
+  a
+<span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">then</span>
+  b
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">when</span> p <span style="color:#66d9ef">then</span>
+  a
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h1 id="なぜ普段は書かなくてもよいのか">なぜ普段は書かなくてもよいのか</h1>
+<p>普通 Ruby のコードで <code>then</code> を書くことはない。なぜか。次のコードを実行してみるとわかる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span> puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
+</code></pre></div><p>次のような構文エラーが出力される。</p>
+<pre tabindex="0"><code>20:1: syntax error, unexpected local variable or method, expecting `then' or ';' or '\n'
+if true puts 'Hello, World!' end
+        ^~~~
+20:1: syntax error, unexpected `end', expecting end-of-input
+...f true puts 'Hello, World!' end
+</code></pre><p>二つ目のメッセージは無視して一つ目を読むと、<code>then</code> か <code>;</code> か改行が来るはずのところ変数だかメソッドだかが現れたことによりエラーとなっているようだ。</p>
+<p>ポイントは改行が <code>then</code> (や <code>;</code>) の代わりとなることである。<code>true</code> の後に改行を入れてみる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span>
+puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
+</code></pre></div><p>無事 Hello, World! と出力されるようになった。</p>
+<h1 id="なぜ-then-や--や改行が必要か">なぜ <code>then</code> や <code>;</code> や改行が必要か</h1>
+<p>なぜ <code>then</code> や <code>;</code> や改行 (以下 「<code>then</code> 等」) が必要なのだろうか。次の例を見てほしい:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> a b <span style="color:#66d9ef">end</span>
+</code></pre></div><p><code>then</code> も <code>;</code> も改行もないのでエラーになるが、これは条件式がどこまで続いているのかわからないためだ。
+この例は二通りに解釈できる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># a という変数かメソッドの評価結果が truthy なら b という変数かメソッドを評価</span>
+<span style="color:#66d9ef">if</span> a <span style="color:#66d9ef">then</span>
+  b
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># a というメソッドに b という変数かメソッドの評価結果を渡して呼び出し、</span>
+<span style="color:#75715e"># その結果が truthy なら何もしない</span>
+<span style="color:#66d9ef">if</span> a(b) <span style="color:#66d9ef">then</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p><code>then</code> 等はこの曖昧性を排除するためにあり、条件式は <code>if</code> から <code>then</code> 等までの間にある、ということを明確にする。
+C系の <code>if</code> 後に来る <code>(</code>/<code>)</code> や、Python の <code>:</code>、Rust/Go/Swift などの <code>{</code> も同じ役割を持つ。</p>
+<p>Ruby の場合、プログラマーが書きやすいよう改行でもって <code>then</code> が代用できるので、ほとんどの場合 <code>then</code> は必要ない。</p>
+<h1 id="case---in-における-then"><code>case</code> - <code>in</code> における <code>then</code></h1>
+<p>ようやく本題にたどり着いた。来る Ruby 3.0 では <code>case</code> と <code>in</code> キーワードを使ったパターンマッチングの構文が入る予定である。この構文でもパターン部との区切りとして <code>then</code> 等が必要になる。
+(現在の) Ruby には formal な形式での文法仕様は存在しないので、yacc の定義ファイルを参照した (yacc の説明は省略)。</p>
+<p><a href="https://github.com/ruby/ruby/blob/221ca0f8281d39f0dfdfe13b2448875384bbf735/parse.y#L3961-L3986">https://github.com/ruby/ruby/blob/221ca0f8281d39f0dfdfe13b2448875384bbf735/parse.y#L3961-L3986</a></p>
+<pre tabindex="0"><code class="language-yacc" data-lang="yacc">p_case_body	: keyword_in
+		    {
+			SET_LEX_STATE(EXPR_BEG|EXPR_LABEL);
+			p-&gt;command_start = FALSE;
+			$&lt;ctxt&gt;1 = p-&gt;ctxt;
+			p-&gt;ctxt.in_kwarg = 1;
+			$&lt;tbl&gt;$ = push_pvtbl(p);
+		    }
+		    {
+			$&lt;tbl&gt;$ = push_pktbl(p);
+		    }
+		  p_top_expr then
+		    {
+			pop_pktbl(p, $&lt;tbl&gt;3);
+			pop_pvtbl(p, $&lt;tbl&gt;2);
+			p-&gt;ctxt.in_kwarg = $&lt;ctxt&gt;1.in_kwarg;
+		    }
+		  compstmt
+		  p_cases
+		    {
+		    /*%%%*/
+			$$ = NEW_IN($4, $7, $8, &amp;@$);
+		    /*% %*/
+		    /*% ripper: in!($4, $7, escape_Qundef($8)) %*/
+		    }
+		;
+</code></pre><p>簡略版:</p>
+<pre tabindex="0"><code class="language-yacc" data-lang="yacc">p_case_body	: keyword_in p_top_expr then compstmt p_cases
+		;
+</code></pre><p>ここで、<code>keyword_in</code> は文字通り <code>in</code>、<code>p_top_expr</code> はいわゆるパターン、<code>then</code> は <code>then</code> キーワードのことではなく、この記事で <code>then</code> 等と呼んでいるもの、つまり <code>then</code> キーワード、<code>;</code>、改行のいずれかである。</p>
+<p>これにより、<code>case</code> - <code>when</code> による従来の構文と同じように、<code>then</code> 等をパターンの後ろに挿入すればよいことがわかった。つまり次の3通りのいずれかになる:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span> a
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">then</span> b
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">then</span> c
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>
+  a
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>
+  b
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>
+  c
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>; a
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>; b
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>; c
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>ところで、<code>p_top_expr</code> には <code>if</code> による guard clause が書けるので、その場合は <code>if</code> - <code>then</code> と似たような見た目になる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">case</span> x
+<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> a
+<span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> b
+<span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">then</span> c
+<span style="color:#66d9ef">end</span>
+</code></pre></div><h1 id="まとめ">まとめ</h1>
+<ul>
+<li><code>if</code> や <code>case</code> の条件の後ろには <code>then</code>、<code>;</code>、改行のいずれかが必要
+<ul>
+<li>通常は改行しておけばよい</li>
+</ul>
+</li>
+<li>3.0 で入る予定の <code>case</code> - <code>in</code> でも <code>then</code> 等が必要になる</li>
+<li>Ruby の構文を正確に知るには (現状) <code>parse.y</code> を直接読めばよい</li>
+</ul>
+]]></description>
     </item>
     
     <item>
@@ -22,7 +157,73 @@
       <pubDate>Sat, 02 Oct 2021 09:37:50 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/ruby-detect-running-implementation/</guid>
-      <description>Ruby には複数の実装があるが、自身を実行している処理系の種類をスクリプト上からどのように判定すればよいだろうか。</description>
+      <description><![CDATA[ <p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/74d7ffeeebc51b20d791">https://qiita.com/nsfisis/items/74d7ffeeebc51b20d791</a></p>
+<hr>
+<p>Ruby という言語には複数の実装があるが、それらをスクリプト上からどのようにして programmatically に見分ければよいだろうか。</p>
+<p><code>Object</code> クラスに定義されている <code>RUBY_ENGINE</code> という定数がこの用途に使える。</p>
+<p>参考: <a href="https://docs.ruby-lang.org/ja/latest/method/Object/c/RUBY_ENGINE.html">Object::RUBY_ENGINE</a></p>
+<p>上記ページの例から引用する:</p>
+<pre tabindex="0"><code class="language-shell-session" data-lang="shell-session">$ ruby-1.9.1 -ve 'p RUBY_ENGINE'
+ruby 1.9.1p0 (2009-03-04 revision 22762) [x86_64-linux]
+&quot;ruby&quot;
+$ jruby -ve 'p RUBY_ENGINE'
+jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java]
+&quot;jruby&quot;
+</code></pre><p>それぞれの処理系がどのような値を返すかだが、stack overflow に良い質問と回答があった。</p>
+<p><a href="https://stackoverflow.com/a/9894232">What values for RUBY_ENGINE correspond to which Ruby implementations?</a> より引用:</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">RUBY_ENGINE</th>
+<th style="text-align:left">Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&lt;undefined&gt;</td>
+<td style="text-align:left">MRI &lt; 1.9</td>
+</tr>
+<tr>
+<td style="text-align:center">&lsquo;ruby&rsquo;</td>
+<td style="text-align:left">MRI &gt;= 1.9 or REE</td>
+</tr>
+<tr>
+<td style="text-align:center">&lsquo;jruby&rsquo;</td>
+<td style="text-align:left">JRuby</td>
+</tr>
+<tr>
+<td style="text-align:center">&lsquo;macruby&rsquo;</td>
+<td style="text-align:left">MacRuby</td>
+</tr>
+<tr>
+<td style="text-align:center">&lsquo;rbx&rsquo;</td>
+<td style="text-align:left">Rubinius</td>
+</tr>
+<tr>
+<td style="text-align:center">&lsquo;maglev&rsquo;</td>
+<td style="text-align:left">MagLev</td>
+</tr>
+<tr>
+<td style="text-align:center">&lsquo;ironruby&rsquo;</td>
+<td style="text-align:left">IronRuby</td>
+</tr>
+<tr>
+<td style="text-align:center">&lsquo;cardinal&rsquo;</td>
+<td style="text-align:left">Cardinal</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>なお、この質問・回答は 2014年になされたものであり、値は変わっている可能性がある。MRI (aka CRuby) については執筆時現在 (2020/12/8) も <code>'ruby'</code> が返ってくることを確認済み。</p>
+<p>この表にない主要な処理系として、<a href="https://mruby.org">mruby</a> は <code>'mruby'</code> を返す。</p>
+<p><a href="https://github.com/mruby/mruby/blob/ed29d74bfd95362eaeb946fcf7e865d80346b62b/include/mruby/version.h#L32-L35">mruby 該当部分のソース</a> より引用:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
+</span><span style="color:#75715e"> * Ruby engine.
+</span><span style="color:#75715e"> */</span>
+<span style="color:#75715e">#define MRUBY_RUBY_ENGINE  &#34;mruby&#34;
+</span></code></pre></div>]]></description>
     </item>
     
   </channel>

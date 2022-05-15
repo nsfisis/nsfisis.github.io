@@ -13,7 +13,96 @@
       <pubDate>Sat, 02 Oct 2021 09:37:25 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/vim-swap-order-of-selected-lines/</guid>
-      <description>Vim で選択した行の順番を入れ替える方法。</description>
+      <description><![CDATA[ <p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/4fefb361d9a693803520">https://qiita.com/nsfisis/items/4fefb361d9a693803520</a></p>
+<hr>
+<h1 id="バージョン情報">バージョン情報</h1>
+<p><code>:version</code> の一部</p>
+<blockquote>
+<p>VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Jan 26 2020 11:30:30)
+macOS version
+Included patches: 1-148
+Huge version without GUI.</p>
+</blockquote>
+<h1 id="よく紹介されている手法">よく紹介されている手法</h1>
+<h2 id="tac--tail"><code>tac</code> / <code>tail</code></h2>
+<p><code>tac</code> や <code>tail -r</code> などの外部コマンドを <code>!</code> を使って呼び出し、置き換える。</p>
+<blockquote>
+<p>:h v_!</p>
+</blockquote>
+<p><code>tac</code> コマンドや <code>tail</code> の <code>-r</code> オプションは環境によって利用できないことがあり、複数の環境を行き来する場合に採用しづらい</p>
+<h2 id="gm0"><code>:g/^/m0</code></h2>
+<p>こちらは外部コマンドに頼らず、Vim の機能のみを使う。<code>g</code> は <code>:global</code> コマンドの、<code>m</code> は <code>:move</code> コマンドの略</p>
+<p><code>:global</code> コマンドは <code>:[range]global/{pattern}/[command]</code> のように使い、<code>[range]</code> で指定された範囲の行のうち、<code>{pattern}</code> で指定された検索パターンにマッチする行に対して、順番に <code>[command]</code> で指定された Ex コマンドを呼び出す。</p>
+<blockquote>
+<p>:h :global</p>
+</blockquote>
+<p><code>:move</code> コマンドは <code>[range]:move {address}</code> のように使い、<code>[range]</code> で指定された範囲の行を <code>{address}</code> で指定された位置に移動させる。</p>
+<blockquote>
+<p>:h :move</p>
+</blockquote>
+<p><code>:g/^/m0</code> のように組み合わせると、「すべての行を1行ずつ 0行目(1行目の上)に動かす」という動きをする。これは確かに行の入れ替えになっている。</p>
+<p>なお、<code>:g/^/m0</code> は全ての行を入れ替えるが、<code>:N,Mg/^/mN-1</code> とすることで N行目から M行目を処理範囲とするよう拡張できる。手でこれを入力するわけにはいかないので、次のようなコマンドを用意する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>これは望みの動作をするが、実際に実行してみると全行がハイライトされてしまう。次節で詳細を述べる。</p>
+<h1 id="gm0-の問題点"><code>:g/^/m0</code> の問題点</h1>
+<p><code>:global</code> コマンドは各行に対してマッチングを行う際、現在の検索パターンを上書きしてしまう。<code>^</code> は行の先頭にマッチするため、結果として全ての行がハイライトされてしまう。<code>'hlsearch'</code> オプションを無効にしている場合その限りではないが、その場合でも直前の検索パターンが失われてしまうと <code>n</code> コマンドなどの際に不便である。</p>
+<blockquote>
+<p>:h @/</p>
+</blockquote>
+<h1 id="解決策">解決策</h1>
+<blockquote>
+<p>[2020/9/28追記]
+より簡潔な方法を見つけたので次節に追記した</p>
+</blockquote>
+<p>前述した <code>:Reverse</code> コマンドの定義を少し変えて、次のようにする:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">s</span>:<span style="color:#a6e22e">reverse_lines</span>(<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">to</span>) <span style="color:#a6e22e">abort</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#a6e22e">execute</span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d,%dg/^/m%d&#34;</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">to</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span> - <span style="color:#ae81ff">1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">endfunction</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">call</span> &lt;<span style="color:#a6e22e">SID</span>&gt;<span style="color:#a6e22e">reverse_lines</span>(&lt;<span style="color:#a6e22e">line1</span>&gt;, &lt;<span style="color:#a6e22e">line2</span>&gt;)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>実行しているコマンドが変わったわけではないが、関数呼び出しを経由するようにした。これだけで前述の問題が解決する。</p>
+<p>この理由は、ユーザー定義関数を実行する際は検索パターンが一度保存され、実行が終了したあと復元されるため。結果として検索パターンが <code>^</code> で上書きされることがなくなる。</p>
+<p>Vim のヘルプから該当箇所を引用する (強調は筆者による)。</p>
+<blockquote>
+<p>:h autocmd-searchpat</p>
+<p><strong>Autocommands do not change the current search patterns.</strong>  Vim saves the current
+search patterns before executing autocommands then restores them after the
+autocommands finish.  This means that autocommands do not affect the strings
+highlighted with the &lsquo;hlsearch&rsquo; option.</p>
+</blockquote>
+<p>これは autocommand の実行に関しての記述だが、これと同じことがユーザー定義関数の実行時にも適用される。このことは <code>:nohlsearch</code> のヘルプにある。同じく該当箇所を引用する (強調は筆者による)。</p>
+<blockquote>
+<p>:h :nohlsearch</p>
+<p>(略) This command doesn&rsquo;t work in an autocommand, because
+the highlighting state is saved and restored when
+executing autocommands |autocmd-searchpat|.
+<strong>Same thing for when invoking a user function.</strong></p>
+</blockquote>
+<p>この仕様により、<code>:g/^/m0</code> の呼び出しをユーザー定義関数に切り出すことで上述の問題を解決できる。</p>
+<h1 id="解決策-改訂版">解決策 (改訂版)</h1>
+<blockquote>
+<p>[2020/9/28追記]
+より簡潔な方法を見つけたため追記する</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>まさにこのための Exコマンド、<code>:keeppatterns</code> が存在する。<code>:keeppatterns {command}</code> のように使い、読んで字の如く、後ろに続く Exコマンドを「現在の検索パターンを保ったまま」実行する。はるかに分かりやすく意図を表現できる。</p>
+<blockquote>
+<p>:h :keeppatterns</p>
+</blockquote>
+<h1 id="コピペ用再掲">コピペ用再掲</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#75715e">&#34; License: Public Domain</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div>]]></description>
     </item>
     
     <item>
@@ -22,7 +111,80 @@
       <pubDate>Sat, 02 Oct 2021 09:37:12 +0900</pubDate>
       
       <guid>https://blog.nsfisis.dev/posts/2021-10-02/vim-difference-between-autocmd-bufwrite-and-bufwritepre/</guid>
-      <description>Vim の autocmd events における BufWrite/BufWritePre がどう違うのかを調べた結果、違いはないことがわかった。</description>
+      <description><![CDATA[ <p>この記事は Qiita から移植してきたものです。
+元 URL: <a href="https://qiita.com/nsfisis/items/79ab4db8564032de0b25">https://qiita.com/nsfisis/items/79ab4db8564032de0b25</a></p>
+<hr>
+<h1 id="tl-dr">TL; DR</h1>
+<p>違いはない。ただのエイリアス。</p>
+<h1 id="調査記録">調査記録</h1>
+<p>Vim の autocmd events には似通った名前のものがいくつかある。大抵は <code>:help</code> に説明があるが、この記事のタイトルにある2つを含めた以下のイベントには、その違いについて説明がない。</p>
+<ul>
+<li><code>BufRead</code>/<code>BufReadPost</code></li>
+<li><code>BufWrite</code>/<code>BufWritePre</code></li>
+<li><code>BufAdd</code>/<code>BufCreate</code></li>
+</ul>
+<p>このうち、<code>BufAdd</code>/<code>BufCreate</code> に関しては、<code>:help BufCreate</code> に</p>
+<blockquote>
+<p>The BufCreate event is for historic reasons.</p>
+</blockquote>
+<p>とあり、おそらくは <code>BufAdd</code> のエイリアスであろうということがわかる。他の2組も同様ではないかと予想されるが、確認のため vim と neovim のソースコードを調査した。</p>
+<blockquote>
+<p>ソースコードへのリンク
+<a href="https://github.com/vim/vim/tree/8e6be34338f13a6a625f19bcef82019c9adc65f2">vim (調査時点での master branch)</a>
+<a href="https://github.com/neovim/neovim/tree/71d4f5851f068eeb432af34850dddda8cc1c71e3">neovim (上に同じ)</a></p>
+</blockquote>
+<h2 id="vim-のソースコード">vim のソースコード</h2>
+<p>以下は、autocmd events の名前と内部で使われている整数値とのマッピングを定義している箇所である。見ての通り、上でエイリアスではないかと述べた3組には、それぞれ同じ内部値が使われている。</p>
+<p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufAdd&#34;</span>,		EVENT_BUFADD},
+    {<span style="color:#e6db74">&#34;BufCreate&#34;</span>,	EVENT_BUFADD},
+</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufRead&#34;</span>,		EVENT_BUFREADPOST},
+    {<span style="color:#e6db74">&#34;BufReadCmd&#34;</span>,	EVENT_BUFREADCMD},
+    {<span style="color:#e6db74">&#34;BufReadPost&#34;</span>,	EVENT_BUFREADPOST},
+</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufWrite&#34;</span>,	EVENT_BUFWRITEPRE},
+    {<span style="color:#e6db74">&#34;BufWritePost&#34;</span>,	EVENT_BUFWRITEPOST},
+    {<span style="color:#e6db74">&#34;BufWritePre&#34;</span>,	EVENT_BUFWRITEPRE},
+</code></pre></div><h2 id="neovim-のソースコード">neovim のソースコード</h2>
+<p>neovim の場合でも同様のマッピングが定義されているが、こちらの場合は Lua で書かれている。以下にある通り、はっきり <code>aliases</code> と書かれている。</p>
+<p><a href="https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124">https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">  aliases <span style="color:#f92672">=</span> {
+    BufCreate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufAdd&#39;</span>,
+    BufRead <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufReadPost&#39;</span>,
+    BufWrite <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufWritePre&#39;</span>,
+    FileEncoding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EncodingChanged&#39;</span>,
+  },
+</code></pre></div><p>ところで、上では取り上げなかった <code>FileEncoding</code> だが、これは <code>:help FileEncoding</code> にしっかりと書いてある。</p>
+<pre tabindex="0"><code>                                                           *FileEncoding*
+FileEncoding                    Obsolete.  It still works and is equivalent
+                                to |EncodingChanged|.
+</code></pre><h2 id="まとめ">まとめ</h2>
+<p>記事タイトルについて言えば、どちらも変わらないので好きな方を使えばよい。あえて言えば、次のようになるだろう。</p>
+<ul>
+<li><code>BufAdd</code>/<code>BufCreate</code>
+<ul>
+<li>→ <code>BufCreate</code> は歴史的な理由により (&ldquo;for historic reasons&rdquo;) 存在しているため、新しい方 (<code>BufAdd</code>) を使う</li>
+</ul>
+</li>
+<li><code>BufRead</code>/<code>BufReadPost</code>
+<ul>
+<li>→ <code>BufReadPre</code> との対称性のため、あるいは <code>BufWritePost</code> との対称性のため <code>BufReadPost</code> を使う</li>
+</ul>
+</li>
+<li><code>BufWrite</code>/<code>BufWritePre</code>
+<ul>
+<li>→ <code>BufWritePost</code> との対称性のため、あるいは <code>BufReadPre</code> との対称性のため <code>BufWritePre</code> を使う</li>
+</ul>
+</li>
+<li><code>FileEncoding</code>/<code>EncodingChanged</code>
+<ul>
+<li>→ <code>FileEncoding</code> は &ldquo;Obsolete&rdquo; と明言されているので、<code>EncodingChanged</code> を使う</li>
+</ul>
+</li>
+</ul>
+<p>ところでこの調査で知ったのだが、<code>BufRead</code> と <code>BufWrite</code> は上にある通り発火するタイミングが「後」と「前」で対称性がない。可能なら <code>Pre</code>/<code>Post</code> 付きのものを使った方が分かりやすいだろう。</p>
+]]></description>
     </item>
     
   </channel>
