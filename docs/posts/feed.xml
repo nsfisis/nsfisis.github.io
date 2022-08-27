@@ -6,7 +6,57 @@
     <description>Recent content in Posts on REPL: Rest-Eat-Program Loop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sun, 01 May 2022 09:41:39 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/posts/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 27 Aug 2022 18:55:28 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/posts/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PHP カンファレンス沖縄で出題されたコードゴルフの問題を解いてみた</title>
+      <link>https://blog.nsfisis.dev/posts/2022-08-27/php-conference-okinawa-code-golf/</link>
+      <pubDate>Sat, 27 Aug 2022 18:55:28 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/2022-08-27/php-conference-okinawa-code-golf/</guid>
+      <description><![CDATA[ <h1 id="はじめに">はじめに</h1>
+<p>本日 <a href="https://phpcon.okinawa.jp/">PHP カンファレンス沖縄 2022</a> が開催された (らしい)。</p>
+<p>カンファレンスには参加できなかったものの、懇親会の LT で出題されたコードゴルフの問題が Twitter に流れてきたので、解いてみた。</p>
+<p>ツイート: <a href="https://twitter.com/m3m0r7/status/1563397620231712772">https://twitter.com/m3m0r7/status/1563397620231712772</a><br>
+スライド: <a href="https://speakerdeck.com/memory1994/php-conference-okinawa-2022-extra?slide=3">https://speakerdeck.com/memory1994/php-conference-okinawa-2022-extra?slide=3</a></p>
+<h1 id="解">解</h1>
+<p>細かいレギュレーションは不明だったので、勝手に定めた。</p>
+<ul>
+<li>コマンドライン引数の第1引数で受けとる</li>
+<li>結果は標準出力に出す</li>
+<li>コンマの直後にはスペースを1つ置く</li>
+<li>末尾コンマは禁止</li>
+<li>数字でないものは入ってこないものとする</li>
+<li>負数は入ってこないものとする</li>
+</ul>
+<p>書いたものがこちら:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">[<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> $n<span style="color:#f92672">=</span>$argv[<span style="color:#ae81ff">1</span>];<span style="color:#66d9ef">foreach</span>([<span style="color:#ae81ff">1e4</span>,<span style="color:#ae81ff">5e3</span>,<span style="color:#ae81ff">2e3</span>,<span style="color:#ae81ff">1e3</span>,<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">1</span>]<span style="color:#66d9ef">as</span>$x)<span style="color:#66d9ef">for</span>(;$n<span style="color:#f92672">&gt;=</span>$x;$n<span style="color:#f92672">-=</span>$x)$r[]<span style="color:#f92672">=</span>$x;<span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>,$r<span style="color:#f92672">??</span>[]);<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">]
+</span></code></pre></div><p>しめて 123 バイトとなった (末尾改行を含めずにカウント)。</p>
+<p>こちらは改行とスペースを追加したバージョン:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">[<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+$n <span style="color:#f92672">=</span> $argv[<span style="color:#ae81ff">1</span>];
+<span style="color:#66d9ef">foreach</span> ([<span style="color:#ae81ff">1e4</span>, <span style="color:#ae81ff">5e3</span>, <span style="color:#ae81ff">2e3</span>, <span style="color:#ae81ff">1e3</span>, <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">as</span> $x)
+  <span style="color:#66d9ef">for</span> (; $n <span style="color:#f92672">&gt;=</span> $x; $n <span style="color:#f92672">-=</span> $x)
+    $r[] <span style="color:#f92672">=</span> $x;
+<span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>, $r <span style="color:#f92672">??</span> []);
+
+<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">]
+</span></code></pre></div><h1 id="使用したテクニック">使用したテクニック</h1>
+<h2 id="指数表記">指数表記</h2>
+<p>割と多くの言語のゴルフで使えるテクニック。<code>e</code> を用いた指数表記で、大きな数を短く表す。このコードでは <code>10000</code>、<code>5000</code>、<code>2000</code>、<code>1000</code> を指数表記している。</p>
+<h2 id="foreach-や-for-の中身を1つの文に">foreach や for の中身を1つの文に</h2>
+<p><code>foreach</code>、<code>for</code>、<code>if</code> などの後ろには、通常 <code>{</code> を続けて複数の文を連ねるが、中身の文を1つにしてしまえば、<code>{</code> と <code>}</code> を省略できる。C言語などでも使える。</p>
+<h2 id="r-に初期値を入れない">$r に初期値を入れない</h2>
+<p>PHP では、<code>$r[] = ...</code> のような配列の末尾に追加する式を実行したとき、<code>$r</code> が未定義だった場合は <code>$r</code> を勝手に定義して空の配列で初期化してくれる。これを利用すると、<code>$r = [];</code> のような初期化が不要になる。</p>
+<p>ただし、プログラムに 0 が渡されるとループを一度も回らないので、<code>$r</code> が未定義になってしまい、<code>implode()</code> に渡すところでエラーになる。それを防ぐために <code>$r ?? []</code> を使っている。</p>
+<p>もし 0 が渡されたケースを無視するなら、これが不要になるので 4 バイト縮む。</p>
+<h2 id="php-タグの外に文字列を置く">PHP タグの外に文字列を置く</h2>
+<p>PHP では、<code>&lt;?php</code> <code>?&gt;</code> で囲われた部分の外側にある文字列は、そのまま出力される。今回のケースでは、先頭と末尾に必ず <code>[</code> と <code>]</code> を出力するので、そのまま書いてやればよい。</p>
+<h1 id="おわりに">おわりに</h1>
+<p>最後になりましたが、<a href="https://twitter.com/m3m0r7">めもりー</a> さん、楽しい問題をありがとうございました。</p>
+]]></description>
+    </item>
+    
     <item>
       <title>PHPerKaigi 2022</title>
       <link>https://blog.nsfisis.dev/posts/2022-05-01/phperkaigi-2022/</link>
