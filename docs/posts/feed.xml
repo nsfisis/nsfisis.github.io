@@ -16,7 +16,7 @@
       <description><![CDATA[ <h1 id="はじめに">はじめに</h1>
 <p>本日 <a href="https://phpcon.okinawa.jp/">PHP カンファレンス沖縄 2022</a> が開催された (らしい)。</p>
 <p>カンファレンスには参加できなかったものの、懇親会の LT で出題されたコードゴルフの問題が Twitter に流れてきたので、解いてみた。</p>
-<p>ツイート: <a href="https://twitter.com/m3m0r7/status/1563397620231712772">https://twitter.com/m3m0r7/status/1563397620231712772</a><br>
+<p>ツイート: <a href="https://twitter.com/m3m0r7/status/1563397620231712772">https://twitter.com/m3m0r7/status/1563397620231712772</a> <br>
 スライド: <a href="https://speakerdeck.com/memory1994/php-conference-okinawa-2022-extra?slide=3">https://speakerdeck.com/memory1994/php-conference-okinawa-2022-extra?slide=3</a></p>
 <h1 id="解">解</h1>
 <p>細かいレギュレーションは不明だったので、勝手に定めた。</p>
@@ -29,19 +29,19 @@
 <li>負数は入ってこないものとする</li>
 </ul>
 <p>書いたものがこちら:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">[<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> $n<span style="color:#f92672">=</span>$argv[<span style="color:#ae81ff">1</span>];<span style="color:#66d9ef">foreach</span>([<span style="color:#ae81ff">1e4</span>,<span style="color:#ae81ff">5e3</span>,<span style="color:#ae81ff">2e3</span>,<span style="color:#ae81ff">1e3</span>,<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">1</span>]<span style="color:#66d9ef">as</span>$x)<span style="color:#66d9ef">for</span>(;$n<span style="color:#f92672">&gt;=</span>$x;$n<span style="color:#f92672">-=</span>$x)$r[]<span style="color:#f92672">=</span>$x;<span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>,$r<span style="color:#f92672">??</span>[]);<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">]
-</span></code></pre></div><p>しめて 123 バイトとなった (末尾改行を含めずにカウント)。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>[<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span> $n<span style="color:#f92672">=</span>$argv[<span style="color:#ae81ff">1</span>];<span style="color:#66d9ef">foreach</span>([<span style="color:#ae81ff">1e4</span>,<span style="color:#ae81ff">5e3</span>,<span style="color:#ae81ff">2e3</span>,<span style="color:#ae81ff">1e3</span>,<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">1</span>]<span style="color:#66d9ef">as</span>$x)<span style="color:#66d9ef">for</span>(;$n<span style="color:#f92672">&gt;=</span>$x;$n<span style="color:#f92672">-=</span>$x)$r[]<span style="color:#f92672">=</span>$x;<span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>,$r<span style="color:#f92672">??</span>[]);<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">]
+</span></span></span></code></pre></div><p>しめて 123 バイトとなった (末尾改行を含めずにカウント)。</p>
 <p>こちらは改行とスペースを追加したバージョン:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">[<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-$n <span style="color:#f92672">=</span> $argv[<span style="color:#ae81ff">1</span>];
-<span style="color:#66d9ef">foreach</span> ([<span style="color:#ae81ff">1e4</span>, <span style="color:#ae81ff">5e3</span>, <span style="color:#ae81ff">2e3</span>, <span style="color:#ae81ff">1e3</span>, <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">as</span> $x)
-  <span style="color:#66d9ef">for</span> (; $n <span style="color:#f92672">&gt;=</span> $x; $n <span style="color:#f92672">-=</span> $x)
-    $r[] <span style="color:#f92672">=</span> $x;
-<span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>, $r <span style="color:#f92672">??</span> []);
-
-<span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">]
-</span></code></pre></div><h1 id="使用したテクニック">使用したテクニック</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>[<span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$n <span style="color:#f92672">=</span> $argv[<span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ([<span style="color:#ae81ff">1e4</span>, <span style="color:#ae81ff">5e3</span>, <span style="color:#ae81ff">2e3</span>, <span style="color:#ae81ff">1e3</span>, <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">as</span> $x)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (; $n <span style="color:#f92672">&gt;=</span> $x; $n <span style="color:#f92672">-=</span> $x)
+</span></span><span style="display:flex;"><span>    $r[] <span style="color:#f92672">=</span> $x;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>, $r <span style="color:#f92672">??</span> []);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">]
+</span></span></span></code></pre></div><h1 id="使用したテクニック">使用したテクニック</h1>
 <h2 id="指数表記">指数表記</h2>
 <p>割と多くの言語のゴルフで使えるテクニック。<code>e</code> を用いた指数表記で、大きな数を短く表す。このコードでは <code>10000</code>、<code>5000</code>、<code>2000</code>、<code>1000</code> を指数表記している。</p>
 <h2 id="foreach-や-for-の中身を1つの文に">foreach や for の中身を1つの文に</h2>
@@ -146,7 +146,7 @@ $n <span style="color:#f92672">=</span> $argv[<span style="color:#ae81ff">1</spa
       <guid>https://blog.nsfisis.dev/posts/2022-04-24/term-banner-write-tool-showing-banner-in-terminal/</guid>
       <description><![CDATA[ <h1 id="はじめに">はじめに</h1>
 <p>こんなものを作った。</p>
-<pre tabindex="0"><code>$ term-banner 'Hello, World!' 'こんにちは、' '世界！'
+<pre tabindex="0"><code>$ term-banner &#39;Hello, World!&#39; &#39;こんにちは、&#39; &#39;世界！&#39;
 </code></pre><p><img src="https://raw.githubusercontent.com/nsfisis/term-banner/main/screenshot.png" alt="term-banner のスクリーンショット"></p>
 <p>コマンドライン引数として渡した文字列をターミナルに大きく表示する。</p>
 <p>リポジトリはこちら: <a href="https://github.com/nsfisis/term-banner">https://github.com/nsfisis/term-banner</a></p>
@@ -200,76 +200,76 @@ PNG が標準ライブラリにあったり、Shift-JIS のエンコーディン
 <p>リポジトリはこちら: <a href="https://github.com/nsfisis/PHPerKaigi2022-tokens">https://github.com/nsfisis/PHPerKaigi2022-tokens</a></p>
 <h1 id="第1問-brainf_ckphp">第1問 brainf_ck.php</h1>
 <p>ソースコードはこちら。実行には PHP 8.1 以上が必要なので注意。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-<span style="color:#66d9ef">declare</span>(<span style="color:#a6e22e">strict_types</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span><span style="color:#a6e22e">O1</span>);
-
-<span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">Dgcircus\PHPerKaigi\Y2022</span>;
-
-<span style="color:#e6db74">/**
-</span><span style="color:#e6db74"> * @todo
-</span><span style="color:#e6db74"> * Run this program to acquire a PHPer token.
-</span><span style="color:#e6db74"> */</span>
-
-<span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">creativecommons</span><span style="color:#f92672">.</span><span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">publicdomain</span><span style="color:#f92672">/</span><span style="color:#a6e22e">zero</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>
-
-<span style="color:#a6e22e">\error_reporting</span>(<span style="color:#f92672">~+!</span><span style="color:#e6db74">&#39;We are hiring!&#39;</span>);
-
-$z <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($f) <span style="color:#f92672">=&gt;</span> (<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> $f(<span style="color:#a6e22e">fn</span>(<span style="color:#f92672">...</span>$xs) <span style="color:#f92672">=&gt;</span> $x($x)(<span style="color:#f92672">...</span>$xs)))(<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> $f(<span style="color:#a6e22e">fn</span>(<span style="color:#f92672">...</span>$xs) <span style="color:#f92672">=&gt;</span> $x($x)(<span style="color:#f92672">...</span>$xs)));
-$id <span style="color:#f92672">=</span> <span style="color:#a6e22e">\spl_object_id</span>(<span style="color:#f92672">...</span>);
-$put <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($c) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">\printf</span>(<span style="color:#e6db74">&#39;%c&#39;</span>, $c);
-$mm <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($p, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\ArrayObject</span>(<span style="color:#a6e22e">\array_fill</span>(<span style="color:#f92672">+!!</span>[], $n, $p));
-
-$👉 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [<span style="color:#f92672">++</span>$mp, <span style="color:#f92672">++</span>$pc];
-$👈 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [<span style="color:#f92672">--</span>$mp, <span style="color:#f92672">++</span>$pc];
-$👍 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, <span style="color:#f92672">++</span>$m[$mp]];
-$👎 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, <span style="color:#f92672">--</span>$m[$mp]];
-$📝 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, $put($m[$mp])];
-$🤡 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($m[$mp]) {
-    <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">=&gt;</span> [$mp, $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($pc, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($id($p[$pc])) {
-      $b <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">++</span>$pc, <span style="color:#f92672">++</span>$n),
-      $e <span style="color:#f92672">=&gt;</span> $n <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">?</span> <span style="color:#f92672">++</span>$pc <span style="color:#f92672">:</span> $loop(<span style="color:#f92672">++</span>$pc, <span style="color:#f92672">--</span>$n),
-      <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">++</span>$pc, $n),
-    })($pc, <span style="color:#f92672">-!</span>[])],
-    <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc],
-};
-$🎪 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($m[$mp]) {
-    <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc],
-    <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> [$mp, $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($pc, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($id($p[$pc])) {
-      $e <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">--</span>$pc, <span style="color:#f92672">++</span>$n),
-      $b <span style="color:#f92672">=&gt;</span> $n <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">?</span> $pc<span style="color:#f92672">+!</span>[] <span style="color:#f92672">:</span> $loop(<span style="color:#f92672">--</span>$pc, <span style="color:#f92672">--</span>$n),
-      <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">--</span>$pc, $n),
-    })($pc, <span style="color:#f92672">-!</span>[])],
-};
-$🐘 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($p) <span style="color:#f92672">=&gt;</span> $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span>
-  <span style="color:#a6e22e">isset</span>($p[$pc]) <span style="color:#f92672">&amp;&amp;</span> $loop($m, $p, $b, $e, <span style="color:#f92672">...</span>($p[$pc]($m, $p, $b, $e, $mp, $pc)))
-)($mm(<span style="color:#f92672">+!!</span>[], <span style="color:#f92672">+</span>(<span style="color:#f92672">!</span>[]<span style="color:#f92672">.!</span>[])), $p, $id($🤡), $id($🎪), <span style="color:#f92672">+!!</span>[], <span style="color:#f92672">+!!</span>[]);
-
-$🐘([
-  $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
-  $🤡,
-    $👉, $👍, $👍, $👍,
-    $👉, $👍, $👍, $👍, $👍, $👍,
-    $👉, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
-    $👉, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
-    $👈, $👈, $👈, $👈, $👎,
-  $🎪,
-  $👉, $👍, $👍, $👍, $👍, $👍, $📝,
-  $👎, $👎, $📝,
-  $👉, $👎, $👎, $👎, $📝,
-  $👉, $👎, $👎, $👎, $📝,
-  $👎, $👎, $📝,
-  $👎, $📝,
-  $👈, $📝,
-  $👉, $👉, $👎, $👎, $📝,
-  $👍, $👍, $👍, $👍, $👍, $👍, $👍, $📝,
-  $👈, $👎, $👎, $👎, $👎, $📝,
-  $👈, $📝,
-  $👉, $👍, $👍, $📝,
-  $👉, $👎, $📝,
-  $👈, $📝,
-]);
-</code></pre></div><p>この問題は、単に適切なバージョンの PHP で動かせばトークンが得られる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">declare</span>(<span style="color:#a6e22e">strict_types</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span><span style="color:#a6e22e">O1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">Dgcircus\PHPerKaigi\Y2022</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * @todo
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Run this program to acquire a PHPer token.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">creativecommons</span><span style="color:#f92672">.</span><span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">publicdomain</span><span style="color:#f92672">/</span><span style="color:#a6e22e">zero</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">\error_reporting</span>(<span style="color:#f92672">~+!</span><span style="color:#e6db74">&#39;We are hiring!&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$z <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($f) <span style="color:#f92672">=&gt;</span> (<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> $f(<span style="color:#a6e22e">fn</span>(<span style="color:#f92672">...</span>$xs) <span style="color:#f92672">=&gt;</span> $x($x)(<span style="color:#f92672">...</span>$xs)))(<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> $f(<span style="color:#a6e22e">fn</span>(<span style="color:#f92672">...</span>$xs) <span style="color:#f92672">=&gt;</span> $x($x)(<span style="color:#f92672">...</span>$xs)));
+</span></span><span style="display:flex;"><span>$id <span style="color:#f92672">=</span> <span style="color:#a6e22e">\spl_object_id</span>(<span style="color:#f92672">...</span>);
+</span></span><span style="display:flex;"><span>$put <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($c) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">\printf</span>(<span style="color:#e6db74">&#39;%c&#39;</span>, $c);
+</span></span><span style="display:flex;"><span>$mm <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($p, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">\ArrayObject</span>(<span style="color:#a6e22e">\array_fill</span>(<span style="color:#f92672">+!!</span>[], $n, $p));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$👉 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [<span style="color:#f92672">++</span>$mp, <span style="color:#f92672">++</span>$pc];
+</span></span><span style="display:flex;"><span>$👈 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [<span style="color:#f92672">--</span>$mp, <span style="color:#f92672">++</span>$pc];
+</span></span><span style="display:flex;"><span>$👍 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, <span style="color:#f92672">++</span>$m[$mp]];
+</span></span><span style="display:flex;"><span>$👎 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, <span style="color:#f92672">--</span>$m[$mp]];
+</span></span><span style="display:flex;"><span>$📝 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc, $put($m[$mp])];
+</span></span><span style="display:flex;"><span>$🤡 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($m[$mp]) {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">=&gt;</span> [$mp, $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($pc, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($id($p[$pc])) {
+</span></span><span style="display:flex;"><span>      $b <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">++</span>$pc, <span style="color:#f92672">++</span>$n),
+</span></span><span style="display:flex;"><span>      $e <span style="color:#f92672">=&gt;</span> $n <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">?</span> <span style="color:#f92672">++</span>$pc <span style="color:#f92672">:</span> $loop(<span style="color:#f92672">++</span>$pc, <span style="color:#f92672">--</span>$n),
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">++</span>$pc, $n),
+</span></span><span style="display:flex;"><span>    })($pc, <span style="color:#f92672">-!</span>[])],
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc],
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>$🎪 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($m[$mp]) {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">=&gt;</span> [$mp, <span style="color:#f92672">++</span>$pc],
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> [$mp, $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($pc, $n) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">match</span> ($id($p[$pc])) {
+</span></span><span style="display:flex;"><span>      $e <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">--</span>$pc, <span style="color:#f92672">++</span>$n),
+</span></span><span style="display:flex;"><span>      $b <span style="color:#f92672">=&gt;</span> $n <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[] <span style="color:#f92672">?</span> $pc<span style="color:#f92672">+!</span>[] <span style="color:#f92672">:</span> $loop(<span style="color:#f92672">--</span>$pc, <span style="color:#f92672">--</span>$n),
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">default</span> <span style="color:#f92672">=&gt;</span> $loop(<span style="color:#f92672">--</span>$pc, $n),
+</span></span><span style="display:flex;"><span>    })($pc, <span style="color:#f92672">-!</span>[])],
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>$🐘 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>($p) <span style="color:#f92672">=&gt;</span> $z(<span style="color:#a6e22e">fn</span>($loop) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">fn</span>($m, $p, $b, $e, $mp, $pc) <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">isset</span>($p[$pc]) <span style="color:#f92672">&amp;&amp;</span> $loop($m, $p, $b, $e, <span style="color:#f92672">...</span>($p[$pc]($m, $p, $b, $e, $mp, $pc)))
+</span></span><span style="display:flex;"><span>)($mm(<span style="color:#f92672">+!!</span>[], <span style="color:#f92672">+</span>(<span style="color:#f92672">!</span>[]<span style="color:#f92672">.!</span>[])), $p, $id($🤡), $id($🎪), <span style="color:#f92672">+!!</span>[], <span style="color:#f92672">+!!</span>[]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$🐘([
+</span></span><span style="display:flex;"><span>  $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
+</span></span><span style="display:flex;"><span>  $🤡,
+</span></span><span style="display:flex;"><span>    $👉, $👍, $👍, $👍,
+</span></span><span style="display:flex;"><span>    $👉, $👍, $👍, $👍, $👍, $👍,
+</span></span><span style="display:flex;"><span>    $👉, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
+</span></span><span style="display:flex;"><span>    $👉, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍, $👍,
+</span></span><span style="display:flex;"><span>    $👈, $👈, $👈, $👈, $👎,
+</span></span><span style="display:flex;"><span>  $🎪,
+</span></span><span style="display:flex;"><span>  $👉, $👍, $👍, $👍, $👍, $👍, $📝,
+</span></span><span style="display:flex;"><span>  $👎, $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👉, $👎, $👎, $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👉, $👎, $👎, $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👎, $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👈, $📝,
+</span></span><span style="display:flex;"><span>  $👉, $👉, $👎, $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👍, $👍, $👍, $👍, $👍, $👍, $👍, $📝,
+</span></span><span style="display:flex;"><span>  $👈, $👎, $👎, $👎, $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👈, $📝,
+</span></span><span style="display:flex;"><span>  $👉, $👍, $👍, $📝,
+</span></span><span style="display:flex;"><span>  $👉, $👎, $📝,
+</span></span><span style="display:flex;"><span>  $👈, $📝,
+</span></span><span style="display:flex;"><span>]);
+</span></span></code></pre></div><p>この問題は、単に適切なバージョンの PHP で動かせばトークンが得られる。</p>
 <h2 id="解説">解説</h2>
 <h3 id="絵文字">絵文字</h3>
 <p>まず目につくのは大量の絵文字だろう。
@@ -323,18 +323,18 @@ Brainf*ck とは、難解プログラミング言語のひとつであり、こ�
 今回は、PHP 8.1 から追加された、<code>0O</code> または <code>0o</code> から始まる八進数リテラルを使った。</p>
 <h3 id="url">URL</h3>
 <p>ソースコードのライセンスを示したこの部分だが、</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">creativecommons</span><span style="color:#f92672">.</span><span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">publicdomain</span><span style="color:#f92672">/</span><span style="color:#a6e22e">zero</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>
-</code></pre></div><p>完全に合法な PHP のコードである。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">https</span><span style="color:#f92672">://</span><span style="color:#a6e22e">creativecommons</span><span style="color:#f92672">.</span><span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">publicdomain</span><span style="color:#f92672">/</span><span style="color:#a6e22e">zero</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>
+</span></span></code></pre></div><p>完全に合法な PHP のコードである。
 <code>https:</code> 部分はラベル、<code>//</code> 以降は行コメントになっている。</p>
 <h3 id="リテラルなしで数値を生成する">リテラルなしで数値を生成する</h3>
 <p>ソースコード中に、ほとんど数値リテラルが書かれていないことにお気づきだろうか。
 PHP では、型変換を利用することで任意の整数を作り出すことができる。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[]);
-<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+!</span>[]);
-<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]);
-<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]<span style="color:#f92672">+!</span>[]);
-<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+</span>(<span style="color:#f92672">!</span>[]<span style="color:#f92672">.+!!</span>[]));
-</code></pre></div><p><code>[]</code> に <code>!</code> を適用すると <code>true</code> が返ってくる。それに <code>+</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+!!</span>[]);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+!</span>[]);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">3</span> <span style="color:#f92672">===</span> <span style="color:#f92672">!</span>[]<span style="color:#f92672">+!</span>[]<span style="color:#f92672">+!</span>[]);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">10</span> <span style="color:#f92672">===</span> <span style="color:#f92672">+</span>(<span style="color:#f92672">!</span>[]<span style="color:#f92672">.+!!</span>[]));
+</span></span></code></pre></div><p><code>[]</code> に <code>!</code> を適用すると <code>true</code> が返ってくる。それに <code>+</code>
 を適用すると、<code>bool</code> から <code>int</code> ヘの型変換が走り、<code>1</code> が生成される。<code>10</code>
 はさらにトリッキーだ。まず <code>1</code> と <code>0</code> を作り、<code>.</code> で文字列として結合する
 (<code>'10'</code>)。これに <code>+</code> を適用すると、<code>string</code> から <code>int</code>
@@ -354,57 +354,57 @@ PHP では、型変換を利用することで任意の整数を作り出すこ�
 あまりに長い brainf*ck プログラムを書くとスタックオーバーフローする。</p>
 <h1 id="第2問-riddlephp">第2問 riddle.php</h1>
 <p>ソースコードはこちら。実行には PHP 8.0 以上が必要なので注意。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-<span style="color:#e6db74">/*********************************************************
-</span><span style="color:#e6db74"> * This program displays a PHPer token.                  *
-</span><span style="color:#e6db74"> * Guess &#39;N&#39;.                                            *
-</span><span style="color:#e6db74"> *                                                       *
-</span><span style="color:#e6db74"> * Hints:                                                *
-</span><span style="color:#e6db74"> * - N itself has no special meaning, e.g., 42, 8128,    *
-</span><span style="color:#e6db74"> *   it is selected at random.                           *
-</span><span style="color:#e6db74"> * - Each element of $token represents a single letter.  *
-</span><span style="color:#e6db74"> * - One letter consists of 5x5 cells.                   *
-</span><span style="color:#e6db74"> * - Remember, the output is a complete PHPer token.     *
-</span><span style="color:#e6db74"> *                                                       *
-</span><span style="color:#e6db74"> * License:                                              *
-</span><span style="color:#e6db74"> *   https://creativecommons.org/publicdomain/zero/1.0/  *
-</span><span style="color:#e6db74"> *********************************************************/</span>
-<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">N</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">/* Change it to your answer. */</span>;
-<span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span><span style="color:#a6e22e">b11111_11111_11111_11111_11111</span>);
-
-$token <span style="color:#f92672">=</span> [
-  <span style="color:#ae81ff">0x14B499C</span>,
-  <span style="color:#ae81ff">0x0BE34CC</span>, <span style="color:#ae81ff">0x01C9C69</span>,
-  <span style="color:#ae81ff">0x0ECA069</span>, <span style="color:#ae81ff">0x01C2449</span>, <span style="color:#ae81ff">0x0FDB166</span>, <span style="color:#ae81ff">0x01C9C69</span>,
-  <span style="color:#ae81ff">0x01C1C66</span>, <span style="color:#ae81ff">0x0FC1C47</span>, <span style="color:#ae81ff">0x01C1C66</span>,
-  <span style="color:#ae81ff">0x10C5858</span>, <span style="color:#ae81ff">0x1E4E3B8</span>, <span style="color:#ae81ff">0x1A2F2F8</span>,
-];
-<span style="color:#66d9ef">foreach</span> ($token <span style="color:#66d9ef">as</span> $x) {
-  $x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
-
-  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
-  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
-  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
-  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>$x<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
-}
-</code></pre></div><p>さて、この問題はさきほどのように単純に実行しただけでは、謎のブロックが表示されるだけでトークンは得られない。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">/*********************************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * This program displays a PHPer token.                  *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Guess &#39;N&#39;.                                            *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *                                                       *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * Hints:                                                *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * - N itself has no special meaning, e.g., 42, 8128,    *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *   it is selected at random.                           *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * - Each element of $token represents a single letter.  *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * - One letter consists of 5x5 cells.                   *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * - Remember, the output is a complete PHPer token.     *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *                                                       *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> * License:                                              *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *   https://creativecommons.org/publicdomain/zero/1.0/  *
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> *********************************************************/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">N</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">/* Change it to your answer. */</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span><span style="color:#a6e22e">b11111_11111_11111_11111_11111</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$token <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0x14B499C</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0x0BE34CC</span>, <span style="color:#ae81ff">0x01C9C69</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0x0ECA069</span>, <span style="color:#ae81ff">0x01C2449</span>, <span style="color:#ae81ff">0x0FDB166</span>, <span style="color:#ae81ff">0x01C9C69</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0x01C1C66</span>, <span style="color:#ae81ff">0x0FC1C47</span>, <span style="color:#ae81ff">0x01C1C66</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0x10C5858</span>, <span style="color:#ae81ff">0x1E4E3B8</span>, <span style="color:#ae81ff">0x1A2F2F8</span>,
+</span></span><span style="display:flex;"><span>];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> ($token <span style="color:#66d9ef">as</span> $x) {
+</span></span><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
+</span></span><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+</span></span><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>$x<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>さて、この問題はさきほどのように単純に実行しただけでは、謎のブロックが表示されるだけでトークンは得られない。
 トークンを得るためには、ソースコードを読み、定数 <code>N</code> を特定する必要がある。</p>
 <p>ここでは、私の想定解を解説する。</p>
 <h2 id="読解">読解</h2>
 <p>まずはソースコードを読んでいく。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">$token <span style="color:#f92672">=</span> [
-  <span style="color:#75715e">// 略
-</span><span style="color:#75715e"></span>];
-</code></pre></div><p>数値からなる <code>$token</code> があり、各要素をループしている。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
-</code></pre></div><p>まずは排他的論理和 (xor) を取り、</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
-</code></pre></div><p>二進数に変換して、</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
-</code></pre></div><p>0 を空白に、1 を <code>#</code> にし、</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
-</code></pre></div><p>5文字ごとに区切ったあと、改行で結合している。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$token <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 略
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>];
+</span></span></code></pre></div><p>数値からなる <code>$token</code> があり、各要素をループしている。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
+</span></span></code></pre></div><p>まずは排他的論理和 (xor) を取り、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
+</span></span></code></pre></div><p>二進数に変換して、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+</span></span></code></pre></div><p>0 を空白に、1 を <code>#</code> にし、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  $x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
+</span></span></code></pre></div><p>5文字ごとに区切ったあと、改行で結合している。</p>
 <h2 id="ヒント">ヒント</h2>
 <p>次に、ソースコードに書いてあるヒントを読んでいく。</p>
 <ul>
@@ -418,76 +418,76 @@ $token <span style="color:#f92672">=</span> [
 <h2 id="解く">解く</h2>
 <p>ここまでわかれば、あと一歩で解ける。すなわち、<code>0x14B499C</code> が <code>#</code> に変換されるような <code>N</code> を見つければよい。</p>
 <p><code>N</code> は高々</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span><span style="color:#a6e22e">b11111_11111_11111_11111_11111</span>);
-</code></pre></div><p>なのでブルートフォースしてもよいが、ここではブルートフォースしない方法を紹介する。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-$x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x14B499C</span>;
-
-$x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
-
-$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
-$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
-$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
-
-<span style="color:#a6e22e">assert</span>($x <span style="color:#f92672">===</span>
-  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34; # # &#34;</span>);
-</code></pre></div><p>この一連の変換に対する逆変換を考えると、次のようになる。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-$x <span style="color:#f92672">=</span>
-  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
-  <span style="color:#e6db74">&#34; # # &#34;</span>;
-
-$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#a6e22e">explode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $x));
-$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
-$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">bindec</span>($x);
-
-$n <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x14B499C</span>;
-
-<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;N = </span><span style="color:#e6db74">$n\n</span><span style="color:#e6db74">&#34;</span>;
-</code></pre></div><p>これを実行すると、<code>N</code> が得られる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">N</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span><span style="color:#a6e22e">b11111_11111_11111_11111_11111</span>);
+</span></span></code></pre></div><p>なのでブルートフォースしてもよいが、ここではブルートフォースしない方法を紹介する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x14B499C</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#a6e22e">N</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;%025b&#39;</span>, $x);
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>($x, <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">assert</span>($x <span style="color:#f92672">===</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34; # # &#34;</span>);
+</span></span></code></pre></div><p>この一連の変換に対する逆変換を考えると、次のようになる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34; # # </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;#####</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34; # # &#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#a6e22e">explode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $x));
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_replace</span>(<span style="color:#a6e22e">search</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;#&#39;</span>], <span style="color:#a6e22e">replace</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#39;0&#39;</span>, <span style="color:#e6db74">&#39;1&#39;</span>], <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> $x);
+</span></span><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#a6e22e">bindec</span>($x);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$n <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x14B499C</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;N = </span><span style="color:#e6db74">$n\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span></code></pre></div><p>これを実行すると、<code>N</code> が得られる。</p>
 <h1 id="第3問-toquinephp">第3問 toquine.php</h1>
 <p>ソースコードはこちら。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
-
-<span style="color:#75715e">// License: https://creativecommons.org/publicdomain/zero/1.0/
-</span><span style="color:#75715e">// This is a quine-like program to generate a PHPer token.
-</span><span style="color:#75715e">// Execute it like this: php toquine.php | php | php | php | ...
-</span><span style="color:#75715e"></span>
-$s <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;&lt;&#39;</span><span style="color:#e6db74">Q</span><span style="color:#e6db74">&#39;
-</span><span style="color:#e6db74">&lt;?cuc
-</span><span style="color:#e6db74">// Yvprafr: uggcf://perngvirpbzzbaf.bet/choyvpqbznva/mreb/1.0/
-</span><span style="color:#e6db74">// Guvf vf n dhvar-yvxr cebtenz gb trarengr n CUCre gbxra.
-</span><span style="color:#e6db74">// Rkrphgr vg yvxr guvf: cuc gbdhvar.cuc | cuc | cuc | cuc | ...
-</span><span style="color:#e6db74">%f$f = %f;
-</span><span style="color:#e6db74">$f = fge_ebg13($f); $kf = [
-</span><span style="color:#e6db74">%f,
-</span><span style="color:#e6db74">];
-</span><span style="color:#e6db74">$g = ahyy.snyfr; sbe ($v = 0; $v &lt;= vagqvi(__YVAR__-035,6); ++$v) vs (!vffrg($kf[$v])) oernx; ryfr
-</span><span style="color:#e6db74">$g .= vzcybqr(&#34;\a&#34;, fge_fcyvg(fge_ercynpr([&#39;0&#39;,&#39;1&#39;], [&#39;  &#39;,&#39;##&#39;], fcevags(pue(37) . &#39;025o&#39;, $kf[$v])), 012)) . &#34;\a\a&#34;;
-</span><span style="color:#e6db74">$jf = neenl_znc(sa($j) =&gt; vzcybqr(&#39;, &#39;, $j), neenl_puhax(neenl_znc(sa($k) =&gt; fcevags(&#39;0k&#39; . pue(37) . &#39;07K&#39;, $k), $kf), 10));
-</span><span style="color:#e6db74">cevags($f, $g, fge_ebg13(&#34;&lt;&lt;&lt;&#39;Q&#39;\a{$f}\aQ&#34;), vzcybqr(&#34;,\a&#34;, $jf));
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">Q</span>;
-$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_rot13</span>($s); $xs <span style="color:#f92672">=</span> [
-<span style="color:#ae81ff">0x0AFABEA</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F2109F</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x0002800</span>, <span style="color:#ae81ff">0x1F2109F</span>, <span style="color:#ae81ff">0x0117041</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1F295B7</span>,
-<span style="color:#ae81ff">0x010FC21</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1151151</span>, <span style="color:#ae81ff">0x010FC21</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F295B7</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F295B7</span>, <span style="color:#ae81ff">0x1F8C63F</span>,
-<span style="color:#ae81ff">0x1F8C631</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x17AD6BD</span>, <span style="color:#ae81ff">0x17AD6BD</span>, <span style="color:#ae81ff">0x1F8C63F</span>, <span style="color:#ae81ff">0x1F295B7</span>,
-];
-$t <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">.</span><span style="color:#66d9ef">false</span>; <span style="color:#66d9ef">for</span> ($i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; $i <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">intdiv</span>(<span style="color:#66d9ef">__LINE__</span><span style="color:#f92672">-</span><span style="color:#ae81ff">035</span>,<span style="color:#ae81ff">6</span>); <span style="color:#f92672">++</span>$i) <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>($xs[$i])) <span style="color:#66d9ef">break</span>; <span style="color:#66d9ef">else</span>
-$t <span style="color:#f92672">.=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>(<span style="color:#a6e22e">str_replace</span>([<span style="color:#e6db74">&#39;0&#39;</span>,<span style="color:#e6db74">&#39;1&#39;</span>], [<span style="color:#e6db74">&#39;  &#39;</span>,<span style="color:#e6db74">&#39;##&#39;</span>], <span style="color:#a6e22e">sprintf</span>(<span style="color:#a6e22e">chr</span>(<span style="color:#ae81ff">37</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;025b&#39;</span>, $xs[$i])), <span style="color:#ae81ff">012</span>)) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
-$ws <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">fn</span>($w) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>, $w), <span style="color:#a6e22e">array_chunk</span>(<span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;0x&#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">chr</span>(<span style="color:#ae81ff">37</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;07X&#39;</span>, $x), $xs), <span style="color:#ae81ff">10</span>));
-<span style="color:#a6e22e">printf</span>($s, $t, <span style="color:#a6e22e">str_rot13</span>(<span style="color:#e6db74">&#34;&lt;&lt;&lt;&#39;D&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>$s<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">D&#34;</span>), <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;,</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $ws));
-</code></pre></div><p>コメントにもあるとおり、次のようにして実行すれば答えがでてくる。</p>
-<pre tabindex="0"><code class="language-shell-session" data-lang="shell-session">$ php toquine.php | php | php | php | ...
-</code></pre><p>実際にはもう少しパイプで繋げなければならない。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// License: https://creativecommons.org/publicdomain/zero/1.0/
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// This is a quine-like program to generate a PHPer token.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Execute it like this: php toquine.php | php | php | php | ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> <span style="color:#e6db74">&lt;&lt;&lt;&#39;</span><span style="color:#e6db74">Q</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&lt;?cuc
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">// Yvprafr: uggcf://perngvirpbzzbaf.bet/choyvpqbznva/mreb/1.0/
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">// Guvf vf n dhvar-yvxr cebtenz gb trarengr n CUCre gbxra.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">// Rkrphgr vg yvxr guvf: cuc gbdhvar.cuc | cuc | cuc | cuc | ...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">%f$f = %f;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">$f = fge_ebg13($f); $kf = [
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">%f,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">];
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">$g = ahyy.snyfr; sbe ($v = 0; $v &lt;= vagqvi(__YVAR__-035,6); ++$v) vs (!vffrg($kf[$v])) oernx; ryfr
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">$g .= vzcybqr(&#34;\a&#34;, fge_fcyvg(fge_ercynpr([&#39;0&#39;,&#39;1&#39;], [&#39;  &#39;,&#39;##&#39;], fcevags(pue(37) . &#39;025o&#39;, $kf[$v])), 012)) . &#34;\a\a&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">$jf = neenl_znc(sa($j) =&gt; vzcybqr(&#39;, &#39;, $j), neenl_puhax(neenl_znc(sa($k) =&gt; fcevags(&#39;0k&#39; . pue(37) . &#39;07K&#39;, $k), $kf), 10));
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">cevags($f, $g, fge_ebg13(&#34;&lt;&lt;&lt;&#39;Q&#39;\a{$f}\aQ&#34;), vzcybqr(&#34;,\a&#34;, $jf));
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#e6db74">Q</span>;
+</span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_rot13</span>($s); $xs <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x0AFABEA</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F2109F</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x0002800</span>, <span style="color:#ae81ff">0x1F2109F</span>, <span style="color:#ae81ff">0x0117041</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1F295B7</span>,
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x010FC21</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1151151</span>, <span style="color:#ae81ff">0x010FC21</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F295B7</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x1F294A7</span>, <span style="color:#ae81ff">0x1F295B7</span>, <span style="color:#ae81ff">0x1F8C63F</span>,
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0x1F8C631</span>, <span style="color:#ae81ff">0x1FAD6B5</span>, <span style="color:#ae81ff">0x17AD6BD</span>, <span style="color:#ae81ff">0x17AD6BD</span>, <span style="color:#ae81ff">0x1F8C63F</span>, <span style="color:#ae81ff">0x1F295B7</span>,
+</span></span><span style="display:flex;"><span>];
+</span></span><span style="display:flex;"><span>$t <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">.</span><span style="color:#66d9ef">false</span>; <span style="color:#66d9ef">for</span> ($i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; $i <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">intdiv</span>(<span style="color:#66d9ef">__LINE__</span><span style="color:#f92672">-</span><span style="color:#ae81ff">035</span>,<span style="color:#ae81ff">6</span>); <span style="color:#f92672">++</span>$i) <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>($xs[$i])) <span style="color:#66d9ef">break</span>; <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>$t <span style="color:#f92672">.=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">str_split</span>(<span style="color:#a6e22e">str_replace</span>([<span style="color:#e6db74">&#39;0&#39;</span>,<span style="color:#e6db74">&#39;1&#39;</span>], [<span style="color:#e6db74">&#39;  &#39;</span>,<span style="color:#e6db74">&#39;##&#39;</span>], <span style="color:#a6e22e">sprintf</span>(<span style="color:#a6e22e">chr</span>(<span style="color:#ae81ff">37</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;025b&#39;</span>, $xs[$i])), <span style="color:#ae81ff">012</span>)) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>$ws <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">fn</span>($w) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#39;, &#39;</span>, $w), <span style="color:#a6e22e">array_chunk</span>(<span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">fn</span>($x) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#39;0x&#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">chr</span>(<span style="color:#ae81ff">37</span>) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;07X&#39;</span>, $x), $xs), <span style="color:#ae81ff">10</span>));
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>($s, $t, <span style="color:#a6e22e">str_rot13</span>(<span style="color:#e6db74">&#34;&lt;&lt;&lt;&#39;D&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>$s<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">D&#34;</span>), <span style="color:#a6e22e">implode</span>(<span style="color:#e6db74">&#34;,</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $ws));
+</span></span></code></pre></div><p>コメントにもあるとおり、次のようにして実行すれば答えがでてくる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell-session" data-lang="shell-session"><span style="display:flex;"><span>$ php toquine.php | php | php | php | ...
+</span></span></code></pre></div><p>実際にはもう少しパイプで繋げなければならない。</p>
 <h2 id="解説-1">解説</h2>
 <h3 id="プログラム全体-1">プログラム全体</h3>
 <p>コメントにもあるとおり、これは quine (風) のプログラムになっている。
@@ -522,27 +522,27 @@ Quine とは、自分のソースコードをそっくりそのまま出力す�
 <hr>
 <h1 id="前置き">前置き</h1>
 <p>Rust において、プリミティブ型の名前は予約語でない。したがって、次のコードは合法である。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#75715e">#![allow(non_camel_case_types)]</span>
-<span style="color:#75715e">#![allow(dead_code)]</span>
-
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">bool</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">char</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i8</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i16</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i32</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i64</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">i128</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">isize</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u8</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u16</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u32</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u64</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">u128</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">usize</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">f32</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">f64</span>;
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">str</span>;
-</code></pre></div><p>では、普段単に <code>bool</code> と書いたとき、この <code>bool</code> は一体どこから来ているのか。rustc のソースを追ってみた。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#![allow(non_camel_case_types)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#![allow(dead_code)]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">bool</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">char</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i8</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i16</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i32</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i64</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">i128</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">isize</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u8</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u16</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u32</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u64</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">u128</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">usize</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">f32</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">f64</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">str</span>;
+</span></span></code></pre></div><p>では、普段単に <code>bool</code> と書いたとき、この <code>bool</code> は一体どこから来ているのか。rustc のソースを追ってみた。</p>
 <blockquote>
 <p>前提知識: 一般的なコンパイラの構造、用語。<code>rustc</code> そのものの知識は不要 (というよりも筆者自身がよく知らない)</p>
 </blockquote>
@@ -553,91 +553,91 @@ Quine とは、自分のソースコードをそっくりそのまま出力す�
 <p>大雑把な構造としては、<code>compiler</code> フォルダ以下に <code>rustc_*</code> という名前のクレートが数十個入っている。これがどうやら <code>rustc</code> コマンドの実装部のようだ。</p>
 <p><code>rustc</code> はセルフホストされている (= <code>rustc</code> 自身が Rust で書かれている) ので、<code>bool</code> や <code>char</code> などで適当に検索をかけてもノイズが多すぎて話にならない。
 しかし、お誂え向きなことに <code>i128</code>/<code>u128</code> というコンパイラ自身が使うことがなさそうな型が存在するのでこれを使って <code>git grep</code> してみる。</p>
-<pre tabindex="0"><code>$ git grep &quot;\bi128\b&quot; | wc      # i128
+<pre tabindex="0"><code>$ git grep &#34;\bi128\b&#34; | wc      # i128
      165    1069   15790
 
-$ git grep &quot;\bu128\b&quot; | wc      # u128
+$ git grep &#34;\bu128\b&#34; | wc      # u128
      293    2127   26667
 
-$ git grep &quot;\bbool\b&quot; | wc      # cf. bool の結果
+$ git grep &#34;\bbool\b&#34; | wc      # cf. bool の結果
     3563   23577  294659
 </code></pre><p>165 程度であれば探すことができそうだ。今回は、クレート名を見ておおよその当たりをつけた。</p>
-<pre tabindex="0"><code>$ git grep &quot;\bi128\b&quot;
+<pre tabindex="0"><code>$ git grep &#34;\bi128\b&#34;
 ...
 rustc_resolve/src/lib.rs:        table.insert(sym::i128, Int(IntTy::I128));
 ...
 </code></pre><p><code>rustc_resolve</code> というのはいかにも名前解決を担いそうなクレート名である。該当箇所を見てみる。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#e6db74">/// Interns the names of the primitive types.
-</span><span style="color:#e6db74">///
-</span><span style="color:#e6db74">/// All other types are defined somewhere and possibly imported, but the primitive ones need
-</span><span style="color:#e6db74">/// special handling, since they have no place of origin.
-</span><span style="color:#e6db74"></span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">PrimitiveTypeTable</span> {
-    primitive_types: <span style="color:#a6e22e">FxHashMap</span><span style="color:#f92672">&lt;</span>Symbol, PrimTy<span style="color:#f92672">&gt;</span>,
-}
-
-<span style="color:#66d9ef">impl</span> PrimitiveTypeTable {
-    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">new</span>() -&gt; <span style="color:#a6e22e">PrimitiveTypeTable</span> {
-        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> table <span style="color:#f92672">=</span> FxHashMap::default();
-
-        table.insert(sym::<span style="color:#66d9ef">bool</span>, Bool);
-        table.insert(sym::char, Char);
-        table.insert(sym::<span style="color:#66d9ef">f32</span>, Float(FloatTy::F32));
-        table.insert(sym::<span style="color:#66d9ef">f64</span>, Float(FloatTy::F64));
-        table.insert(sym::<span style="color:#66d9ef">isize</span>, Int(IntTy::Isize));
-        table.insert(sym::<span style="color:#66d9ef">i8</span>, Int(IntTy::I8));
-        table.insert(sym::<span style="color:#66d9ef">i16</span>, Int(IntTy::I16));
-        table.insert(sym::<span style="color:#66d9ef">i32</span>, Int(IntTy::I32));
-        table.insert(sym::<span style="color:#66d9ef">i64</span>, Int(IntTy::I64));
-        table.insert(sym::<span style="color:#66d9ef">i128</span>, Int(IntTy::I128));
-        table.insert(sym::<span style="color:#66d9ef">str</span>, Str);
-        table.insert(sym::<span style="color:#66d9ef">usize</span>, Uint(UintTy::Usize));
-        table.insert(sym::<span style="color:#66d9ef">u8</span>, Uint(UintTy::U8));
-        table.insert(sym::<span style="color:#66d9ef">u16</span>, Uint(UintTy::U16));
-        table.insert(sym::<span style="color:#66d9ef">u32</span>, Uint(UintTy::U32));
-        table.insert(sym::<span style="color:#66d9ef">u64</span>, Uint(UintTy::U64));
-        table.insert(sym::<span style="color:#66d9ef">u128</span>, Uint(UintTy::U128));
-        Self { primitive_types: <span style="color:#a6e22e">table</span> }
-    }
-}
-</code></pre></div><p>これは初めに列挙したプリミティブ型の一覧と一致している。doc comment にも、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#e6db74">/// Interns the names of the primitive types.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">///
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// All other types are defined somewhere and possibly imported, but the primitive ones need
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/// special handling, since they have no place of origin.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">PrimitiveTypeTable</span> {
+</span></span><span style="display:flex;"><span>    primitive_types: <span style="color:#a6e22e">FxHashMap</span><span style="color:#f92672">&lt;</span>Symbol, PrimTy<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> PrimitiveTypeTable {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">new</span>() -&gt; <span style="color:#a6e22e">PrimitiveTypeTable</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> table <span style="color:#f92672">=</span> FxHashMap::default();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">bool</span>, Bool);
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">char</span>, Char);
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">f32</span>, Float(FloatTy::F32));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">f64</span>, Float(FloatTy::F64));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">isize</span>, Int(IntTy::Isize));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">i8</span>, Int(IntTy::I8));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">i16</span>, Int(IntTy::I16));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">i32</span>, Int(IntTy::I32));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">i64</span>, Int(IntTy::I64));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">i128</span>, Int(IntTy::I128));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">str</span>, Str);
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">usize</span>, Uint(UintTy::Usize));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">u8</span>, Uint(UintTy::U8));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">u16</span>, Uint(UintTy::U16));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">u32</span>, Uint(UintTy::U32));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">u64</span>, Uint(UintTy::U64));
+</span></span><span style="display:flex;"><span>        table.insert(sym::<span style="color:#66d9ef">u128</span>, Uint(UintTy::U128));
+</span></span><span style="display:flex;"><span>        Self { primitive_types: <span style="color:#a6e22e">table</span> }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>これは初めに列挙したプリミティブ型の一覧と一致している。doc comment にも、</p>
 <blockquote>
 <p>All other types are defined somewhere and possibly imported, but the primitive ones need special handling, since they have no place of origin.</p>
 </blockquote>
 <p>とある。次はこの struct の使用箇所を追う。追うと言っても使われている箇所は次の一箇所しかない。なお説明に不要な箇所は大きく削っている。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust">    <span style="color:#e6db74">/// This resolves the identifier `ident` in the namespace `ns` in the current lexical scope.
-</span><span style="color:#e6db74"></span>    <span style="color:#e6db74">/// (略)
-</span><span style="color:#e6db74"></span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">resolve_ident_in_lexical_scope</span>(
-        <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self,
-        <span style="color:#66d9ef">mut</span> ident: <span style="color:#a6e22e">Ident</span>,
-        ns: <span style="color:#a6e22e">Namespace</span>,
-        <span style="color:#75715e">// (略)
-</span><span style="color:#75715e"></span>    ) -&gt; Option<span style="color:#f92672">&lt;</span>LexicalScopeBinding<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;a</span><span style="color:#f92672">&gt;&gt;</span> {
-        <span style="color:#75715e">// (略)
-</span><span style="color:#75715e"></span>
-        <span style="color:#66d9ef">if</span> ns <span style="color:#f92672">==</span> TypeNS {
-            <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(prim_ty) <span style="color:#f92672">=</span> self.primitive_type_table.primitive_types.get(<span style="color:#f92672">&amp;</span>ident.name) {
-                <span style="color:#66d9ef">let</span> binding <span style="color:#f92672">=</span>
-                    (Res::PrimTy(<span style="color:#f92672">*</span>prim_ty), ty::Visibility::Public, DUMMY_SP, ExpnId::root())
-                        .to_name_binding(self.arenas);
-                <span style="color:#66d9ef">return</span> Some(LexicalScopeBinding::Item(binding));
-            }
-        }
-
-        None
-    }
-</code></pre></div><p>関数名や doc comment が示している通り、この関数は識別子 (identifier, ident) を現在のレキシカルスコープ内で解決 (resolve) する。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#e6db74">/// This resolves the identifier `ident` in the namespace `ns` in the current lexical scope.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    <span style="color:#e6db74">/// (略)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">resolve_ident_in_lexical_scope</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self,
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">mut</span> ident: <span style="color:#a6e22e">Ident</span>,
+</span></span><span style="display:flex;"><span>        ns: <span style="color:#a6e22e">Namespace</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// (略)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ) -&gt; Option<span style="color:#f92672">&lt;</span>LexicalScopeBinding<span style="color:#f92672">&lt;&#39;</span><span style="color:#a6e22e">a</span><span style="color:#f92672">&gt;&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// (略)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ns <span style="color:#f92672">==</span> TypeNS {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(prim_ty) <span style="color:#f92672">=</span> self.primitive_type_table.primitive_types.get(<span style="color:#f92672">&amp;</span>ident.name) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">let</span> binding <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>                    (Res::PrimTy(<span style="color:#f92672">*</span>prim_ty), ty::Visibility::Public, DUMMY_SP, ExpnId::root())
+</span></span><span style="display:flex;"><span>                        .to_name_binding(self.arenas);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> Some(LexicalScopeBinding::Item(binding));
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        None
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>関数名や doc comment が示している通り、この関数は識別子 (identifier, ident) を現在のレキシカルスコープ内で解決 (resolve) する。
 <code>if ns == TypeNS</code> のブロック内では、<code>primitive_type_table</code> (上記の <code>PrimitiveTypeTable::new()</code> で作られた変数) に含まれている識別子 (<code>bool</code>、<code>i32</code> など) かどうか判定し、そうであればそれに紐づけられたプリミティブ型を返している。</p>
 <p>なお、<code>ns</code> は「名前空間」を示す変数である。Rust における名前空間はC言語におけるそれとほとんど同じで、今探している名前が関数名/変数名なのか型なのかマクロなのかを区別している。この <code>if</code> は、プリミティブ型に解決されるのは型を探しているときだけだ、と言っている。</p>
 <p>重要なのは、これが <code>resolve_ident_in_lexical_scope()</code> の最後に書かれている点である。つまり、最初に挙げたプリミティブ型の識別子は、「名前解決の最終段階で」、「他に同名の型が見つかっていなければ」プリミティブ型として解決される。</p>
 <p>動作がわかったところで、例として次のコードを考える。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#75715e">#![allow(non_camel_case_types)]</span>
-
-<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">bool</span>;
-
-<span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#66d9ef">let</span> _: <span style="color:#66d9ef">bool</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">bool</span>;
-}
-</code></pre></div><p>ここで <code>main()</code> の <code>bool</code> は <code>struct bool</code> として解決される。なぜなら、プリミティブ型の判定をする前に <code>bool</code> という名前の別の型が見つかるからだ。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#![allow(non_camel_case_types)]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">bool</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> _: <span style="color:#66d9ef">bool</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">bool</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ここで <code>main()</code> の <code>bool</code> は <code>struct bool</code> として解決される。なぜなら、プリミティブ型の判定をする前に <code>bool</code> という名前の別の型が見つかるからだ。</p>
 <h1 id="まとめ">まとめ</h1>
 <p>Rust のプリミティブ型は予約語ではない。名前解決の最終段階で特別扱いされ、他に同名の型が見つかっていなければ対応するプリミティブ型に解決される。</p>
 ]]></description>
@@ -656,61 +656,61 @@ rustc_resolve/src/lib.rs:        table.insert(sym::i128, Int(IntTy::I128));
 <p><code>case</code> - <code>in</code> によるパターンマッチング構文でも、<code>case</code> - <code>when</code> と同じように <code>then</code> が使える (場合によっては使う必要がある)。</p>
 <h1 id="then-とは"><code>then</code> とは</h1>
 <p>使われることは稀だが、Ruby では <code>then</code> がキーワードになっている。次のように使う:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> cond <span style="color:#66d9ef">then</span>
-  puts <span style="color:#e6db74">&#34;Y&#34;</span>
-<span style="color:#66d9ef">else</span>
-  puts <span style="color:#e6db74">&#34;N&#34;</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>このキーワードが現れうる場所はいくつかあり、<code>if</code>、<code>unless</code>、<code>rescue</code>、<code>case</code> 構文がそれに当たる。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> cond <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  puts <span style="color:#e6db74">&#34;Y&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  puts <span style="color:#e6db74">&#34;N&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>このキーワードが現れうる場所はいくつかあり、<code>if</code>、<code>unless</code>、<code>rescue</code>、<code>case</code> 構文がそれに当たる。
 上記のように、何か条件を書いた後 <code>then</code> を置き、式がそこで終了していることを示すマーカーとして機能する。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Example:</span>
-
-<span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">then</span>
-  a
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">unless</span> x <span style="color:#66d9ef">then</span>
-  a
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">begin</span>
-  a
-<span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">then</span>
-  b
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">case</span> x
-<span style="color:#66d9ef">when</span> p <span style="color:#66d9ef">then</span>
-  a
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h1 id="なぜ普段は書かなくてもよいのか">なぜ普段は書かなくてもよいのか</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#75715e"># Example:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">unless</span> x <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">begin</span>
+</span></span><span style="display:flex;"><span>  a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  b
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> x
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">when</span> p <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h1 id="なぜ普段は書かなくてもよいのか">なぜ普段は書かなくてもよいのか</h1>
 <p>普通 Ruby のコードで <code>then</code> を書くことはない。なぜか。次のコードを実行してみるとわかる。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span> puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
-</code></pre></div><p>次のような構文エラーが出力される。</p>
-<pre tabindex="0"><code>20:1: syntax error, unexpected local variable or method, expecting `then' or ';' or '\n'
-if true puts 'Hello, World!' end
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span> puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>次のような構文エラーが出力される。</p>
+<pre tabindex="0"><code>20:1: syntax error, unexpected local variable or method, expecting `then&#39; or &#39;;&#39; or &#39;\n&#39;
+if true puts &#39;Hello, World!&#39; end
         ^~~~
-20:1: syntax error, unexpected `end', expecting end-of-input
-...f true puts 'Hello, World!' end
+20:1: syntax error, unexpected `end&#39;, expecting end-of-input
+...f true puts &#39;Hello, World!&#39; end
 </code></pre><p>二つ目のメッセージは無視して一つ目を読むと、<code>then</code> か <code>;</code> か改行が来るはずのところ変数だかメソッドだかが現れたことによりエラーとなっているようだ。</p>
 <p>ポイントは改行が <code>then</code> (や <code>;</code>) の代わりとなることである。<code>true</code> の後に改行を入れてみる。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span>
-puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
-</code></pre></div><p>無事 Hello, World! と出力されるようになった。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>puts <span style="color:#e6db74">&#39;Hello, World!&#39;</span> <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>無事 Hello, World! と出力されるようになった。</p>
 <h1 id="なぜ-then-や--や改行が必要か">なぜ <code>then</code> や <code>;</code> や改行が必要か</h1>
 <p>なぜ <code>then</code> や <code>;</code> や改行 (以下 「<code>then</code> 等」) が必要なのだろうか。次の例を見てほしい:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> a b <span style="color:#66d9ef">end</span>
-</code></pre></div><p><code>then</code> も <code>;</code> も改行もないのでエラーになるが、これは条件式がどこまで続いているのかわからないためだ。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> a b <span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><code>then</code> も <code>;</code> も改行もないのでエラーになるが、これは条件式がどこまで続いているのかわからないためだ。
 この例は二通りに解釈できる。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># a という変数かメソッドの評価結果が truthy なら b という変数かメソッドを評価</span>
-<span style="color:#66d9ef">if</span> a <span style="color:#66d9ef">then</span>
-  b
-<span style="color:#66d9ef">end</span>
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># a というメソッドに b という変数かメソッドの評価結果を渡して呼び出し、</span>
-<span style="color:#75715e"># その結果が truthy なら何もしない</span>
-<span style="color:#66d9ef">if</span> a(b) <span style="color:#66d9ef">then</span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p><code>then</code> 等はこの曖昧性を排除するためにあり、条件式は <code>if</code> から <code>then</code> 等までの間にある、ということを明確にする。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#75715e"># a という変数かメソッドの評価結果が truthy なら b という変数かメソッドを評価</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> a <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  b
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#75715e"># a というメソッドに b という変数かメソッドの評価結果を渡して呼び出し、</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># その結果が truthy なら何もしない</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> a(b) <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p><code>then</code> 等はこの曖昧性を排除するためにあり、条件式は <code>if</code> から <code>then</code> 等までの間にある、ということを明確にする。
 C系の <code>if</code> 後に来る <code>(</code>/<code>)</code> や、Python の <code>:</code>、Rust/Go/Swift などの <code>{</code> も同じ役割を持つ。</p>
 <p>Ruby の場合、プログラマーが書きやすいよう改行でもって <code>then</code> が代用できるので、ほとんどの場合 <code>then</code> は必要ない。</p>
 <h1 id="case---in-における-then"><code>case</code> - <code>in</code> における <code>then</code></h1>
@@ -748,33 +748,33 @@ C系の <code>if</code> 後に来る <code>(</code>/<code>)</code> や、Python 
 		;
 </code></pre><p>ここで、<code>keyword_in</code> は文字通り <code>in</code>、<code>p_top_expr</code> はいわゆるパターン、<code>then</code> は <code>then</code> キーワードのことではなく、この記事で <code>then</code> 等と呼んでいるもの、つまり <code>then</code> キーワード、<code>;</code>、改行のいずれかである。</p>
 <p>これにより、<code>case</code> - <code>when</code> による従来の構文と同じように、<code>then</code> 等をパターンの後ろに挿入すればよいことがわかった。つまり次の3通りのいずれかになる:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">case</span> x
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span> a
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">then</span> b
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">then</span> c
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">case</span> x
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>
-  a
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>
-  b
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>
-  c
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">case</span> x
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>; a
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>; b
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>; c
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>ところで、<code>p_top_expr</code> には <code>if</code> による guard clause が書けるので、その場合は <code>if</code> - <code>then</code> と似たような見た目になる。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">case</span> x
-<span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> a
-<span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> b
-<span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">then</span> c
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h1 id="まとめ">まとめ</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">case</span> x
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span> a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">then</span> b
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">then</span> c
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> x
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  b
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  c
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> x
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span>; a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span>; b
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">3</span>; c
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><p>ところで、<code>p_top_expr</code> には <code>if</code> による guard clause が書けるので、その場合は <code>if</code> - <code>then</code> と似たような見た目になる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">case</span> x
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> a
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span> b
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">in</span> n <span style="color:#66d9ef">then</span> c
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h1 id="まとめ">まとめ</h1>
 <ul>
 <li><code>if</code> や <code>case</code> の条件の後ろには <code>then</code>、<code>;</code>、改行のいずれかが必要
 <ul>
@@ -797,26 +797,26 @@ C系の <code>if</code> 後に来る <code>(</code>/<code>)</code> や、Python 
 元 URL: <a href="https://qiita.com/nsfisis/items/94090937bcf860cfa93b">https://qiita.com/nsfisis/items/94090937bcf860cfa93b</a></p>
 <hr>
 <p>タイトル落ち。まずはこのコードを見て欲しい。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#a6e22e">[[alignas]] [[alignof]] [[and]] [[and_eq]] [[asm]] [[auto]] [[bitand]]</span>
-<span style="color:#a6e22e">[[bitor]] [[bool]] [[break]] [[case]] [[catch]] [[char]] [[char16_t]]</span>
-<span style="color:#a6e22e">[[char32_t]] [[class]] [[compl]] [[const]] [[const_cast]] [[constexpr]]</span>
-<span style="color:#a6e22e">[[continue]] [[decltype]] [[default]] [[delete]] [[do]] [[double]]</span>
-<span style="color:#a6e22e">[[dynamic_cast]] [[else]] [[enum]] [[explicit]] [[export]] [[extern]] [[false]]</span>
-<span style="color:#a6e22e">[[final]] [[float]] [[for]] [[friend]] [[goto]] [[if]] [[inline]] [[int]]</span>
-<span style="color:#a6e22e">[[long]] [[mutable]] [[namespace]] [[new]] [[noexcept]] [[not]] [[not_eq]]</span>
-<span style="color:#a6e22e">[[nullptr]] [[operator]] [[or]] [[or_eq]] [[override]] [[private]]</span>
-<span style="color:#a6e22e">[[protected]] [[public]] [[register]] [[reinterpret_cast]] [[return]] [[short]]</span>
-<span style="color:#a6e22e">[[signed]] [[sizeof]] [[static]] [[static_assert]] [[static_cast]] [[struct]]</span>
-<span style="color:#a6e22e">[[switch]] [[template]] [[this]] [[thread_local]] [[throw]] [[true]] [[try]]</span>
-<span style="color:#a6e22e">[[typedef]] [[typeid]] [[typename]] [[union]] [[unsigned]]</span>
-<span style="color:#a6e22e">[[virtual]] [[void]] [[volatile]] [[wchar_t]] [[while]] [[xor]] [[xor_eq]]</span>
-<span style="color:#75715e">// [[using]]
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> main() {
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-}
-</code></pre></div><blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[alignas]] [[alignof]] [[and]] [[and_eq]] [[asm]] [[auto]] [[bitand]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[bitor]] [[bool]] [[break]] [[case]] [[catch]] [[char]] [[char16_t]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[char32_t]] [[class]] [[compl]] [[const]] [[const_cast]] [[constexpr]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[continue]] [[decltype]] [[default]] [[delete]] [[do]] [[double]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[dynamic_cast]] [[else]] [[enum]] [[explicit]] [[export]] [[extern]] [[false]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[final]] [[float]] [[for]] [[friend]] [[goto]] [[if]] [[inline]] [[int]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[long]] [[mutable]] [[namespace]] [[new]] [[noexcept]] [[not]] [[not_eq]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[nullptr]] [[operator]] [[or]] [[or_eq]] [[override]] [[private]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[protected]] [[public]] [[register]] [[reinterpret_cast]] [[return]] [[short]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[signed]] [[sizeof]] [[static]] [[static_assert]] [[static_cast]] [[struct]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[switch]] [[template]] [[this]] [[thread_local]] [[throw]] [[true]] [[try]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[typedef]] [[typeid]] [[typename]] [[union]] [[unsigned]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[[virtual]] [[void]] [[volatile]] [[wchar_t]] [[while]] [[xor]] [[xor_eq]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// [[using]]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> main() {
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
 <p>コンパイラのバージョン
 $ clang++ &ndash;version
 Apple clang version 11.0.0 (clang-1100.0.33.8)
@@ -842,9 +842,9 @@ $ clang++ &ndash;std=c++17 hoge.cpp</p>
 <p>同サイトの [keywords のページ] (<a href="https://en.cppreference.com/w/cpp/keyword">https://en.cppreference.com/w/cpp/keyword</a>) から一覧を拝借し、上のコードが出来上がった (C++17 においてキーワードでないものなど、一部省いている)。
 大量の警告 (unknown attribute &lsquo;〇〇&rsquo; ignored) がコンパイラから出力されるが、コンパイルできる。</p>
 <p>上のコードでは <code>[[using]]</code> をコメントアウトしているが、これは <code>using</code> キーワードのみ属性構文の中で意味を持つからであり、このコメントアウトを外すとコンパイルに失敗する。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">// using の例
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">[[using foo: attr1, attr2]] int x; // [[foo::attr1, foo::attr2]]</span> <span style="color:#960050;background-color:#1e0010">の糖衣構文</span>
-</code></pre></div><p>C++17 の仕様も見てみる (正確には標準化前のドラフト)。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// using の例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">[[using foo: attr1, attr2]] int x; // [[foo::attr1, foo::attr2]]</span> <span style="color:#960050;background-color:#1e0010">の糖衣構文</span>
+</span></span></code></pre></div><p>C++17 の仕様も見てみる (正確には標準化前のドラフト)。</p>
 <p>引用元: <a href="https://timsong-cpp.github.io/cppwp/n4659/dcl.attr#grammar-4">https://timsong-cpp.github.io/cppwp/n4659/dcl.attr#grammar-4</a></p>
 <blockquote>
 <p>If a keyword or an alternative token that satisfies the syntactic requirements of an identifier is contained in an attribute-token, it is considered an identifier.</p>
@@ -878,13 +878,13 @@ $ clang++ &ndash;std=c++17 hoge.cpp</p>
 <p><code>Object</code> クラスに定義されている <code>RUBY_ENGINE</code> という定数がこの用途に使える。</p>
 <p>参考: <a href="https://docs.ruby-lang.org/ja/latest/method/Object/c/RUBY_ENGINE.html">Object::RUBY_ENGINE</a></p>
 <p>上記ページの例から引用する:</p>
-<pre tabindex="0"><code class="language-shell-session" data-lang="shell-session">$ ruby-1.9.1 -ve 'p RUBY_ENGINE'
-ruby 1.9.1p0 (2009-03-04 revision 22762) [x86_64-linux]
-&quot;ruby&quot;
-$ jruby -ve 'p RUBY_ENGINE'
-jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java]
-&quot;jruby&quot;
-</code></pre><p>それぞれの処理系がどのような値を返すかだが、stack overflow に良い質問と回答があった。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell-session" data-lang="shell-session"><span style="display:flex;"><span>$ ruby-1.9.1 -ve <span style="color:#e6db74">&#39;p RUBY_ENGINE&#39;</span>
+</span></span><span style="display:flex;"><span>ruby 1.9.1p0 (2009-03-04 revision 22762) [x86_64-linux]
+</span></span><span style="display:flex;"><span>&#34;ruby&#34;
+</span></span><span style="display:flex;"><span>$ jruby -ve <span style="color:#e6db74">&#39;p RUBY_ENGINE&#39;</span>
+</span></span><span style="display:flex;"><span>jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java]
+</span></span><span style="display:flex;"><span>&#34;jruby&#34;
+</span></span></code></pre></div><p>それぞれの処理系がどのような値を返すかだが、stack overflow に良い質問と回答があった。</p>
 <p><a href="https://stackoverflow.com/a/9894232">What values for RUBY_ENGINE correspond to which Ruby implementations?</a> より引用:</p>
 <blockquote>
 <table>
@@ -933,11 +933,11 @@ jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java]
 <p>なお、この質問・回答は 2014年になされたものであり、値は変わっている可能性がある。MRI (aka CRuby) については執筆時現在 (2020/12/8) も <code>'ruby'</code> が返ってくることを確認済み。</p>
 <p>この表にない主要な処理系として、<a href="https://mruby.org">mruby</a> は <code>'mruby'</code> を返す。</p>
 <p><a href="https://github.com/mruby/mruby/blob/ed29d74bfd95362eaeb946fcf7e865d80346b62b/include/mruby/version.h#L32-L35">mruby 該当部分のソース</a> より引用:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
-</span><span style="color:#75715e"> * Ruby engine.
-</span><span style="color:#75715e"> */</span>
-<span style="color:#75715e">#define MRUBY_RUBY_ENGINE  &#34;mruby&#34;
-</span></code></pre></div>]]></description>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Ruby engine.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define MRUBY_RUBY_ENGINE  &#34;mruby&#34;
+</span></span></span></code></pre></div>]]></description>
     </item>
     
     <item>
@@ -976,10 +976,10 @@ Huge version without GUI.</p>
 </blockquote>
 <p><code>:g/^/m0</code> のように組み合わせると、「すべての行を1行ずつ 0行目(1行目の上)に動かす」という動きをする。これは確かに行の入れ替えになっている。</p>
 <p>なお、<code>:g/^/m0</code> は全ての行を入れ替えるが、<code>:N,Mg/^/mN-1</code> とすることで N行目から M行目を処理範囲とするよう拡張できる。手でこれを入力するわけにはいかないので、次のようなコマンドを用意する。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>これは望みの動作をするが、実際に実行してみると全行がハイライトされてしまう。次節で詳細を述べる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>これは望みの動作をするが、実際に実行してみると全行がハイライトされてしまう。次節で詳細を述べる。</p>
 <h1 id="gm0-の問題点"><code>:g/^/m0</code> の問題点</h1>
 <p><code>:global</code> コマンドは各行に対してマッチングを行う際、現在の検索パターンを上書きしてしまう。<code>^</code> は行の先頭にマッチするため、結果として全ての行がハイライトされてしまう。<code>'hlsearch'</code> オプションを無効にしている場合その限りではないが、その場合でも直前の検索パターンが失われてしまうと <code>n</code> コマンドなどの際に不便である。</p>
 <blockquote>
@@ -991,14 +991,14 @@ Huge version without GUI.</p>
 より簡潔な方法を見つけたので次節に追記した</p>
 </blockquote>
 <p>前述した <code>:Reverse</code> コマンドの定義を少し変えて、次のようにする:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">s</span>:<span style="color:#a6e22e">reverse_lines</span>(<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">to</span>) <span style="color:#a6e22e">abort</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#a6e22e">execute</span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d,%dg/^/m%d&#34;</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">to</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span> - <span style="color:#ae81ff">1</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">endfunction</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">call</span> &lt;<span style="color:#a6e22e">SID</span>&gt;<span style="color:#a6e22e">reverse_lines</span>(&lt;<span style="color:#a6e22e">line1</span>&gt;, &lt;<span style="color:#a6e22e">line2</span>&gt;)<span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>実行しているコマンドが変わったわけではないが、関数呼び出しを経由するようにした。これだけで前述の問題が解決する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">s</span>:<span style="color:#a6e22e">reverse_lines</span>(<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">to</span>) <span style="color:#a6e22e">abort</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#a6e22e">execute</span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d,%dg/^/m%d&#34;</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">to</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span> - <span style="color:#ae81ff">1</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">endfunction</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">call</span> &lt;<span style="color:#a6e22e">SID</span>&gt;<span style="color:#a6e22e">reverse_lines</span>(&lt;<span style="color:#a6e22e">line1</span>&gt;, &lt;<span style="color:#a6e22e">line2</span>&gt;)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>実行しているコマンドが変わったわけではないが、関数呼び出しを経由するようにした。これだけで前述の問題が解決する。</p>
 <p>この理由は、ユーザー定義関数を実行する際は検索パターンが一度保存され、実行が終了したあと復元されるため。結果として検索パターンが <code>^</code> で上書きされることがなくなる。</p>
 <p>Vim のヘルプから該当箇所を引用する (強調は筆者による)。</p>
 <blockquote>
@@ -1022,20 +1022,20 @@ executing autocommands |autocmd-searchpat|.
 <p>[2020/9/28追記]
 より簡潔な方法を見つけたため追記する</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>まさにこのための Exコマンド、<code>:keeppatterns</code> が存在する。<code>:keeppatterns {command}</code> のように使い、読んで字の如く、後ろに続く Exコマンドを「現在の検索パターンを保ったまま」実行する。はるかに分かりやすく意図を表現できる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>まさにこのための Exコマンド、<code>:keeppatterns</code> が存在する。<code>:keeppatterns {command}</code> のように使い、読んで字の如く、後ろに続く Exコマンドを「現在の検索パターンを保ったまま」実行する。はるかに分かりやすく意図を表現できる。</p>
 <blockquote>
 <p>:h :keeppatterns</p>
 </blockquote>
 <h1 id="コピペ用再掲">コピペ用再掲</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#75715e">&#34; License: Public Domain</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div>]]></description>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#75715e">&#34; License: Public Domain</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div>]]></description>
     </item>
     
     <item>
@@ -1069,26 +1069,26 @@ executing autocommands |autocmd-searchpat|.
 <h2 id="vim-のソースコード">vim のソースコード</h2>
 <p>以下は、autocmd events の名前と内部で使われている整数値とのマッピングを定義している箇所である。見ての通り、上でエイリアスではないかと述べた3組には、それぞれ同じ内部値が使われている。</p>
 <p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufAdd&#34;</span>,		EVENT_BUFADD},
-    {<span style="color:#e6db74">&#34;BufCreate&#34;</span>,	EVENT_BUFADD},
-</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufRead&#34;</span>,		EVENT_BUFREADPOST},
-    {<span style="color:#e6db74">&#34;BufReadCmd&#34;</span>,	EVENT_BUFREADCMD},
-    {<span style="color:#e6db74">&#34;BufReadPost&#34;</span>,	EVENT_BUFREADPOST},
-</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufWrite&#34;</span>,	EVENT_BUFWRITEPRE},
-    {<span style="color:#e6db74">&#34;BufWritePost&#34;</span>,	EVENT_BUFWRITEPOST},
-    {<span style="color:#e6db74">&#34;BufWritePre&#34;</span>,	EVENT_BUFWRITEPRE},
-</code></pre></div><h2 id="neovim-のソースコード">neovim のソースコード</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufAdd&#34;</span>,		EVENT_BUFADD},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufCreate&#34;</span>,	EVENT_BUFADD},
+</span></span></code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufRead&#34;</span>,		EVENT_BUFREADPOST},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufReadCmd&#34;</span>,	EVENT_BUFREADCMD},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufReadPost&#34;</span>,	EVENT_BUFREADPOST},
+</span></span></code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufWrite&#34;</span>,	EVENT_BUFWRITEPRE},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufWritePost&#34;</span>,	EVENT_BUFWRITEPOST},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufWritePre&#34;</span>,	EVENT_BUFWRITEPRE},
+</span></span></code></pre></div><h2 id="neovim-のソースコード">neovim のソースコード</h2>
 <p>neovim の場合でも同様のマッピングが定義されているが、こちらの場合は Lua で書かれている。以下にある通り、はっきり <code>aliases</code> と書かれている。</p>
 <p><a href="https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124">https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">  aliases <span style="color:#f92672">=</span> {
-    BufCreate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufAdd&#39;</span>,
-    BufRead <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufReadPost&#39;</span>,
-    BufWrite <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufWritePre&#39;</span>,
-    FileEncoding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EncodingChanged&#39;</span>,
-  },
-</code></pre></div><p>ところで、上では取り上げなかった <code>FileEncoding</code> だが、これは <code>:help FileEncoding</code> にしっかりと書いてある。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span>  aliases <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    BufCreate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufAdd&#39;</span>,
+</span></span><span style="display:flex;"><span>    BufRead <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufReadPost&#39;</span>,
+</span></span><span style="display:flex;"><span>    BufWrite <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufWritePre&#39;</span>,
+</span></span><span style="display:flex;"><span>    FileEncoding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EncodingChanged&#39;</span>,
+</span></span><span style="display:flex;"><span>  },
+</span></span></code></pre></div><p>ところで、上では取り上げなかった <code>FileEncoding</code> だが、これは <code>:help FileEncoding</code> にしっかりと書いてある。</p>
 <pre tabindex="0"><code>                                                           *FileEncoding*
 FileEncoding                    Obsolete.  It still works and is equivalent
                                 to |EncodingChanged|.
@@ -1131,38 +1131,38 @@ FileEncoding                    Obsolete.  It still works and is equivalent
 <hr>
 <p>本記事は Python 3.7.6 の動作結果を元にして書かれている。</p>
 <p>Python でクロージャを作ろうと、次のようなコードを書いた。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
-    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
-        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-    g()
-
-f()
-</code></pre></div><p>関数 <code>g</code> から 関数 <code>f</code> のスコープ内で定義された変数 <code>x</code> を参照し、それに 1 を足そうとしている。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    g()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f()
+</span></span></code></pre></div><p>関数 <code>g</code> から 関数 <code>f</code> のスコープ内で定義された変数 <code>x</code> を参照し、それに 1 を足そうとしている。
 これを実行すると <code>x += 1</code> の箇所でエラーが発生する。</p>
 <blockquote>
 <p>UnboundLocalError: local variable &lsquo;x&rsquo; referenced before assignment</p>
 </blockquote>
 <p>local変数 <code>x</code> が代入前に参照された、とある。これは、<code>f</code> の <code>x</code> を参照するのではなく、新しく別の変数を <code>g</code> 内に作ってしまっているため。
 前述のコードを宣言と代入を便宜上分けて書き直すと次のようになる。<code>var</code> を変数宣言のための構文として擬似的に利用している。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 注: var は正しい Python の文法ではない。上記参照のこと</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
-    var x           <span style="color:#75715e">#  f の local変数 &#39;x&#39; を宣言</span>
-    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>           <span style="color:#75715e">#  x に 0 を代入</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():        <span style="color:#75715e">#  f の内部関数 g を定義</span>
-        var x       <span style="color:#75715e">#  g の local変数 &#39;x&#39; を宣言</span>
-                    <span style="color:#75715e">#  たまたま f にも同じ名前の変数があるが、それとは別の変数</span>
-        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>      <span style="color:#75715e">#  x に 1 を加算 (x = x + 1 の糖衣構文)</span>
-                    <span style="color:#75715e">#  加算する前の値を参照しようとするが、まだ代入されていないためエラー</span>
-    g()
-</code></pre></div><p>当初の意図を表現するには、次のように書けばよい。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
-    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
-        <span style="color:#66d9ef">nonlocal</span> x   <span style="color:#75715e">## (*)</span>
-        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-    g()
-</code></pre></div><p><code>(*)</code> のように、<code>nonlocal</code> を追加する。これにより一つ外側のスコープ (<code>g</code> の一つ外側 = <code>f</code>) で定義されている <code>x</code> を探しに行くようになる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 注: var は正しい Python の文法ではない。上記参照のこと</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
+</span></span><span style="display:flex;"><span>    var x           <span style="color:#75715e">#  f の local変数 &#39;x&#39; を宣言</span>
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>           <span style="color:#75715e">#  x に 0 を代入</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():        <span style="color:#75715e">#  f の内部関数 g を定義</span>
+</span></span><span style="display:flex;"><span>        var x       <span style="color:#75715e">#  g の local変数 &#39;x&#39; を宣言</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">#  たまたま f にも同じ名前の変数があるが、それとは別の変数</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>      <span style="color:#75715e">#  x に 1 を加算 (x = x + 1 の糖衣構文)</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">#  加算する前の値を参照しようとするが、まだ代入されていないためエラー</span>
+</span></span><span style="display:flex;"><span>    g()
+</span></span></code></pre></div><p>当初の意図を表現するには、次のように書けばよい。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">nonlocal</span> x   <span style="color:#75715e">## (*)</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    g()
+</span></span></code></pre></div><p><code>(*)</code> のように、<code>nonlocal</code> を追加する。これにより一つ外側のスコープ (<code>g</code> の一つ外側 = <code>f</code>) で定義されている <code>x</code> を探しに行くようになる。</p>
 ]]></description>
     </item>
     

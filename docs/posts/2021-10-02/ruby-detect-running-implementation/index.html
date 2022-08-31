@@ -15,7 +15,7 @@
     <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
     
     <link rel="icon" href="https://blog.nsfisis.dev/favicon.svg">
-    <meta name="generator" content="Hugo 0.88.1" />
+    <meta name="generator" content="Hugo 0.102.1" />
     
     
   </head>
@@ -49,13 +49,13 @@
 <p><code>Object</code> クラスに定義されている <code>RUBY_ENGINE</code> という定数がこの用途に使える。</p>
 <p>参考: <a href="https://docs.ruby-lang.org/ja/latest/method/Object/c/RUBY_ENGINE.html">Object::RUBY_ENGINE</a></p>
 <p>上記ページの例から引用する:</p>
-<pre tabindex="0"><code class="language-shell-session" data-lang="shell-session">$ ruby-1.9.1 -ve 'p RUBY_ENGINE'
-ruby 1.9.1p0 (2009-03-04 revision 22762) [x86_64-linux]
-&quot;ruby&quot;
-$ jruby -ve 'p RUBY_ENGINE'
-jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java]
-&quot;jruby&quot;
-</code></pre><p>それぞれの処理系がどのような値を返すかだが、stack overflow に良い質問と回答があった。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell-session" data-lang="shell-session"><span style="display:flex;"><span>$ ruby-1.9.1 -ve <span style="color:#e6db74">&#39;p RUBY_ENGINE&#39;</span>
+</span></span><span style="display:flex;"><span>ruby 1.9.1p0 (2009-03-04 revision 22762) [x86_64-linux]
+</span></span><span style="display:flex;"><span>&#34;ruby&#34;
+</span></span><span style="display:flex;"><span>$ jruby -ve <span style="color:#e6db74">&#39;p RUBY_ENGINE&#39;</span>
+</span></span><span style="display:flex;"><span>jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java]
+</span></span><span style="display:flex;"><span>&#34;jruby&#34;
+</span></span></code></pre></div><p>それぞれの処理系がどのような値を返すかだが、stack overflow に良い質問と回答があった。</p>
 <p><a href="https://stackoverflow.com/a/9894232">What values for RUBY_ENGINE correspond to which Ruby implementations?</a> より引用:</p>
 <blockquote>
 <table>
@@ -104,11 +104,11 @@ jruby 1.2.0 (ruby 1.8.6 patchlevel 287) (2009-03-16 rev 9419) [i386-java]
 <p>なお、この質問・回答は 2014年になされたものであり、値は変わっている可能性がある。MRI (aka CRuby) については執筆時現在 (2020/12/8) も <code>'ruby'</code> が返ってくることを確認済み。</p>
 <p>この表にない主要な処理系として、<a href="https://mruby.org">mruby</a> は <code>'mruby'</code> を返す。</p>
 <p><a href="https://github.com/mruby/mruby/blob/ed29d74bfd95362eaeb946fcf7e865d80346b62b/include/mruby/version.h#L32-L35">mruby 該当部分のソース</a> より引用:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
-</span><span style="color:#75715e"> * Ruby engine.
-</span><span style="color:#75715e"> */</span>
-<span style="color:#75715e">#define MRUBY_RUBY_ENGINE  &#34;mruby&#34;
-</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Ruby engine.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define MRUBY_RUBY_ENGINE  &#34;mruby&#34;
+</span></span></span></code></pre></div>
   </div>
 </article></main>
 <footer class="footer">

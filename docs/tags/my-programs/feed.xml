@@ -15,7 +15,7 @@
       <guid>https://blog.nsfisis.dev/posts/2022-04-24/term-banner-write-tool-showing-banner-in-terminal/</guid>
       <description><![CDATA[ <h1 id="はじめに">はじめに</h1>
 <p>こんなものを作った。</p>
-<pre tabindex="0"><code>$ term-banner 'Hello, World!' 'こんにちは、' '世界！'
+<pre tabindex="0"><code>$ term-banner &#39;Hello, World!&#39; &#39;こんにちは、&#39; &#39;世界！&#39;
 </code></pre><p><img src="https://raw.githubusercontent.com/nsfisis/term-banner/main/screenshot.png" alt="term-banner のスクリーンショット"></p>
 <p>コマンドライン引数として渡した文字列をターミナルに大きく表示する。</p>
 <p>リポジトリはこちら: <a href="https://github.com/nsfisis/term-banner">https://github.com/nsfisis/term-banner</a></p>

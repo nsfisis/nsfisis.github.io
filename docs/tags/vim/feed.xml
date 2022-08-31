@@ -43,10 +43,10 @@ Huge version without GUI.</p>
 </blockquote>
 <p><code>:g/^/m0</code> のように組み合わせると、「すべての行を1行ずつ 0行目(1行目の上)に動かす」という動きをする。これは確かに行の入れ替えになっている。</p>
 <p>なお、<code>:g/^/m0</code> は全ての行を入れ替えるが、<code>:N,Mg/^/mN-1</code> とすることで N行目から M行目を処理範囲とするよう拡張できる。手でこれを入力するわけにはいかないので、次のようなコマンドを用意する。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>これは望みの動作をするが、実際に実行してみると全行がハイライトされてしまう。次節で詳細を述べる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>これは望みの動作をするが、実際に実行してみると全行がハイライトされてしまう。次節で詳細を述べる。</p>
 <h1 id="gm0-の問題点"><code>:g/^/m0</code> の問題点</h1>
 <p><code>:global</code> コマンドは各行に対してマッチングを行う際、現在の検索パターンを上書きしてしまう。<code>^</code> は行の先頭にマッチするため、結果として全ての行がハイライトされてしまう。<code>'hlsearch'</code> オプションを無効にしている場合その限りではないが、その場合でも直前の検索パターンが失われてしまうと <code>n</code> コマンドなどの際に不便である。</p>
 <blockquote>
@@ -58,14 +58,14 @@ Huge version without GUI.</p>
 より簡潔な方法を見つけたので次節に追記した</p>
 </blockquote>
 <p>前述した <code>:Reverse</code> コマンドの定義を少し変えて、次のようにする:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">s</span>:<span style="color:#a6e22e">reverse_lines</span>(<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">to</span>) <span style="color:#a6e22e">abort</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#a6e22e">execute</span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d,%dg/^/m%d&#34;</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">to</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span> - <span style="color:#ae81ff">1</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">endfunction</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">call</span> &lt;<span style="color:#a6e22e">SID</span>&gt;<span style="color:#a6e22e">reverse_lines</span>(&lt;<span style="color:#a6e22e">line1</span>&gt;, &lt;<span style="color:#a6e22e">line2</span>&gt;)<span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>実行しているコマンドが変わったわけではないが、関数呼び出しを経由するようにした。これだけで前述の問題が解決する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#66d9ef">function</span>! <span style="color:#a6e22e">s</span>:<span style="color:#a6e22e">reverse_lines</span>(<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">to</span>) <span style="color:#a6e22e">abort</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#a6e22e">execute</span> <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d,%dg/^/m%d&#34;</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">to</span>, <span style="color:#a6e22e">a</span>:<span style="color:#a6e22e">from</span> - <span style="color:#ae81ff">1</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">endfunction</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">call</span> &lt;<span style="color:#a6e22e">SID</span>&gt;<span style="color:#a6e22e">reverse_lines</span>(&lt;<span style="color:#a6e22e">line1</span>&gt;, &lt;<span style="color:#a6e22e">line2</span>&gt;)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>実行しているコマンドが変わったわけではないが、関数呼び出しを経由するようにした。これだけで前述の問題が解決する。</p>
 <p>この理由は、ユーザー定義関数を実行する際は検索パターンが一度保存され、実行が終了したあと復元されるため。結果として検索パターンが <code>^</code> で上書きされることがなくなる。</p>
 <p>Vim のヘルプから該当箇所を引用する (強調は筆者による)。</p>
 <blockquote>
@@ -89,20 +89,20 @@ executing autocommands |autocmd-searchpat|.
 <p>[2020/9/28追記]
 より簡潔な方法を見つけたため追記する</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>まさにこのための Exコマンド、<code>:keeppatterns</code> が存在する。<code>:keeppatterns {command}</code> のように使い、読んで字の如く、後ろに続く Exコマンドを「現在の検索パターンを保ったまま」実行する。はるかに分かりやすく意図を表現できる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>まさにこのための Exコマンド、<code>:keeppatterns</code> が存在する。<code>:keeppatterns {command}</code> のように使い、読んで字の如く、後ろに続く Exコマンドを「現在の検索パターンを保ったまま」実行する。はるかに分かりやすく意図を表現できる。</p>
 <blockquote>
 <p>:h :keeppatterns</p>
 </blockquote>
 <h1 id="コピペ用再掲">コピペ用再掲</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#75715e">&#34; License: Public Domain</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div>]]></description>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#75715e">&#34; License: Public Domain</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">command</span>! -<span style="color:#a6e22e">bar</span> -<span style="color:#a6e22e">range</span>=%<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">Reverse</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    \ <span style="color:#a6e22e">keeppatterns</span> &lt;<span style="color:#a6e22e">line1</span>&gt;,&lt;<span style="color:#a6e22e">line2</span>&gt;<span style="color:#a6e22e">g</span><span style="color:#e6db74">/^/</span><span style="color:#a6e22e">m</span>&lt;<span style="color:#a6e22e">line1</span>&gt;<span style="color:#ae81ff">-1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div>]]></description>
     </item>
     
     <item>
@@ -136,26 +136,26 @@ executing autocommands |autocmd-searchpat|.
 <h2 id="vim-のソースコード">vim のソースコード</h2>
 <p>以下は、autocmd events の名前と内部で使われている整数値とのマッピングを定義している箇所である。見ての通り、上でエイリアスではないかと述べた3組には、それぞれ同じ内部値が使われている。</p>
 <p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L85-L86</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufAdd&#34;</span>,		EVENT_BUFADD},
-    {<span style="color:#e6db74">&#34;BufCreate&#34;</span>,	EVENT_BUFADD},
-</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufRead&#34;</span>,		EVENT_BUFREADPOST},
-    {<span style="color:#e6db74">&#34;BufReadCmd&#34;</span>,	EVENT_BUFREADCMD},
-    {<span style="color:#e6db74">&#34;BufReadPost&#34;</span>,	EVENT_BUFREADPOST},
-</code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">    {<span style="color:#e6db74">&#34;BufWrite&#34;</span>,	EVENT_BUFWRITEPRE},
-    {<span style="color:#e6db74">&#34;BufWritePost&#34;</span>,	EVENT_BUFWRITEPOST},
-    {<span style="color:#e6db74">&#34;BufWritePre&#34;</span>,	EVENT_BUFWRITEPRE},
-</code></pre></div><h2 id="neovim-のソースコード">neovim のソースコード</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufAdd&#34;</span>,		EVENT_BUFADD},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufCreate&#34;</span>,	EVENT_BUFADD},
+</span></span></code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L95-L97</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufRead&#34;</span>,		EVENT_BUFREADPOST},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufReadCmd&#34;</span>,	EVENT_BUFREADCMD},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufReadPost&#34;</span>,	EVENT_BUFREADPOST},
+</span></span></code></pre></div><p><a href="https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105">https://github.com/vim/vim/blob/8e6be34338f13a6a625f19bcef82019c9adc65f2/src/autocmd.c#L103-L105</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufWrite&#34;</span>,	EVENT_BUFWRITEPRE},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufWritePost&#34;</span>,	EVENT_BUFWRITEPOST},
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">&#34;BufWritePre&#34;</span>,	EVENT_BUFWRITEPRE},
+</span></span></code></pre></div><h2 id="neovim-のソースコード">neovim のソースコード</h2>
 <p>neovim の場合でも同様のマッピングが定義されているが、こちらの場合は Lua で書かれている。以下にある通り、はっきり <code>aliases</code> と書かれている。</p>
 <p><a href="https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124">https://github.com/neovim/neovim/blob/71d4f5851f068eeb432af34850dddda8cc1c71e3/src/nvim/auevents.lua#L119-L124</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">  aliases <span style="color:#f92672">=</span> {
-    BufCreate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufAdd&#39;</span>,
-    BufRead <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufReadPost&#39;</span>,
-    BufWrite <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufWritePre&#39;</span>,
-    FileEncoding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EncodingChanged&#39;</span>,
-  },
-</code></pre></div><p>ところで、上では取り上げなかった <code>FileEncoding</code> だが、これは <code>:help FileEncoding</code> にしっかりと書いてある。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span>  aliases <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    BufCreate <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufAdd&#39;</span>,
+</span></span><span style="display:flex;"><span>    BufRead <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufReadPost&#39;</span>,
+</span></span><span style="display:flex;"><span>    BufWrite <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;BufWritePre&#39;</span>,
+</span></span><span style="display:flex;"><span>    FileEncoding <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EncodingChanged&#39;</span>,
+</span></span><span style="display:flex;"><span>  },
+</span></span></code></pre></div><p>ところで、上では取り上げなかった <code>FileEncoding</code> だが、これは <code>:help FileEncoding</code> にしっかりと書いてある。</p>
 <pre tabindex="0"><code>                                                           *FileEncoding*
 FileEncoding                    Obsolete.  It still works and is equivalent
                                 to |EncodingChanged|.

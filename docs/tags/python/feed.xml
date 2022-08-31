@@ -18,38 +18,38 @@
 <hr>
 <p>本記事は Python 3.7.6 の動作結果を元にして書かれている。</p>
 <p>Python でクロージャを作ろうと、次のようなコードを書いた。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
-    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
-        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-    g()
-
-f()
-</code></pre></div><p>関数 <code>g</code> から 関数 <code>f</code> のスコープ内で定義された変数 <code>x</code> を参照し、それに 1 を足そうとしている。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    g()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f()
+</span></span></code></pre></div><p>関数 <code>g</code> から 関数 <code>f</code> のスコープ内で定義された変数 <code>x</code> を参照し、それに 1 を足そうとしている。
 これを実行すると <code>x += 1</code> の箇所でエラーが発生する。</p>
 <blockquote>
 <p>UnboundLocalError: local variable &lsquo;x&rsquo; referenced before assignment</p>
 </blockquote>
 <p>local変数 <code>x</code> が代入前に参照された、とある。これは、<code>f</code> の <code>x</code> を参照するのではなく、新しく別の変数を <code>g</code> 内に作ってしまっているため。
 前述のコードを宣言と代入を便宜上分けて書き直すと次のようになる。<code>var</code> を変数宣言のための構文として擬似的に利用している。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 注: var は正しい Python の文法ではない。上記参照のこと</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
-    var x           <span style="color:#75715e">#  f の local変数 &#39;x&#39; を宣言</span>
-    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>           <span style="color:#75715e">#  x に 0 を代入</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():        <span style="color:#75715e">#  f の内部関数 g を定義</span>
-        var x       <span style="color:#75715e">#  g の local変数 &#39;x&#39; を宣言</span>
-                    <span style="color:#75715e">#  たまたま f にも同じ名前の変数があるが、それとは別の変数</span>
-        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>      <span style="color:#75715e">#  x に 1 を加算 (x = x + 1 の糖衣構文)</span>
-                    <span style="color:#75715e">#  加算する前の値を参照しようとするが、まだ代入されていないためエラー</span>
-    g()
-</code></pre></div><p>当初の意図を表現するには、次のように書けばよい。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
-    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
-        <span style="color:#66d9ef">nonlocal</span> x   <span style="color:#75715e">## (*)</span>
-        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-    g()
-</code></pre></div><p><code>(*)</code> のように、<code>nonlocal</code> を追加する。これにより一つ外側のスコープ (<code>g</code> の一つ外側 = <code>f</code>) で定義されている <code>x</code> を探しに行くようになる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 注: var は正しい Python の文法ではない。上記参照のこと</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
+</span></span><span style="display:flex;"><span>    var x           <span style="color:#75715e">#  f の local変数 &#39;x&#39; を宣言</span>
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>           <span style="color:#75715e">#  x に 0 を代入</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():        <span style="color:#75715e">#  f の内部関数 g を定義</span>
+</span></span><span style="display:flex;"><span>        var x       <span style="color:#75715e">#  g の local変数 &#39;x&#39; を宣言</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">#  たまたま f にも同じ名前の変数があるが、それとは別の変数</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>      <span style="color:#75715e">#  x に 1 を加算 (x = x + 1 の糖衣構文)</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">#  加算する前の値を参照しようとするが、まだ代入されていないためエラー</span>
+</span></span><span style="display:flex;"><span>    g()
+</span></span></code></pre></div><p>当初の意図を表現するには、次のように書けばよい。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>():
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">g</span>():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">nonlocal</span> x   <span style="color:#75715e">## (*)</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    g()
+</span></span></code></pre></div><p><code>(*)</code> のように、<code>nonlocal</code> を追加する。これにより一つ外側のスコープ (<code>g</code> の一つ外側 = <code>f</code>) で定義されている <code>x</code> を探しに行くようになる。</p>
 ]]></description>
     </item>
     
