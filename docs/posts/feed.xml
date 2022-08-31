@@ -6,7 +6,33 @@
     <description>Recent content in Posts on REPL: Rest-Eat-Program Loop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Sat, 27 Aug 2022 18:55:28 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/posts/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 31 Aug 2022 22:25:02 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/posts/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>弊社の PHP Foundation への寄付に寄せて</title>
+      <link>https://blog.nsfisis.dev/posts/2022-08-31/support-for-communty-is-employee-benefits/</link>
+      <pubDate>Wed, 31 Aug 2022 22:25:02 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/2022-08-31/support-for-communty-is-employee-benefits/</guid>
+      <description><![CDATA[ <h1 id="はじめに">はじめに</h1>
+<p><strong>注: これは私個人の意見であり、所属する組織を代表するものではありません。</strong></p>
+<p>先日、私の勤める <a href="https://www.dgcircus.com/">デジタルサーカス株式会社</a> が <a href="https://opencollective.com/phpfoundation">PHP Foundation</a> へ $2,000 の寄付をおこないました。</p>
+<p>記事: <a href="https://www.dgcircus.com/news/581">https://www.dgcircus.com/news/581</a></p>
+<p>本件を社内でしつこく推進した1人として、推進の理由等を書き残しておきます。</p>
+<h1 id="なぜ">なぜ？</h1>
+<p>組織としての寄付理由は前掲した記事に譲るとして、ここでは、私が社内でこの件を推進した理由について書くことにします。</p>
+<p>当時の考えを端的にまとめた社内チャットの投稿があったので、それを引用します:</p>
+<blockquote>
+<p>結局これを通したい (私の中での) 最大の理由が、「自分の勤める会社が、これをやる会社であってほしい」というのがあり、↑にしても、感情ベースの理由しか出せていないというのが説得力に欠けている理由なのだと思いますが、寄付の報告が流れてきたり、OSS のフリーライドの話が流れてきたりするたびに、自尊心が毀損される、というか (これは大袈裟すぎる表現で、実際にはそこまで明確に傷ついているわけではありませんが)。</p>
+<p>追記: 「肩身が狭くなる」というのがより適切でした。</p>
+</blockquote>
+<p>※文中の「↑にしても」は、ここに載せていない別の投稿を指しています。</p>
+<p>OSS を金銭的に支援したり、技術カンファレンスへ協賛したり (あるいは <a href="https://twitter.com/tomzoh">CTO</a> がカンファレンスを年2で主催したり: <a href="https://iosdc.jp">iOSDC</a> <a href="https://phperkaigi.jp">PHPerKaigi</a>) といった行為は、コミュニティへの貢献であると同時に、社員に対する精神的福利厚生でもあると言えるでしょう (知らんけど)。これらは、技術や技術者を大切にする組織である、ということの、対外的にも対内的にも強力なメッセージなのです。</p>
+<p>以上が、私が社内で寄付の件を進めた (かなり私的な) 理由です。</p>
+<h1 id="おわりに">おわりに</h1>
+<p>最終的に社としての寄付まで漕ぎ着けられたのは、もちろん私の力ではなく役員の方々の決定によるものです。この場を借りて感謝申し上げます。</p>
+]]></description>
+    </item>
+    
     <item>
       <title>PHP カンファレンス沖縄で出題されたコードゴルフの問題を解いてみた</title>
       <link>https://blog.nsfisis.dev/posts/2022-08-27/php-conference-okinawa-code-golf/</link>
