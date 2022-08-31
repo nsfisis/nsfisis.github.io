@@ -6,6 +6,6 @@ tags: ["TODO"]
 summary: |
   TODO
 changelog:
-  - {{ .Date.Format "2006-01-02" }}: 公開
+  {{ .Date | time.Format "2006-01-02" }}: 公開
 ---
 
