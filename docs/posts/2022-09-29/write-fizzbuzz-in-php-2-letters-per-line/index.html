@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>[PHP] fizzbuzz を書く。1行あたり2文字で。 | REPL: Rest-Eat-Program Loop</title>
+    
+    <meta name="description" content="PHP で、fizzbuzz を書いた。ただし、1行あたりに使える文字数は2文字まで。">
+    <meta name="author" content="nsfisis">
+    
+    <link href="https://blog.nsfisis.dev/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/style.css" rel="stylesheet">
+    <link href="https://blog.nsfisis.dev/custom.css" rel="stylesheet">
+    
+    <link rel="icon" href="https://blog.nsfisis.dev/favicon.svg">
+    <meta name="generator" content="Hugo 0.102.1" />
+    
+    
+  </head>
+  <body class="single">
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">[PHP] fizzbuzz を書く。1行あたり2文字で。</h1>
+    <ul class="post-tags">
+      <li><a href="https://blog.nsfisis.dev/tags/php">php</a></li>
+    </ul>
+  </header>
+  <div class="post-content">
+    <section>
+      <h1>更新履歴</h1>
+      <ul>
+        <li>2022-09-28: 公開</li>
+      </ul>
+    </section>
+    <h1 id="記事の構成について">記事の構成について</h1>
+<p>この記事は、普通の fizzbuzz を徐々に変形して最終形にしていく、という構成で書かれている。最終形を見てどのような仕組みで動いているのか解読してから解説を読みたい、というかたがいれば、 <a href="https://gist.github.com/nsfisis/04c227d5a419867472a0b23a83ad2919#file-fizzbuzz-php-2-letters-per-line-and-supports-php-8-x-without-warnings">このページ</a> にソースコードがあるので、そちらを先に見てほしい。</p>
+<h1 id="レギュレーション">レギュレーション</h1>
+<p>PHP で、次のような制約の下に fizzbuzz を書いた。</p>
+<ul>
+<li>1行あたりの文字数は2文字までに収めること (ただし <code>&lt;?php</code> タグは除く)
+<ul>
+<li>厳密な定義: <code>&lt;?php</code> タグ以降のソースコードが、2 byte ごとに ラインフィード (LF) で区切られること</li>
+</ul>
+</li>
+<li>スペースやタブを使用しないこと</li>
+<li>ループのアンロールをしないこと
+<ul>
+<li>100 回ループの代わりに 100 回コードをコピペ、というのは禁止</li>
+</ul>
+</li>
+<li>PHP 7.4〜8.1 で動作すること</li>
+<li>実行時に Notice や Warning が出ないこと</li>
+<li>標準的なインストール構成の PHP で実現できること (デフォルトで有効になっていない拡張等を使わないこと)</li>
+</ul>
+<p>備考: PHP には <code>short_open_tag</code> というオプションがあり、これを有効にするとファイル冒頭の <code>&lt;?php</code> の代わりに <code>&lt;?</code> を使うことができ、文字どおり1行2文字で書ける。ただ、このオプションはデフォルト off になっている環境が多いようなので、今回は使わないことにした。</p>
+<h1 id="主な障害">主な障害</h1>
+<p>1行あたりの文字数など、適当に改行を挟めばいいだけではないのか？</p>
+<p>特に、C言語でこのような試みをおこなったことがあるかたならそう思うだろう。事実、Cでのこの制約はほとんど無意味に等しい。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">i\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">n\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">c\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">l\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">u\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">d\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">e\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">s\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">t\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">d\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">i\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">o\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">.\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">h\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">&gt;\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>i\
+</span></span><span style="display:flex;"><span>n\
+</span></span><span style="display:flex;"><span>t\
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span>m\
+</span></span><span style="display:flex;"><span>a\
+</span></span><span style="display:flex;"><span>i\
+</span></span><span style="display:flex;"><span>n(
+</span></span><span style="display:flex;"><span>){
+</span></span><span style="display:flex;"><span>f\
+</span></span><span style="display:flex;"><span>o\
+</span></span><span style="display:flex;"><span>r(
+</span></span><span style="display:flex;"><span>i\
+</span></span><span style="display:flex;"><span>n\
+</span></span><span style="display:flex;"><span>t\
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span>i<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>i<span style="color:#f92672">&lt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>\
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>\
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>i\
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>\
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>
+</span></span><span style="display:flex;"><span>(i
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>\
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">15</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>p\
+</span></span><span style="display:flex;"><span>r\
+</span></span><span style="display:flex;"><span>i\
+</span></span><span style="display:flex;"><span>n\
+</span></span><span style="display:flex;"><span>t\
+</span></span><span style="display:flex;"><span>f(
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">F\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">i\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">z\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">z\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">B\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">u\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">z\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">z\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">%\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">c\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* あとは同じように普通のプログラムを変形するだけなので省略 */</span>
+</span></span></code></pre></div><p>バックスラッシュを使った行継続がトークンを区切らない、というのがポイントだ。</p>
+<p>さて、PHP ではそもそもバックスラッシュを行継続に使うことができない。これにより、「3文字以上からなるトークンが一切使えない」という制約が課される。例えば、<code>echo</code> で出力することや、<code>for</code> でループすること、<code>new</code> でインスタンスを生成することができない。特に、出力は fizzbuzz をどんなアルゴリズムで実装しようとおこなわなければならないので、できないのは致命的である。</p>
+<p>当然、名前が3文字以上ある関数も使えない。なお、標準 PHP の範囲内において、名前が 2文字未満の関数は以下のとおりである:</p>
+<ul>
+<li><code>_</code>: <code>gettext</code> のエイリアス</li>
+<li><code>dl</code>: 拡張モジュールをロードする</li>
+<li><code>pi</code>: 円周率を返す</li>
+</ul>
+<p>(環境によって多少は変わるかも)</p>
+<p>2文字の関数を定義しまくった拡張モジュールを用意しておいて <code>dl()</code> で読み込む行為は、レギュレーションで定めた</p>
+<blockquote>
+<ul>
+<li>標準的なインストール構成の PHP で実現できること (デフォルトで有効になっていない拡張等を使わないこと)</li>
+</ul>
+</blockquote>
+<p>に反する (というより、「それだとおもしろくもなんともないので、このルールを足した」というのが正しい)。</p>
+<p>また、2文字だと文字列がまともに書けないのも辛い。<code>''</code> だけで 2文字使うので、「1文字の文字列リテラル」というものを書くことができない。PHP では文字列リテラル中に生の改行が書けるので</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$a
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">a&#39;</span>
+</span></span><span style="display:flex;"><span>;;
+</span></span></code></pre></div><p>とすると <code>$a</code> は <code>&quot;\na&quot;</code> になるのだが、この <code>$a</code> に余計な改行が入ってしまう。</p>
+<p>これらの障害をどのように乗り越えるのか、次節から見ていく。</p>
+<h1 id="解説">解説</h1>
+<h2 id="普通の--fizzbuzz">普通の (?) fizzbuzz</h2>
+<p>まずは普通に書くとしよう。</p>
+<pre tabindex="0"><code>&lt;?php
+
+for ($i = 1; $i &lt; 100; $i++) {
+  echo (($i % 3 ? &#39;&#39; : &#39;Fizz&#39;) . ($i % 5 ? &#39;&#39; : &#39;Buzz&#39;) ?: $i) . &#34;\n&#34;;
+}
+</code></pre><p>素直に書いた fizzbuzz とは言い難いが、このくらいは普通だということにしておかないと、この先がやっていられないので許してほしい。</p>
+<h2 id="for-の排除"><code>for</code> の排除</h2>
+<p><code>for</code> は、3文字もある長いキーワードである。こんなものは使えない。<code>array_</code> 系の関数を使って、適当に置き換えるとしよう。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">range</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">array_walk</span>(
+</span></span><span style="display:flex;"><span>  $s,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fn</span>($i) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">printf</span>((($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Fizz&#39;</span>) <span style="color:#f92672">.</span> ($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Buzz&#39;</span>) <span style="color:#f92672">?:</span> $i) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>),
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p><code>array_walk</code> や <code>range</code>、<code>printf</code> といった <code>for</code> よりも長いトークンが現れてしまったが、これは次節で直すことにする。なお、<code>echo</code> は文であり式なので <code>printf</code> に置き換えた。</p>
+<h2 id="関数呼び出しの短縮">関数呼び出しの短縮</h2>
+<p><code>range</code>、<code>array_walk</code>、<code>printf</code> は長すぎるのでどうにかせねばならない。ここで、PHP の可変関数を使う。可変関数とは、関数名が文字列として入った変数を経由して、関数を呼び出す機能である。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$r <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;range&#39;</span>;
+</span></span><span style="display:flex;"><span>$w <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;array_walk&#39;</span>;
+</span></span><span style="display:flex;"><span>$p <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;printf&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> $r(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>$w(
+</span></span><span style="display:flex;"><span>  $s,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fn</span>($i) <span style="color:#f92672">=&gt;</span> $p((($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Fizz&#39;</span>) <span style="color:#f92672">.</span> ($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Buzz&#39;</span>) <span style="color:#f92672">?:</span> $i) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>),
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p>これで関数を呼び出している所は短くなった。では、<code>$r</code> や <code>$w</code> や <code>$p</code>、また <code>'Fizz'</code> や <code>'Buzz'</code> はどうやって 1行2文字に収めるのか。次のテクニックへ移ろう。</p>
+<h2 id="余談-php-8x-で動作しなくてもいいなら">余談: PHP 8.x で動作しなくてもいいなら</h2>
+<p>今回使ったテクニックを説明する前に、余談として、文字列リテラルの短縮法として今回採用しなかったものを紹介する。</p>
+<blockquote>
+<ul>
+<li>PHP 7.4〜8.1 で動作すること</li>
+</ul>
+</blockquote>
+<p>というルールがない場合、「未定義の定数が評価された場合、その定数の名前が値になる」という PHP 7.x までの仕様が利用できる。例えば、 <code>Fizz</code> という文字列が欲しければ、次のようにする。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$f
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#a6e22e">F</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">.</span><span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">.</span><span style="color:#a6e22e">z</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">.</span><span style="color:#a6e22e">z</span>
+</span></span><span style="display:flex;"><span>;;
+</span></span></code></pre></div><p>こうして簡単に文字列を作れる。なお、この仕様は 7.x 時点でも警告を受けるので、<code>@</code> 演算子を使って抑制してやるとよい。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$f
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=@</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">F</span><span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">@</span><span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">.</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">@</span><span style="color:#a6e22e">z</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">.</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">@</span><span style="color:#a6e22e">z</span>
+</span></span><span style="display:flex;"><span>;;
+</span></span></code></pre></div><p>むしろ、このことがわかっていたからこそ PHP 8.x での動作を要件に課したところがある。</p>
+<h2 id="文字列リテラルの短縮">文字列リテラルの短縮</h2>
+<p>実際に使った手法の説明に移る。</p>
+<p>ずばり、文字列同士のビット演算を使う。マイナーな機能だが、PHP では、文字列同士でビット演算 (<code>&amp;</code>、<code>|</code>、<code>^</code>) をした場合、文字列の各バイトごとに指定したビット演算がなされ、それを結合したものが演算結果となる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;12345&#34;</span>;
+</span></span><span style="display:flex;"><span>$b <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;world&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// $a ^ $b は次のコードと同じ
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$result <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> ($i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; $i <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">min</span>(<span style="color:#a6e22e">strlen</span>($a), <span style="color:#a6e22e">strlen</span>($b)); $i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>  $result <span style="color:#f92672">.=</span> $a[$i] <span style="color:#f92672">^</span> $b[$i];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> $result;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// =&gt; F]AXQ
+</span></span></span></code></pre></div><p>これを踏まえ、次のコードを見てみよう。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$x <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Om</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>$y <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">k!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">o&#34;</span>;
+</span></span><span style="display:flex;"><span>$r <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> $y;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">$r\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span></code></pre></div><p>実行すると、<code>range</code> が表示される。さて、PHP では文字列リテラル中に生の改行を直接書いてもよいのだった (「主な障害」の節を参照のこと)。書きかえてみよう。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Om
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">k!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">o&#39;</span>
+</span></span><span style="display:flex;"><span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$r <span style="color:#f92672">=</span> $x <span style="color:#f92672">^</span> $y;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">$r\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span></code></pre></div><p>さらに <code>#</code> を使って適当に調整すると、次のようになる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Om
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">k!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">o&#39;</span>
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$r
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">$r\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span></code></pre></div><p>1行あたり2文字で、<code>range</code> という文字列を生成することに成功した。他の必要な文字列にも、同様の処理をほどこす。</p>
+<p>備考: <code>Buzz</code> 中にある小文字の <code>u</code> は、このロジックだと non-printable な文字になってしまう。ここまでのテクニックを駆使すれば回避するのはそう難しくないので、考えてみてほしい。</p>
+<h1 id="完成系">完成系</h1>
+<p>完成したものがこちら。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;i
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">S&#39;</span>
+</span></span><span style="display:flex;"><span>;;
+</span></span><span style="display:flex;"><span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">b!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$c
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;x
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Om
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">k!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">o&#39;</span>
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$r
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;k
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Sk
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">~}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Ma
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">x!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">s!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">k!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$w
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;z
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Hd
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">G&#39;</span>
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">x!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">~!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$p
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;L
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">c!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$f
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;H
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$y
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">_!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>;
+</span></span><span style="display:flex;"><span>$b
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$x
+</span></span><span style="display:flex;"><span><span style="color:#f92672">^</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$y
+</span></span><span style="display:flex;"><span>;<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$b
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>]<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>$c
+</span></span><span style="display:flex;"><span>(<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#ae81ff">13</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">*</span><span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>$s
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$r
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>,(
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">**</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>$w
+</span></span><span style="display:flex;"><span>(<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$s
+</span></span><span style="display:flex;"><span>,<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">fn</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$i
+</span></span><span style="display:flex;"><span>)<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>$p
+</span></span><span style="display:flex;"><span>((
+</span></span><span style="display:flex;"><span>(<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$i
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">?</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">:</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$f
+</span></span><span style="display:flex;"><span>)<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$i
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">?</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">:</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$b
+</span></span><span style="display:flex;"><span>)<span style="color:#f92672">?</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">:</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$i
+</span></span><span style="display:flex;"><span>)<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">.</span><span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><h1 id="感想など">感想など</h1>
+<p>PHP は、スクリプト言語の中だとシンタックスシュガーが比較的少ない (体感)。この挑戦は不可能に思われたが、PHP マニュアルとにらめっこしていたらなんとかなった。</p>
+<p>みんなもプログラムを細長くしよう。</p>
+<h1 id="余談2-別解">余談2: 別解</h1>
+<p>PHP では、バッククォートを使ってシェルを呼び出せる。これは <code>shell_exec</code> 関数と等価である。さて、PHP ではバックスラッシュによる行継続が使えないと書いたが、シェルでは使える (当然だが、呼び出されるシェルに依存する。Bash なら大丈夫だろう。知らんけど)。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">e\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">c\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">h\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">o\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">1\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">2\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">3\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>);
+</span></span></code></pre></div><p>なお、ここでは簡単のため出力に <code>printf</code> をそのまま使っているが、実際には <code>printf</code> という文字列を合成して可変関数で呼び出す。</p>
+<p>ただし、これでは</p>
+<blockquote>
+<ul>
+<li>スペースやタブを使用しないこと</li>
+</ul>
+</blockquote>
+<p>に違反してしまう。スペースが使えないと引数とコマンドを区切れない。これは困った。</p>
+<p>もうこれ以上は不可能だと思っていたのだが、この記事の執筆中に解決する方法を思いついたので載せておく。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$c <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;chr&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">$</span>{
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;_
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>$c
+</span></span><span style="display:flex;"><span>(<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#ae81ff">32</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#f92672">.</span>
+</span></span><span style="display:flex;"><span>$c
+</span></span><span style="display:flex;"><span>(<span style="color:#75715e">#
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#ae81ff">92</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">e\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">c\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">h\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">o\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">${
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;_
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">1\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">2\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">3\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>);
+</span></span></code></pre></div><p>先程と同じく、<code>chr</code> や <code>printf</code> を生成する部分は長くなるので省いた。</p>
+<pre tabindex="0"><code>${
+&#39;_
+&#39;}
+</code></pre><p>は変数で、中にはスペースとエスケープが入っている。シェルに渡されている文字列は次のようになる。</p>
+<pre tabindex="0"><code>e\
+c\
+h\
+o\
+ \
+1\
+2\
+3\
+</code></pre><p>これは、前掲したコマンドと同じだ。かくして、スペースを陽に書かずにシェルをおおよそ自由に扱えるようになった。Fizzbuzz のワンライナーくらいすぐ書けるだろうから、あとはなんとかなるだろう (試してないけど)。</p>
+<p>ということでこれは別解ということにしておく。</p>
+<p>ちなみに、PHP 8.2 からは、この気色の悪い変数の記法で Warning が出るようになるようだ。</p>
+<pre tabindex="0"><code>${
+&#39;_
+&#39;}
+</code></pre><p>最新版で警告が出るというのも美しくないので、私としては本編の解法を推す。</p>
+
+  </div>
+</article></main>
+<footer class="footer">
+  <span>&copy; 2022 <a href="https://blog.nsfisis.dev">REPL: Rest-Eat-Program Loop</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+</footer>
+<script src="https://blog.nsfisis.dev/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+
