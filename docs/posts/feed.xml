@@ -113,7 +113,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/* あとは同じように普通のプログラムを変形するだけなので省略 */</span>
 </span></span></code></pre></div><p>バックスラッシュを使った行継続がトークンを区切らない、というのがポイントだ。</p>
 <p>さて、PHP ではそもそもバックスラッシュを行継続に使うことができない。これにより、「3文字以上からなるトークンが一切使えない」という制約が課される。例えば、<code>echo</code> で出力することや、<code>for</code> でループすること、<code>new</code> でインスタンスを生成することができない。特に、出力は fizzbuzz をどんなアルゴリズムで実装しようとおこなわなければならないので、できないのは致命的である。</p>
-<p>当然、名前が3文字以上ある関数も使えない。なお、標準 PHP の範囲内において、名前が 2文字未満の関数は以下のとおりである:</p>
+<p>当然、名前が3文字以上ある関数も使えない。なお、標準 PHP の範囲内において、名前が 2文字以下の関数は以下のとおりである:</p>
 <ul>
 <li><code>_</code>: <code>gettext</code> のエイリアス</li>
 <li><code>dl</code>: 拡張モジュールをロードする</li>
@@ -132,7 +132,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">a&#39;</span>
 </span></span><span style="display:flex;"><span>;;
-</span></span></code></pre></div><p>とすると <code>$a</code> は <code>&quot;\na&quot;</code> になるのだが、この <code>$a</code> に余計な改行が入ってしまう。</p>
+</span></span></code></pre></div><p>とすると <code>$a</code> は <code>&quot;\na&quot;</code> になるのだが、余計な改行が入ってしまう。</p>
 <p>これらの障害をどのように乗り越えるのか、次節から見ていく。</p>
 <h1 id="解説">解説</h1>
 <h2 id="普通の--fizzbuzz">普通の (?) fizzbuzz</h2>
@@ -150,9 +150,10 @@ for ($i = 1; $i &lt; 100; $i++) {
 </span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">range</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">100</span>);
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">array_walk</span>(
 </span></span><span style="display:flex;"><span>  $s,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fn</span>($i) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">printf</span>((($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Fizz&#39;</span>) <span style="color:#f92672">.</span> ($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Buzz&#39;</span>) <span style="color:#f92672">?:</span> $i) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fn</span>($i) <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>((($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Fizz&#39;</span>) <span style="color:#f92672">.</span> ($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Buzz&#39;</span>) <span style="color:#f92672">?:</span> $i) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>),
 </span></span><span style="display:flex;"><span>);
-</span></span></code></pre></div><p><code>array_walk</code> や <code>range</code>、<code>printf</code> といった <code>for</code> よりも長いトークンが現れてしまったが、これは次節で直すことにする。なお、<code>echo</code> は文であり式なので <code>printf</code> に置き換えた。</p>
+</span></span></code></pre></div><p><code>array_walk</code> や <code>range</code>、<code>printf</code> といった <code>for</code> よりも長いトークンが現れてしまったが、これは次節で直すことにする。なお、<code>echo</code> は文 (statement) であり式 (expression) ではないので、式である <code>printf</code> に置き換えた。</p>
 <h2 id="関数呼び出しの短縮">関数呼び出しの短縮</h2>
 <p><code>range</code>、<code>array_walk</code>、<code>printf</code> は長すぎるのでどうにかせねばならない。ここで、PHP の可変関数を使う。可変関数とは、関数名が文字列として入った変数を経由して、関数を呼び出す機能である。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
@@ -164,7 +165,8 @@ for ($i = 1; $i &lt; 100; $i++) {
 </span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> $r(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">100</span>);
 </span></span><span style="display:flex;"><span>$w(
 </span></span><span style="display:flex;"><span>  $s,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fn</span>($i) <span style="color:#f92672">=&gt;</span> $p((($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Fizz&#39;</span>) <span style="color:#f92672">.</span> ($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Buzz&#39;</span>) <span style="color:#f92672">?:</span> $i) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>),
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fn</span>($i) <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span>    $p((($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Fizz&#39;</span>) <span style="color:#f92672">.</span> ($i <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">?</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Buzz&#39;</span>) <span style="color:#f92672">?:</span> $i) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>),
 </span></span><span style="display:flex;"><span>);
 </span></span></code></pre></div><p>これで関数を呼び出している所は短くなった。では、<code>$r</code> や <code>$w</code> や <code>$p</code>、また <code>'Fizz'</code> や <code>'Buzz'</code> はどうやって 1行2文字に収めるのか。次のテクニックへ移ろう。</p>
 <h2 id="余談-php-8x-で動作しなくてもいいなら">余談: PHP 8.x で動作しなくてもいいなら</h2>
@@ -194,7 +196,7 @@ for ($i = 1; $i &lt; 100; $i++) {
 </span></span></code></pre></div><p>むしろ、このことがわかっていたからこそ PHP 8.x での動作を要件に課したところがある。</p>
 <h2 id="文字列リテラルの短縮">文字列リテラルの短縮</h2>
 <p>実際に使った手法の説明に移る。</p>
-<p>ずばり、文字列同士のビット演算を使う。マイナーな機能だが、PHP では、文字列同士でビット演算 (<code>&amp;</code>、<code>|</code>、<code>^</code>) をした場合、文字列の各バイトごとに指定したビット演算がなされ、それを結合したものが演算結果となる。</p>
+<p>ずばり、文字列同士のビット演算を使う。PHP では、文字列同士でビット演算 (<code>&amp;</code>、<code>|</code>、<code>^</code>) をした場合、文字列の各バイトごとに指定したビット演算がなされ、それを結合したものが演算結果となる。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;12345&#34;</span>;
 </span></span><span style="display:flex;"><span>$b <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;world&#34;</span>;
 </span></span><span style="display:flex;"><span>
@@ -397,7 +399,7 @@ for ($i = 1; $i &lt; 100; $i++) {
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;</span>)
 </span></span><span style="display:flex;"><span>);
 </span></span></code></pre></div><h1 id="感想など">感想など</h1>
-<p>PHP は、スクリプト言語の中だとシンタックスシュガーが比較的少ない (体感)。この挑戦は不可能に思われたが、PHP マニュアルとにらめっこしていたらなんとかなった。</p>
+<p>PHP は、スクリプト言語の中だとシンタックスシュガーが少ない (体感)。この挑戦は不可能に思われたが、PHP マニュアルとにらめっこしていたらなんとかなった。</p>
 <p>みんなもプログラムを細長くしよう。</p>
 <h1 id="余談2-別解">余談2: 別解</h1>
 <p>PHP では、バッククォートを使ってシェルを呼び出せる。これは <code>shell_exec</code> 関数と等価である。さて、PHP ではバックスラッシュによる行継続が使えないと書いたが、シェルでは使える (当然だが、呼び出されるシェルに依存する。Bash なら大丈夫だろう。知らんけど)。</p>
@@ -455,7 +457,7 @@ for ($i = 1; $i &lt; 100; $i++) {
 <pre tabindex="0"><code>${
 &#39;_
 &#39;}
-</code></pre><p>は変数で、中にはスペースとエスケープが入っている。シェルに渡されている文字列は次のようになる。</p>
+</code></pre><p>は変数で、中にはスペースとエスケープが入っている (<code>chr(32) . chr(92)</code>)。シェルに渡されている文字列は次のようになる。</p>
 <pre tabindex="0"><code>e\
 c\
 h\
@@ -466,7 +468,7 @@ o\
 3\
 </code></pre><p>これは、前掲したコマンドと同じだ。かくして、スペースを陽に書かずにシェルをおおよそ自由に扱えるようになった。Fizzbuzz のワンライナーくらいすぐ書けるだろうから、あとはなんとかなるだろう (試してないけど)。</p>
 <p>ということでこれは別解ということにしておく。</p>
-<p>ちなみに、PHP 8.2 からは、この気色の悪い変数の記法で Warning が出るようになるようだ。</p>
+<p>ちなみに、PHP 8.2 からは、この記法で Warning が出るようになるようだ。</p>
 <pre tabindex="0"><code>${
 &#39;_
 &#39;}
