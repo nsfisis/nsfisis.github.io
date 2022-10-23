@@ -6,7 +6,87 @@
     <description>Recent content in Posts on REPL: Rest-Eat-Program Loop</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Thu, 29 Sep 2022 00:50:52 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/posts/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 23 Oct 2022 09:54:07 +0900</lastBuildDate><atom:link href="https://blog.nsfisis.dev/posts/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PHPerKaigi 2023: ボツになったトークン問題 その 1</title>
+      <link>https://blog.nsfisis.dev/posts/2022-10-23/phperkaigi-2023-unused-token-quiz-1/</link>
+      <pubDate>Sun, 23 Oct 2022 09:54:07 +0900</pubDate>
+      
+      <guid>https://blog.nsfisis.dev/posts/2022-10-23/phperkaigi-2023-unused-token-quiz-1/</guid>
+      <description><![CDATA[ <h1 id="はじめに">はじめに</h1>
+<p>2023 年 3 月 23 日から 25 日にかけて開催予定 (記事執筆時点) の、<a href="https://phperkaigi.jp/2023/">PHPerKaigi 2023</a> において、昨年と同様に、弊社<a href="https://www.dgcircus.com/">デジタルサーカス株式会社</a> から、トークン問題を出題予定である。</p>
+<p>昨年のトークン問題の記事はこちら: <a href="/posts/2022-04-09/phperkaigi-2022-tokens">PHPerKaigi 2022 トークン問題の解説</a></p>
+<p>すでに 2023 年用の問題は作成済みであるが、その制作過程の中でいくつかボツ問ができた。せっかくなので、PHPerKaigi 開催を待つ間に紹介しようと思う。</p>
+<p>10 月から 2 月まで、毎月 1 記事ずつ公開していく予定 (忘れていなければ)。</p>
+<h1 id="問題">問題</h1>
+<p>注意: これはボツ問なので、得られたトークンを PHPerKaigi で入力してもポイントにはならない。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$π <span style="color:#f92672">=</span> $argv[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">??</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ($π <span style="color:#f92672">===</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">exit</span>(<span style="color:#e6db74">&#39;No input.&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$π <span style="color:#f92672">=</span> <span style="color:#a6e22e">trim</span>($π);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">is_numeric</span>($π)) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">exit</span>(<span style="color:#e6db74">&#39;Invalid input.&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">chr</span>(<span style="color:#f92672">...</span>), <span style="color:#a6e22e">str_split</span>($π, <span style="color:#ae81ff">2</span>)));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">preg_match</span>(<span style="color:#e6db74">&#39;/(\x23.+?) /&#39;</span>, $s, $m);
+</span></span><span style="display:flex;"><span>$t <span style="color:#f92672">=</span> $m[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">md5</span>($t) <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;056e831a4146bf123e8ea16613303d2e&#39;</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Token: </span><span style="color:#e6db74">{</span>$t<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Failed.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="トークン入手方法">トークン入手方法</h1>
+<p>ソースを見るとわかるとおり、<code>$argv[1]</code> を参照している。それを <code>$π</code> なる変数に代入しているので、円周率を渡してみる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell-session" data-lang="shell-session"><span style="display:flex;"><span>$ php Q.php 3.14
+</span></span><span style="display:flex;"><span>Failed.
+</span></span></code></pre></div><p>失敗してしまった。精度を上げてみる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell-session" data-lang="shell-session"><span style="display:flex;"><span>$ php Q.php 3.1415
+</span></span><span style="display:flex;"><span>Failed.
+</span></span></code></pre></div><p>だめだった。これを成功するまで繰り返す。</p>
+<p>最初にトークンが得られるのは、小数点以下 16 桁目まで入力したときで、こうなる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell-session" data-lang="shell-session"><span style="display:flex;"><span>$ php Q.php 3.1415926535897932
+</span></span><span style="display:flex;"><span>Token: #YO
+</span></span></code></pre></div><p>めでたくトークン「#YO」が手に入った。</p>
+<h1 id="解説">解説</h1>
+<p>短いので頭から追っていく。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$π <span style="color:#f92672">=</span> $argv[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">??</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ($π <span style="color:#f92672">===</span> <span style="color:#66d9ef">null</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">exit</span>(<span style="color:#e6db74">&#39;No input.&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$π <span style="color:#f92672">=</span> <span style="color:#a6e22e">trim</span>($π);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">is_numeric</span>($π)) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">exit</span>(<span style="color:#e6db74">&#39;Invalid input.&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>入力のバリデーション部分。数値のみ受け付ける。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">chr</span>(<span style="color:#f92672">...</span>), <span style="color:#a6e22e">str_split</span>($π, <span style="color:#ae81ff">2</span>)));
+</span></span></code></pre></div><p><code>$π</code> を 2 文字ごとに区切り (<code>str_split</code>)、数値を ASCII コードと見做して文字に変換 (<code>chr</code>) して結合 (<code>implode</code>) している。</p>
+<p>例えば、<code>$π</code> が <code>'656667'</code> だったとすると、<code>65</code>、<code>66</code>、<code>67</code> に対応した <code>'A'</code>、<code>'B'</code>、<code>'C'</code> へと変換され、<code>'ABC'</code> になる。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$π <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;656667&#39;</span>;
+</span></span><span style="display:flex;"><span>$s <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>(<span style="color:#a6e22e">array_map</span>(<span style="color:#a6e22e">chr</span>(<span style="color:#f92672">...</span>), <span style="color:#a6e22e">str_split</span>($π, <span style="color:#ae81ff">2</span>)));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> $s;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// =&gt; ABC
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">preg_match</span>(<span style="color:#e6db74">&#39;/(\x23.+?) /&#39;</span>, $s, $m);
+</span></span><span style="display:flex;"><span>$t <span style="color:#f92672">=</span> $m[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span></code></pre></div><p>正規表現でマッチングしている。<code>\x23</code> は <code>#</code> と同じであることに留意すると、この正規表現は「<code>#</code> から始まる 2 以上の長さ (含 <code>#</code>) の文字列で、最初に現れるスペースまで」にマッチする。つまりこれは、PHPerKaigi におけるトークンである。</p>
+<p>なお、<code>#</code> を直接書いていないのは、<code>/#.+?) /</code> と書くと、<code>#.+?)</code> という意図せぬトークンが登録されてしまうからである。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">md5</span>($t) <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;056e831a4146bf123e8ea16613303d2e&#39;</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Token: </span><span style="color:#e6db74">{</span>$t<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;Failed.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>最後にトークンのハッシュ値を見て、想定解かどうかを確認する。</p>
+<h1 id="おわりに">おわりに</h1>
+<p>円周率を何桁も計算して ASCII コード経由で文字列化すれば、トークンっぽいものがどこかで出てくるのではないか、と考えて生まれた作品。</p>
+<p>最初は真面目に円周率の計算プログラムを組んでいたのだが、いざ動かしてみるとやけに浅いところにあったので驚いた (ちなみに、それでも <code>M_PI</code> や <code>pi()</code> では精度が足りない)。見つけたときは狂喜したものの、冷静になってみると大して面白くなかったのでボツになった。むしろ、100 万桁目くらいに埋まっていてくれたほうがよかったかもしれない。</p>
+]]></description>
+    </item>
+    
     <item>
       <title>[PHP] fizzbuzz を書く。1行あたり2文字で。</title>
       <link>https://blog.nsfisis.dev/posts/2022-09-29/write-fizzbuzz-in-php-2-letters-per-line/</link>
